@@ -10,8 +10,8 @@ public class User extends BaseUser {
     private String firstName;
     private String lastName;
 
-    public User(Long id, String firstName, String lastName, String email, String phoneNumber, String username, String password, boolean activated) {
-        super(id, email, phoneNumber, username, password, activated);
+    public User(String firstName, String lastName, String email, String phoneNumber, String username, String password, boolean activated) {
+        super(email, phoneNumber, username, password, activated);
         this.firstName = firstName;
         this.lastName = lastName;
     }

@@ -8,8 +8,8 @@ import java.util.Objects;
 public class Company extends BaseUser{
     private String name;
 
-    public Company(Long id, String name, String email, String phoneNumber, String username, String password, boolean activated) {
-        super(id, email, phoneNumber, username, password, activated);
+    public Company(String name, String email, String phoneNumber, String username, String password, boolean activated) {
+        super(email, phoneNumber, username, password, activated);
         this.name = name;
     }
 

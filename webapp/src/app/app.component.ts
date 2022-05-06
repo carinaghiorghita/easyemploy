@@ -22,7 +22,7 @@ export class AppComponent implements OnInit{
     //     if (user.role == "" && this.router.url != "/createAccount" && this.router.url != "/login")
     //       this.router.navigate(['login']);
     //   });
-    this.router.navigate(['login']);
+    //this.router.navigate(['login']);
   }
 
 }

@@ -1,1 +1,12 @@
-<p>create-account works!</p>
+<form>
+  <input type="text" name="email" placeholder="Email" [(ngModel)]="email">
+  <br>
+  <input type="password" name="password" placeholder="Password" [(ngModel)]="password">
+  <br>
+  <mat-radio-group name="role" [(ngModel)]="role">
+    <mat-radio-button value="USER">I want to create a personal account.</mat-radio-button>
+    <br>
+    <mat-radio-button value="COMPANY">I want to create a company account.</mat-radio-button>
+  </mat-radio-group>
+  <button (click)="onSubmit()">Sign Up</button>
+</form>

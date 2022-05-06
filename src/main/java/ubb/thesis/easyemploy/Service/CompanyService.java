@@ -9,6 +9,7 @@ import ubb.thesis.easyemploy.Repository.CompanyRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,18 +33,30 @@ public class CompanyService {
                 .get(0);
     }
 
+    public Optional<Company> getCompanyByUsername(String username)
+    {
+        return this.companyRepository.findByUsername(username);
+    }
+
+    public Optional<Company> getCompanyByEmail(String email)
+    {
+        return this.companyRepository.findByEmail(email);
+    }
+
     public void saveCompany(Company Company) {
-        logger.trace(" > createCompany - method was entered. Company = {}", Company);
         companyRepository.save(Company);
-        logger.trace(" > createCompany - method ended. Company = {}", Company);
     }
 
     @Transactional
-    public void updateCompany(Company Company) {
-        companyRepository.findById(Company.getId())
+    public void updateCompany(Company company) {
+        companyRepository.findById(company.getId())
                 .ifPresent(s -> {
-                    s.setUsername(Company.getUsername());
-                    //todo rest
+                    s.setUsername(company.getUsername());
+                    s.setActivated(company.isActivated());
+                    s.setPassword(company.getPassword());
+                    s.setName(company.getName());
+                    s.setEmail(company.getEmail());
+                    s.setPhoneNumber(company.getPhoneNumber());
                 });
     }
 

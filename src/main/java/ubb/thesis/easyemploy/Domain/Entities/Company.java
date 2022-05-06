@@ -13,7 +13,7 @@ public class Company extends BaseUser{
         this.name = name;
     }
 
-    protected Company(){}
+    public Company(){}
 
     public String getName() {
         return name;

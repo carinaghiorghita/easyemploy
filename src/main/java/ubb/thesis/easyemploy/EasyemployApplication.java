@@ -17,8 +17,8 @@ public class EasyemployApplication implements CommandLineRunner {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private CompanyService companyService;
+//    @Autowired
+//    private CompanyService companyService;
 
     public static void main(String[] args) {
         SpringApplication.run(EasyemployApplication.class, args);

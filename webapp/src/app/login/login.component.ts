@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   onSubmit(){
     let loginUser = <BaseUser>{username: this.username, password: this.password};
     this.service.login(loginUser).subscribe( (user) => {
-      console.log(user);
+      //console.log(user);
         //this.router.navigate([user2.role]);
     });
   }

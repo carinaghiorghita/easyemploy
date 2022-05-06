@@ -16,6 +16,11 @@ export class LoginService {
       .post<any>('/api/login', user);
   }
 
+  createAccount(user: BaseUser): Observable<any>{
+    return this.httpClient
+      .post<any>('/api/create-account', user);
+  }
+
   logout(): Observable<any> {
     return this.httpClient
       .get<any>('/api/logout');

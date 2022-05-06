@@ -4,11 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ubb.thesis.easyemploy.Domain.Entities.Company;
 import ubb.thesis.easyemploy.Domain.Entities.User;
 import ubb.thesis.easyemploy.Repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,18 +34,31 @@ public class UserService {
                 .get(0);
     }
 
+    public Optional<User> getUserByUsername(String username)
+    {
+        return this.userRepository.findByUsername(username);
+    }
+
+    public Optional<User> getUserByEmail(String email)
+    {
+        return this.userRepository.findByEmail(email);
+    }
+
     public void saveUser(User User) {
-        logger.trace(" > createUser - method was entered. User = {}", User);
         userRepository.save(User);
-        logger.trace(" > createUser - method ended. User = {}", User);
     }
 
     @Transactional
-    public void updateUser(User User) {
-        userRepository.findById(User.getId())
+    public void updateUser(User user) {
+        userRepository.findById(user.getId())
                 .ifPresent(s -> {
-                    s.setUsername(User.getUsername());
-                    //todo rest
+                    s.setUsername(user.getUsername());
+                    s.setActivated(user.isActivated());
+                    s.setPassword(user.getPassword());
+                    s.setFirstName(user.getFirstName());
+                    s.setLastName(user.getLastName());
+                    s.setEmail(user.getEmail());
+                    s.setPhoneNumber(user.getPhoneNumber());
                 });
     }
 

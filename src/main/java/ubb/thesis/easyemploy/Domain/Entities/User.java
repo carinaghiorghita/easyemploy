@@ -16,7 +16,7 @@ public class User extends BaseUser {
         this.lastName = lastName;
     }
 
-    protected User() {
+    public User() {
 
     }
 

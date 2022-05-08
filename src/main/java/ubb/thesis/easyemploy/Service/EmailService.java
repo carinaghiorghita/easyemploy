@@ -1,67 +1,48 @@
 package ubb.thesis.easyemploy.Service;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import ubb.thesis.easyemploy.Domain.Entities.Token;
 
 import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.*;
+import javax.mail.PasswordAuthentication;
 import java.util.Properties;
 
 @Service
 @AllArgsConstructor
-//@NoArgsConstructor
 public class EmailService {
 
     public void send(String email, String link){
-        //todo see why this is not working
-        String user = "easyemploy@outlook.com";
-        String password = "BachelorThesis2022";
+        final String username = "easyemploy@yahoo.com";
+        final String password = "xfzlhhneuafgzcmg";
 
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "outlook.office365.com");
-        props.put("mail.smtp.ssl.trust", "outlook.office365.com");
-        props.put("mail.smtp.port", "587");
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host", "smtp.mail.yahoo.com");
+        prop.put("mail.smtp.ssl.trust", "smtp.mail.yahoo.com");
+        prop.put("mail.smtp.port", "587");
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.starttls.enable", "true"); //TLS
 
-        Session session = Session.getInstance(props,
+        Session session = Session.getInstance(prop,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(user, password);
+                        return new PasswordAuthentication(username, password);
                     }
                 });
 
-        Message message = new MimeMessage(session);
         try {
-            message.setFrom(new InternetAddress("easyemploy@outlook.com"));
 
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress("easyemploy@yahoo.com"));
             message.setRecipients(
-                    Message.RecipientType.TO, InternetAddress.parse(email));
+                    Message.RecipientType.TO,
+                    InternetAddress.parse(email)
+            );
             message.setSubject("Confirm registration");
-
-            String msg = "Hello! You're one step away from creating your EasyEmploy account!. Click here to confirm your registration: " + link;
-
-
-            MimeBodyPart mimeBodyPart = new MimeBodyPart();
-            mimeBodyPart.setContent(msg, "text/html");
-
-            Multipart multipart = new MimeMultipart();
-            multipart.addBodyPart(mimeBodyPart);
-
-            message.setContent(multipart);
+            message.setText("Hello! You're one step away from creating your EasyEmploy account!. Click here to confirm your registration: " + link);
 
             Transport.send(message);
 
         } catch (MessagingException e) {
             e.printStackTrace();
-        }
-    }}
+        }    }}

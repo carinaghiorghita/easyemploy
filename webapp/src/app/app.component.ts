@@ -15,14 +15,12 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
 
-    // this.httpClient
-    //   .get<any>('/api/getUser')
-    //   .subscribe((user) => {
-    //     console.log(user);
-    //     if (user.role == "" && this.router.url != "/createAccount" && this.router.url != "/login")
-    //       this.router.navigate(['login']);
-    //   });
-    //this.router.navigate(['login']);
+    this.httpClient
+      .get<any>('/api/getAuthenticatedUser')
+      .subscribe((baseUser) => {
+        if (baseUser.role == "" && this.router.url != "/create-account" && this.router.url != "/login" && !this.router.url.includes("/confirm-account"))
+          this.router.navigate(['login']);
+      });
   }
 
 }

@@ -11,18 +11,18 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class TokenService {
-    private final TokenRepository TokenRepository;
+    private final TokenRepository tokenRepository;
 
     public void saveToken(Token token) {
-        TokenRepository.save(token);
+        tokenRepository.save(token);
     }
 
     public Optional<Token> getToken(String token) {
-        return TokenRepository.findByToken(token);
+        return tokenRepository.findByToken(token);
     }
 
     public int setConfirmedAt(String token) {
-        return TokenRepository.updateConfirmedAt(
+        return tokenRepository.updateConfirmedAt(
                 token, LocalDateTime.now());
     }
 }

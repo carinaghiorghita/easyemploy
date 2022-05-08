@@ -48,6 +48,18 @@ public class AuthenticationService {
         return user;
     }
 
+    public Optional<? extends BaseUser> getUserByUsername(String username){
+        var user = userService.getUserByUsername(username);
+        if(user.isEmpty()){
+            var company = companyService.getCompanyByUsername(username);
+            if(company.isEmpty())
+                return Optional.empty();
+            return company;
+        }
+        return user;
+    }
+
+
     public void signUp(String email, String password, String role){
         if(role.equals("USER")){
             var user = new User("","",email,"","",this.hashPassword(password),false);

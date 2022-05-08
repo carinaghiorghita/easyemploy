@@ -1,4 +1,14 @@
 <p>Before continuing, please provide more data:</p>
 <form>
+  <input type="text" name="username" placeholder="Username" required [(ngModel)]="baseUser.username">
+  <br>
+<!--  <div *ngIf="baseUser.username.errors?.['required']">Username is required!</div> TODO add validation-->
+<!--  <br>-->
+  <input *ngIf="baseUser.role==='USER'" type="text" name="firstName" placeholder="First Name" required [(ngModel)]="user.firstName">
+  <input *ngIf="baseUser.role==='USER'" type="text" name="lastName" placeholder="Last Name" required [(ngModel)]="user.lastName">
 
+  <input *ngIf="baseUser.role==='COMPANY'" type="text" name="name" placeholder="Name" required [(ngModel)]="company.name">
+  <input type="text" name="phoneNumber" placeholder="Phone number" required [(ngModel)]="baseUser.phoneNumber">
+  <br>
+  <button (click)="onSubmit()">Login</button>
 </form>

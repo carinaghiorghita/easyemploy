@@ -16,6 +16,12 @@ public class User extends BaseUser {
         this.lastName = lastName;
     }
 
+    public User(Long id, String firstName, String lastName, String email, String phoneNumber, String username, String password, boolean activated) {
+        super(id, email, phoneNumber, username, password, activated);
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public User() {
 
     }

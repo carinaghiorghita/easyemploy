@@ -25,6 +25,15 @@ public class BaseUser {
         this.activated = activated;
     }
 
+    public BaseUser(Long id, String email, String phoneNumber, String username, String password, boolean activated) {
+        this.id = id;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.username = username;
+        this.password = password;
+        this.activated = activated;
+    }
+
     protected BaseUser(){}
 
     public Long getId() {

@@ -26,8 +26,8 @@ public class EasyemployApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-//        var user = new User(1L,"John","Doe","johndoe@gmail.com","0722674528","johndoe","johndoe",false);
-//        userService.saveUser(user);
+//        var baseUser = new User(1L,"John","Doe","johndoe@gmail.com","0722674528","johndoe","johndoe",false);
+//        userService.saveUser(baseUser);
 //        System.out.println(userService.getAllUsers());
 //
 //        var company = new Company(1L,"Fortech","fortech@gmail.com","0722674528","fortech","fortech",false);

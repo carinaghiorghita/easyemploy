@@ -13,6 +13,11 @@ public class Company extends BaseUser{
         this.name = name;
     }
 
+    public Company(Long id, String name, String email, String phoneNumber, String username, String password, boolean activated) {
+        super(id, email, phoneNumber, username, password, activated);
+        this.name = name;
+    }
+
     public Company(){}
 
     public String getName() {

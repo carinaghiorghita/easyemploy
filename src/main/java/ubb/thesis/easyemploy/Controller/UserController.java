@@ -9,6 +9,7 @@ import ubb.thesis.easyemploy.Converter.UserConverter;
 import ubb.thesis.easyemploy.Domain.DTO.BaseUserDto;
 import ubb.thesis.easyemploy.Domain.DTO.CompanyDto;
 import ubb.thesis.easyemploy.Domain.DTO.UserDto;
+import ubb.thesis.easyemploy.Domain.Validation.UserValidator;
 import ubb.thesis.easyemploy.Service.CompanyService;
 import ubb.thesis.easyemploy.Service.UserService;
 
@@ -20,6 +21,14 @@ public class UserController {
     @PostMapping(value="/api/updateUser")
     public void updateUser(@RequestBody UserDto userDto){
         var userConverter = new UserConverter();
-        this.userService.updateUser(userConverter.convertDtoToModel(userDto));
+        var user = userConverter.convertDtoToModel(userDto);
+
+        var userValidator = new UserValidator();
+        userValidator.validateFirstName(user);
+        userValidator.validateLastName(user);
+        userValidator.validateUsername(user);
+        userValidator.validatePhoneNumber(user);
+
+        this.userService.updateUser(user);
     }
 }

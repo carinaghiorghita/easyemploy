@@ -9,6 +9,7 @@ import ubb.thesis.easyemploy.Domain.Entities.BaseUser;
 import ubb.thesis.easyemploy.Domain.Entities.Company;
 import ubb.thesis.easyemploy.Domain.Entities.Token;
 import ubb.thesis.easyemploy.Domain.Entities.User;
+import ubb.thesis.easyemploy.Domain.Validation.UserValidator;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -109,13 +110,16 @@ public class AuthenticationService {
         tokenService.setConfirmedAt(tokenString);
 
         var user = this.getUserByEmail(token.getEmail());
+
         if(user.isEmpty())
             throw new IllegalStateException("Invalid email");
         user.get().setActivated(true);
-        if(user.get() instanceof User)
+        if(user.get() instanceof User) {
             userService.updateUser((User) user.get());
-        else
+        }
+        else {
             companyService.updateCompany((Company) user.get());
+        }
     }
 
     public String hashPassword(String plainTextPassword) {

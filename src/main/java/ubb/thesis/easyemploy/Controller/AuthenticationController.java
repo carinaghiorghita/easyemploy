@@ -12,6 +12,7 @@ import ubb.thesis.easyemploy.Domain.DTO.UserDto;
 import ubb.thesis.easyemploy.Domain.Entities.BaseUser;
 import ubb.thesis.easyemploy.Domain.Entities.Company;
 import ubb.thesis.easyemploy.Domain.Entities.User;
+import ubb.thesis.easyemploy.Domain.Validation.BaseUserValidator;
 import ubb.thesis.easyemploy.Service.AuthenticationService;
 import ubb.thesis.easyemploy.Service.CompanyService;
 import ubb.thesis.easyemploy.Service.TokenService;
@@ -30,17 +31,10 @@ public class AuthenticationController {
     @PostMapping(value = "/api/login")
     public BaseUserDto loginUser(@RequestBody BaseUserDto userDto, HttpSession httpSession) {
         var user = authenticationService.getUser(userDto.getUsername(), userDto.getPassword());
-        if (user.isEmpty())
-            return null;
-        httpSession.setAttribute("username", userDto.getUsername());
-        if (user.get() instanceof User)
-            userDto.setRole("USER");
-        else
-            userDto.setRole("COMPANY");
-        userDto.setId(user.get().getId());
-        //todo set email maybe? idk
-        //todo use converter
-        return userDto;
+        if(user.isEmpty())
+            return new BaseUserDto();
+        var userConverter = new BaseUserConverter();
+        return userConverter.convertModelToDto(user.get());
     }
 
     @GetMapping(value ="/api/getAuthenticatedUser")
@@ -57,7 +51,11 @@ public class AuthenticationController {
 
     @PostMapping(value = "/api/create-account")
     public void createUser(@RequestBody BaseUserDto userDto) {
-        //todo validate data
+        var baseUserConverter = new BaseUserConverter();
+        var user = baseUserConverter.convertDtoToModel(userDto);
+
+        var baseUserValidator = new BaseUserValidator();
+        baseUserValidator.validateEmail(user);
 
         if(authenticationService.getUserByEmail(userDto.getEmail()).isPresent())
             throw new RuntimeException("Email already in use!");

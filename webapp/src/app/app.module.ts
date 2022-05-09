@@ -12,6 +12,7 @@ import {CommonModule} from "@angular/common";
 import {LoginService} from "./service/login.service";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmAccountComponent } from './confirm-account/confirm-account.component';
+import { ResendConfirmationComponent } from './resend-confirmation/resend-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ConfirmAccountComponent } from './confirm-account/confirm-account.compo
     CreateAccountComponent,
     LoginComponent,
     LogoutComponent,
-    ConfirmAccountComponent
+    ConfirmAccountComponent,
+    ResendConfirmationComponent
   ],
   imports: [
     FormsModule,

@@ -63,5 +63,8 @@ public class CompanyService {
     public void deleteById(Long id) {
         companyRepository.deleteById(id);
     }
+    public void deleteByEmail(String email) {
+        companyRepository.deleteByEmail(email);
+    }
 
 }

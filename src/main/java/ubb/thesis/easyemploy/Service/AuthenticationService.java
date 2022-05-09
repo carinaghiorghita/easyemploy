@@ -25,7 +25,7 @@ public class AuthenticationService {
     private final TokenService tokenService;
     private final EmailService emailService;
 
-    public Optional<? extends BaseUser> getUser(String username, String password){
+    public Optional<? extends BaseUser> loginByUsername(String username, String password){
         var user = userService.getUserByUsername(username);
         if(user.isEmpty()){
             var company = companyService.getCompanyByUsername(username);
@@ -37,6 +37,20 @@ public class AuthenticationService {
             return Optional.empty();
         return user;
     }
+
+    public Optional<? extends BaseUser> loginByEmail(String email, String password){
+        var user = userService.getUserByEmail(email);
+        if(user.isEmpty()){
+            var company = companyService.getCompanyByEmail(email);
+            if(company.isEmpty() || !BCrypt.checkpw(password, company.get().getPassword()))
+                return Optional.empty();
+            return company;
+        }
+        else if(!BCrypt.checkpw(password, user.get().getPassword()))
+            return Optional.empty();
+        return user;
+    }
+
 
     public Optional<? extends BaseUser> getUserByEmail(String email){
         var user = userService.getUserByEmail(email);
@@ -60,6 +74,12 @@ public class AuthenticationService {
         return user;
     }
 
+    public void deleteUser(BaseUser user){
+        if(user instanceof User)
+            this.userService.deleteById(user.getId());
+        else
+            this.companyService.deleteById(user.getId());
+    }
 
     public void signUp(String email, String password, String role){
         if(role.equals("USER")){

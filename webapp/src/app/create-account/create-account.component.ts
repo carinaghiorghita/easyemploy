@@ -13,6 +13,8 @@ export class CreateAccountComponent implements OnInit {
   password: string = "";
   role: string = "";
 
+  errorMessage: string="";
+
   constructor(private service: LoginService,
               private router: Router) { }
 
@@ -24,7 +26,9 @@ export class CreateAccountComponent implements OnInit {
     this.service.createAccount(newUser)
       .subscribe( (user: any) => {console.log(user);
         //this.router.navigate(['login'])
-        });
+        },
+        error => this.errorMessage=error.error.message
+      );
   }
 
 }

@@ -20,6 +20,14 @@ export class ConfirmAccountService {
       .get<any>('/api/confirm-account', {params});
   }
 
+  resendConfirmation(expiredToken: String): Observable<Token>{
+    const params = new HttpParams().set('expiredToken', String(expiredToken))
+
+    return this.httpClient
+      .get<any>('/api/resend-confirmation-expired', {params});
+  }
+
+
   getUser(email: string): Observable<any>{
     const params = new HttpParams().set('email', String(email))
 

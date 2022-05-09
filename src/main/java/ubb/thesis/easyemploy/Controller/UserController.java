@@ -9,6 +9,7 @@ import ubb.thesis.easyemploy.Converter.UserConverter;
 import ubb.thesis.easyemploy.Domain.DTO.BaseUserDto;
 import ubb.thesis.easyemploy.Domain.DTO.CompanyDto;
 import ubb.thesis.easyemploy.Domain.DTO.UserDto;
+import ubb.thesis.easyemploy.Domain.Exceptions.ValidationException;
 import ubb.thesis.easyemploy.Domain.Validation.UserValidator;
 import ubb.thesis.easyemploy.Service.CompanyService;
 import ubb.thesis.easyemploy.Service.UserService;
@@ -16,6 +17,8 @@ import ubb.thesis.easyemploy.Service.UserService;
 @RestController
 @AllArgsConstructor
 public class UserController {
+
+    private final CompanyService companyService;
     private final UserService userService;
 
     @PostMapping(value="/api/updateUser")
@@ -28,6 +31,12 @@ public class UserController {
         userValidator.validateLastName(user);
         userValidator.validateUsername(user);
         userValidator.validatePhoneNumber(user);
+
+        if(companyService.getCompanyByUsername(user.getUsername()).isPresent()
+                || userService.getUserByUsername(user.getUsername()).isPresent())
+            throw new ValidationException(
+                    "Username already exists!"
+            );
 
         this.userService.updateUser(user);
     }

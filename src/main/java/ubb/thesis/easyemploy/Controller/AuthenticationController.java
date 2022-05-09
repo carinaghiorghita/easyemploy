@@ -8,13 +8,11 @@ import ubb.thesis.easyemploy.Converter.BaseUserConverter;
 import ubb.thesis.easyemploy.Converter.TokenConverter;
 import ubb.thesis.easyemploy.Domain.DTO.BaseUserDto;
 import ubb.thesis.easyemploy.Domain.DTO.TokenDto;
-import ubb.thesis.easyemploy.Domain.DTO.UserDto;
 import ubb.thesis.easyemploy.Domain.Entities.BaseUser;
-import ubb.thesis.easyemploy.Domain.Entities.Company;
 import ubb.thesis.easyemploy.Domain.Entities.User;
+import ubb.thesis.easyemploy.Domain.Exceptions.ValidationException;
 import ubb.thesis.easyemploy.Domain.Validation.BaseUserValidator;
 import ubb.thesis.easyemploy.Service.AuthenticationService;
-import ubb.thesis.easyemploy.Service.CompanyService;
 import ubb.thesis.easyemploy.Service.TokenService;
 import ubb.thesis.easyemploy.Service.UserService;
 
@@ -30,9 +28,15 @@ public class AuthenticationController {
 
     @PostMapping(value = "/api/login")
     public BaseUserDto loginUser(@RequestBody BaseUserDto userDto, HttpSession httpSession) {
-        var user = authenticationService.getUser(userDto.getUsername(), userDto.getPassword());
-        if(user.isEmpty())
-            return new BaseUserDto();
+        var user = authenticationService.loginByUsername(userDto.getUsername(), userDto.getPassword());
+        if(user.isEmpty()) {
+            user = authenticationService.loginByEmail(userDto.getUsername(), userDto.getPassword());
+            if(user.isEmpty())
+                throw new IllegalArgumentException("Username and password do not match!");
+        }
+        if(!user.get().isActivated())
+            throw new IllegalStateException("Please confirm your email before proceeding.");
+        httpSession.setAttribute("username", userDto.getUsername());
         var userConverter = new BaseUserConverter();
         return userConverter.convertModelToDto(user.get());
     }
@@ -56,11 +60,34 @@ public class AuthenticationController {
 
         var baseUserValidator = new BaseUserValidator();
         baseUserValidator.validateEmail(user);
+        if(userDto.getPassword().length() < 6)
+            throw new ValidationException("Password is too short!");
 
         if(authenticationService.getUserByEmail(userDto.getEmail()).isPresent())
             throw new RuntimeException("Email already in use!");
 
         authenticationService.signUp(userDto.getEmail(),userDto.getPassword(),userDto.getRole());
+    }
+
+    @PostMapping(value = "/api/resend-confirmation")
+    public void resendConfirmation(@RequestBody BaseUserDto userDto) {
+        var user = authenticationService.getUserByEmail(userDto.getUsername()).get();
+        var role = user instanceof User ? "USER" : "COMPANY";
+
+        authenticationService.deleteUser(user);
+
+        authenticationService.signUp(user.getEmail(),user.getPassword(),role);
+    }
+
+    @GetMapping(value = "/api/resend-confirmation-expired")
+    public void resendConfirmationExpired(@RequestParam("expiredToken") String expiredToken) {
+        var tokenObject = tokenService.getToken(expiredToken);
+        var user = authenticationService.getUserByEmail(tokenObject.get().getEmail()).get();
+        var role = user instanceof User ? "USER" : "COMPANY";
+
+        authenticationService.deleteUser(user);
+
+        authenticationService.signUp(user.getEmail(),user.getPassword(),role);
     }
 
     @GetMapping(path = "/api/confirm-account")

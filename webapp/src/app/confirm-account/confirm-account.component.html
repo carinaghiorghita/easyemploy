@@ -1,3 +1,4 @@
+<div *ngIf="errorMessage===''">
 <p>Before continuing, please provide more data:</p>
 <form>
   <input type="text" name="username" placeholder="Username" required [(ngModel)]="baseUser.username">
@@ -12,3 +13,17 @@
   <br>
   <button (click)="onSubmit()">Login</button>
 </form>
+</div>
+
+<div *ngIf="errorMessage.includes('Invalid token')">
+  Oops, it looks like the link is broken! Please check again the link from the confirmation email.
+</div>
+<div *ngIf="errorMessage.includes('Email already confirmed')">
+  It looks like you have already confirmed your account. Try <a [routerLink]="['/login']" > logging in </a> instead.
+</div>
+<div *ngIf="errorMessage.includes('Token has expired')">
+  It looks like your confirmation token has expired. Try <a [routerLink]="['/resend-confirmation']" (click)="onResendConfirmation()">sending another confirmation email</a>.
+</div>
+<div *ngIf="creationError!==''">
+  {{creationError}}
+</div>

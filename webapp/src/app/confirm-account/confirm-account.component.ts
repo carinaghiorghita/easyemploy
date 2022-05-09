@@ -13,6 +13,9 @@ import {Company} from "../model/company.model";
 export class ConfirmAccountComponent implements OnInit {
 
   token: string="";
+  errorMessage: string = "";
+  creationError: string = "";
+
   email: string="";
   baseUser: BaseUser=new BaseUser();
   user: User=new User();
@@ -31,9 +34,12 @@ export class ConfirmAccountComponent implements OnInit {
       this.email = tokenObj.email;
       this.confirmAccountService.getUser(this.email).subscribe((user: BaseUser) => {
         this.baseUser=user;
-        console.log(this.baseUser);
       });
-    });
+    },
+      error => {
+        this.errorMessage = error.error.message;
+      }
+    );
   }
 
   onSubmit(): void {
@@ -45,7 +51,9 @@ export class ConfirmAccountComponent implements OnInit {
       this.user.activated = this.baseUser.activated;
       this.user.password = this.baseUser.password;
 
-      this.confirmAccountService.updateUser(this.user).subscribe();
+      this.confirmAccountService.updateUser(this.user).subscribe(() => {},
+        error => this.creationError = error.error.message
+      );
     }
     else {
       this.company.username = this.baseUser.username;
@@ -56,7 +64,14 @@ export class ConfirmAccountComponent implements OnInit {
       this.company.password = this.baseUser.password;
 
 
-      this.confirmAccountService.updateCompany(this.company).subscribe();
+      this.confirmAccountService.updateCompany(this.company).subscribe(() => {},
+        error => this.creationError = error.error.message
+      );
     }
   }
+
+  onResendConfirmation(){
+    this.confirmAccountService.resendConfirmation(this.token).subscribe();
+  }
+
 }

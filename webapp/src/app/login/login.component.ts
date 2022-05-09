@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 export class LoginComponent implements OnInit {
   username: string = "";
   password: string = "";
+  errorMessage: string = "";
 
   constructor(private service: LoginService,
               private router: Router) { }
@@ -21,9 +22,16 @@ export class LoginComponent implements OnInit {
   onSubmit(){
     let loginUser = <BaseUser>{username: this.username, password: this.password};
     this.service.login(loginUser).subscribe( (user) => {
-      //console.log(baseUser);
+      console.log(user);
         //this.router.navigate([user2.role]);
+    },
+      error => {
+      this.errorMessage = error.error.message;
     });
   }
 
+  onResendConfirmation(){
+    let loginUser = <BaseUser>{username: this.username, password: this.password};
+    this.service.resendConfirmation(loginUser).subscribe();
+  }
 }

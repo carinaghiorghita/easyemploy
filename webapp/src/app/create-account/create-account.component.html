@@ -10,3 +10,7 @@
   </mat-radio-group>
   <button (click)="onSubmit()">Sign Up</button>
 </form>
+
+<div *ngIf="errorMessage!==''">
+  {{errorMessage}}
+</div>

@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface CompanyRepository extends JpaRepository<Company, Long> {
     Optional<Company> findByUsername(String username);
     Optional<Company> findByEmail(String email);
+    void deleteByEmail(String email);
 }

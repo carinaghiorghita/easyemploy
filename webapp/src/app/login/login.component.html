@@ -1,6 +1,6 @@
 
 <form>
-  <input type="text" name="username" placeholder="Username" [(ngModel)]="username">
+  <input type="text" name="username" placeholder="Username or email" [(ngModel)]="username">
   <br>
   <input type="password" name="password" placeholder="Password" [(ngModel)]="password">
   <br>
@@ -8,4 +8,10 @@
 </form>
 <p class="txt1" >
   Don't have an account? <a [routerLink]="['/create-account']" >Sign Up</a>
+</p>
+<p *ngIf="errorMessage!==''">
+  {{errorMessage}}
+</p>
+<p *ngIf="errorMessage.includes('confirm')">
+  Click <a [routerLink]="['/resend-confirmation']" (click)="onResendConfirmation()"> here </a> to resend confirmation email.
 </p>

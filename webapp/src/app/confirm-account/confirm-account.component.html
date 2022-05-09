@@ -3,8 +3,6 @@
 <form>
   <input type="text" name="username" placeholder="Username" required [(ngModel)]="baseUser.username">
   <br>
-<!--  <div *ngIf="baseUser.username.errors?.['required']">Username is required!</div> TODO add validation-->
-<!--  <br>-->
   <input *ngIf="baseUser.role==='USER'" type="text" name="firstName" placeholder="First Name" required [(ngModel)]="user.firstName">
   <input *ngIf="baseUser.role==='USER'" type="text" name="lastName" placeholder="Last Name" required [(ngModel)]="user.lastName">
 

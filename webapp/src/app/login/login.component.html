@@ -1,17 +1,43 @@
+<!DOCTYPE html>
 
-<form>
-  <input type="text" name="username" placeholder="Username or email" [(ngModel)]="username">
-  <br>
-  <input type="password" name="password" placeholder="Password" [(ngModel)]="password">
-  <br>
-  <button (click)="onSubmit()">Login</button>
-</form>
-<p class="txt1" >
-  Don't have an account? <a [routerLink]="['/create-account']" >Sign Up</a>
-</p>
-<p *ngIf="errorMessage!==''">
-  {{errorMessage}}
-</p>
-<p *ngIf="errorMessage.includes('confirm')">
-  Click <a [routerLink]="['/resend-confirmation']" (click)="onResendConfirmation()"> here </a> to resend confirmation email.
-</p>
+<meta name="viewport" content="width=device-width" />
+<html>
+<body>
+
+<app-header [link]="'/login'"></app-header>
+
+<div class="main-div">
+<mat-card class="container-login">
+  <mat-card-content>
+    <form (submit)="onSubmit()" class="form-login">
+      <span class="title-form-login">
+        <h1>Login</h1>
+      </span>
+      <!--  <input type="text" name="username" placeholder="Username or email" [(ngModel)]="username">-->
+      <!--  <br>-->
+      <mat-form-field appearance="fill">
+        <mat-label>Username or email</mat-label>
+        <input [(ngModel)]="username" matInput name="username" type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input [(ngModel)]="password" matInput name="password" type="password">
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit">Login</button>
+    </form>
+    <br>
+    <p class="txt1">
+      Don't have an account? <a [routerLink]="['/create-account']">Sign Up</a>
+    </p>
+    <mat-error *ngIf="errorMessage!==''">
+      {{errorMessage}}
+    </mat-error>
+    <mat-error *ngIf="errorMessage.includes('confirm')">
+      Click <a (click)="onResendConfirmation()" [routerLink]="['/resend-confirmation']"> here </a> to resend
+      confirmation email.
+    </mat-error>
+  </mat-card-content>
+</mat-card>
+</div>
+</body>
+</html>

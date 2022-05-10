@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {MatIconRegistry} from "@angular/material/icon";
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,8 @@ export class AppComponent implements OnInit{
   title = 'EasyEmploy';
 
   constructor(private httpClient: HttpClient,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit(): void {
 

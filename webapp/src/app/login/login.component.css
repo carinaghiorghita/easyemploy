@@ -1,0 +1,27 @@
+.main-div{
+  display: block;
+  overflow: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-login {
+  width: 100%;
+  min-height: 80vh;
+  display:flex;
+  flex-wrap: wrap;
+  justify-content:center;
+  align-items: center;
+  padding: 15px;
+  position: center;
+}
+
+mat-card {
+  max-width: 400px;
+  margin: 2em auto;
+  text-align: center;
+}
+
+mat-form-field {
+  display: block;
+}

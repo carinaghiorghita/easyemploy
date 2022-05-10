@@ -1,4 +1,358 @@
 /* You can add global styles to this file, and also import other style files */
+/*//////////////////////////////////////////////////////////////////
+[ IMPORTS ]*/
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300);
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/*//////////////////////////////////////////////////////////////////
+[ RESTYLE TAG ]*/
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: Poppins-Regular, sans-serif;
+}
+
+/*//////////////////////////////////////////////////////////////////
+[ WEBKIT STUFF ]*/
+input {
+  outline: none;
+  border: none;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+textarea {
+  outline: none;
+  border: none;
+}
+
+textarea:focus, input:focus {
+  border-color: transparent !important;
+}
+
+input:focus::-webkit-input-placeholder { color:transparent; }
+input:focus:-moz-placeholder { color:transparent; }
+input:focus::-moz-placeholder { color:transparent; }
+input:focus:-ms-input-placeholder { color:transparent; }
+
+textarea:focus::-webkit-input-placeholder { color:transparent; }
+textarea:focus:-moz-placeholder { color:transparent; }
+textarea:focus::-moz-placeholder { color:transparent; }
+textarea:focus:-ms-input-placeholder { color:transparent; }
+
+input::-webkit-input-placeholder { color: #adadad;}
+input:-moz-placeholder { color: #adadad;}
+input::-moz-placeholder { color: #adadad;}
+input:-ms-input-placeholder { color: #adadad;}
+
+textarea::-webkit-input-placeholder { color: #adadad;}
+textarea:-moz-placeholder { color: #adadad;}
+textarea::-moz-placeholder { color: #adadad;}
+textarea:-ms-input-placeholder { color: #adadad;}
+
+/*---------------------------------------------*/
+.container {
+  max-width: 1200px;
+}
+
+/*//////////////////////////////////////////////////////////////////
+[ BACKGROUND COLORS ]*/
+
+.bg0 {background-color: #fff;}
+.bg1 {background-color: #f7f7f7;}
+
+/*//////////////////////////////////////////////////////////////////
+[ MAIN CONTAINER ]*/
+
+.container-main{
+  width: 100%;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background: #f2f2f2;
+
+
+  background-image:url("https://www.mcclureinsure.com/wp-content/uploads/2014/05/Blurred-Background-Light.jpg");
+  background-image:url("https://image.freepik.com/free-vector/white-blurred-background_1034-249.jpg");
+  background-image:url("https://www.mcclureinsure.com/wp-content/uploads/2014/05/Blurred-Background-Light.jpg");
+  background-image:url("http://st2.depositphotos.com/2171279/6793/i/450/depositphotos_67934267-Store-shopping-mall-abstract-defocused-blurred-background.jpg");
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+
+}
+
+.wrap-main {
+  width: 920px;
+  background-color: #fff;
+  background-color: rgba(255,255,255,0.4);
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 30px 55px 50px 55px;
+}
+
+
+/*------------------------------------------------------------------
+[ TITLE AND FORM ]*/
+
+.submitProposal-form {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.submitProposal-form-title {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: grey;
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 59px;
+}
+
+.submitProposal-form-subtitle {
+  display: block;
+  width: 100%;
+  font-size: 25px;
+  color: #333333;
+  line-height: 1.2;
+  padding-bottom: 5px;
+}
+
+/*------------------------------------------------------------------
+[ INPUT ]*/
+
+.wrap-input {
+  width: 100%;
+  position: relative;
+  border: 1px solid #e6e6e6;
+  border-radius: 13px;
+  padding: 10px 30px 9px 22px;
+  margin-bottom: 20px;
+}
+
+.rs1-wrap-input {
+  width: calc((100% - 30px) / 2);
+}
+
+.label-input {
+  font-size: 13px;
+  color: #393939;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  background: transparent;
+  font-size: 18px;
+  color: #555555;
+  line-height: 1.2;
+  padding-right: 15px;
+}
+
+input.input {
+  height: 40px;
+}
+
+textarea.input {
+  min-height: 120px;
+  padding-top: 9px;
+  padding-bottom: 13px;
+}
+
+
+/*------------------------------------------------------------------
+[ BUTTON ]*/
+button {
+  outline: none !important;
+  border: none;
+  background: transparent;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+iframe {
+  border: none !important;
+}
+
+.container-submitProposal-form-btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 20px;
+  width: 100%;
+}
+
+.submitProposal-form-btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  width: 100%;
+  height: 50px;
+  background-color: #333333;
+  border-radius: 4px;
+
+  font-size: 16px;
+  color: #fff;
+  line-height: 1.2;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.submitProposal-form-btn:hover {
+  background-color: lightslategray;
+}
+
+
+
+
+
+/*
+styles used for the login form
+*/
+
+.title{
+  width:19%;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.5;
+
+
+}
+
+.form-login {
+  width:100%;
+
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.5;
+
+}
+
+
+/*for the blured background*/
+
+.wrap-login {
+  position:relative;
+  width: 300px;
+  height:90vh;
+  z-index:1;
+  border-radius: 4px;
+  overflow: hidden;
+  padding: 77px 40px 33px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
+
+}
+
+.wrap-login:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index:-1;
+
+  box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
+  filter: blur(10px);
+}
+
+
+/*the hover effect for the button*/
+/*button:hover{*/
+/*  background:*/
+/*    -webkit-gradient(linear,left top,right top,*/
+/*    color-stop(0, #2d3436),*/
+
+/*    color-stop(0.5, gray),*/
+
+/*    color-stop(1, #2d3436));*/
+/*  -webkit-animation: slidetounlock 5s;*/
+/*}*/
+
+@-webkit-keyframes slidetounlock {
+  0% {
+    background-position: -300px 0;
+  }
+  100%{
+    background-position: 300px 0;
+  }
+}
+
+.dashboard-link {
+  padding: 10px 10px;
+  text-decoration: none;
+  margin-top: 30px;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 4px;
+  font-size: 1.2rem;
+}
+
+.dashboard-title {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 40px;
+  color: grey;
+  display: block;
+  text-align: center;
+  padding-bottom: 50px;
+}
+
+.dashboard-wrap {
+  text-align: center;
+  position:relative;
+  width: 920px;
+  border-radius: 4px;
+  overflow: hidden;
+  padding: 77px 40px 33px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}

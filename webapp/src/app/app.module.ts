@@ -13,6 +13,13 @@ import {LoginService} from "./service/login.service";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmAccountComponent } from './confirm-account/confirm-account.component';
 import { ResendConfirmationComponent } from './resend-confirmation/resend-confirmation.component';
+import {MatFormField, MatFormFieldModule, MatLabel} from "@angular/material/form-field";
+import {ConfirmAccountService} from "./service/confirm-account.service";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
+import {MatCardContent, MatCardModule} from "@angular/material/card";
+import {MatIconModule} from "@angular/material/icon";
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +28,8 @@ import { ResendConfirmationComponent } from './resend-confirmation/resend-confir
     LoginComponent,
     LogoutComponent,
     ConfirmAccountComponent,
-    ResendConfirmationComponent
+    ResendConfirmationComponent,
+    HeaderComponent
   ],
   imports: [
     FormsModule,
@@ -31,9 +39,17 @@ import { ResendConfirmationComponent } from './resend-confirmation/resend-confir
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatRadioModule
+    MatRadioModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule
   ],
-  providers: [LoginService],
+  providers: [
+    LoginService,
+    ConfirmAccountService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

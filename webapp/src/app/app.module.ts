@@ -20,6 +20,10 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatCardContent, MatCardModule} from "@angular/material/card";
 import {MatIconModule} from "@angular/material/icon";
 import { HeaderComponent } from './header/header.component';
+import { ResetPasswordSendMailComponent } from './reset-password-send-mail/reset-password-send-mail.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { AccountSuccessfullyCreatedComponent } from './account-successfully-created/account-successfully-created.component';
+import { PasswordSuccessfullyResetComponent } from './password-successfully-reset/password-successfully-reset.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,11 @@ import { HeaderComponent } from './header/header.component';
     LogoutComponent,
     ConfirmAccountComponent,
     ResendConfirmationComponent,
-    HeaderComponent
+    HeaderComponent,
+    ResetPasswordSendMailComponent,
+    ResetPasswordComponent,
+    AccountSuccessfullyCreatedComponent,
+    PasswordSuccessfullyResetComponent
   ],
   imports: [
     FormsModule,

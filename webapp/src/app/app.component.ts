@@ -20,7 +20,14 @@ export class AppComponent implements OnInit{
     this.httpClient
       .get<any>('/api/getAuthenticatedUser')
       .subscribe((baseUser) => {
-        if (baseUser.role == "" && this.router.url != "/create-account" && this.router.url != "/login" && !this.router.url.includes("/confirm-account"))
+        if (baseUser.role == ""
+          && this.router.url != "/create-account"
+          && this.router.url != "/login"
+          && this.router.url != "/account-successfully-created"
+          && this.router.url != "/reset-password-send-mail"
+          && this.router.url != "/resend-confirmation"
+          && !this.router.url.includes("/confirm-account")
+          && !this.router.url.includes("/reset-password"))
           this.router.navigate(['login']);
       });
   }

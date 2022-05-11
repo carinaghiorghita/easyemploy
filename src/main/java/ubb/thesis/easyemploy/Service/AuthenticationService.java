@@ -81,6 +81,13 @@ public class AuthenticationService {
             this.companyService.deleteById(user.getId());
     }
 
+    public void updateUser(BaseUser user){
+        if(user instanceof User)
+            this.userService.updateUser((User) user);
+        else
+            this.companyService.updateCompany((Company) user);
+    }
+
     public void signUp(String email, String password, String role){
         if(role.equals("USER")){
             var user = new User("","",email,"","",this.hashPassword(password),false);
@@ -105,10 +112,29 @@ public class AuthenticationService {
 
         tokenService.saveToken(token);
 
-        String link = "http://localhost:4200/confirm-account?token=" + tokenString;
+        String messageText = "Hello! You're one step away from creating your EasyEmploy account!. Click here to confirm your registration: http://localhost:4200/confirm-account?token=" + tokenString;
         emailService.send(
                 email,
-                link);
+                messageText);
+
+    }
+
+    public void resetPassword(BaseUser user){
+        String tokenString = UUID.randomUUID().toString();
+
+        Token token = new Token(
+                tokenString,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                user.getEmail()
+        );
+
+        tokenService.saveToken(token);
+
+        String messageText = "Hello! Click here to reset your password: http://localhost:4200/reset-password?token=" + tokenString;
+        emailService.send(
+                user.getEmail(),
+                messageText);
 
     }
 

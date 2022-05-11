@@ -15,6 +15,7 @@
 body, html {
   height: 100%;
   font-family: Poppins-Regular, sans-serif;
+  background-color: #D3D3D3;
 }
 
 /*//////////////////////////////////////////////////////////////////
@@ -193,18 +194,6 @@ textarea.input {
 }
 
 
-/*------------------------------------------------------------------
-[ BUTTON ]*/
-button {
-  outline: none !important;
-  border: none;
-  background: transparent;
-}
-
-button:hover {
-  cursor: pointer;
-}
-
 iframe {
   border: none !important;
 }
@@ -355,4 +344,71 @@ styles used for the login form
   overflow: hidden;
   padding: 77px 40px 33px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+/* You can add global styles to this file, and also import other style files */
+/*//////////////////////////////////////////////////////////////////
+[ IMPORTS ]*/
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300);
+
+/*//////////////////////////////////////////////////////////////////
+[ RESTYLE TAG ]*/
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: Poppins-Regular, sans-serif;
+}
+
+/*//////////////////////////////////////////////////////////////////
+[ WEBKIT STUFF ]*/
+input {
+  outline: none;
+  border: none;
+}
+
+.main-div{
+  display: block;
+  overflow: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-form {
+  width: 100%;
+  min-height: 80vh;
+  display:flex;
+  flex-wrap: wrap;
+  justify-content:center;
+  align-items: center;
+  padding: 15px;
+  position: center;
+}
+
+mat-card {
+  max-width: 400px;
+  margin: 2em auto;
+  text-align: center;
+}
+
+mat-form-field {
+  display: block;
+}
+
+button {
+  outline: none !important;
+  border: none;
+  background: transparent;
+  outline: none !important;
+  border: none;
+  background: transparent;
+}
+
+button:hover {
+  cursor: pointer;
 }

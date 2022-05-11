@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ConfirmAccountService} from "../service/confirm-account.service";
 import {BaseUser} from "../model/baseuser.model";
 import {User} from "../model/user.model";
 import {Company} from "../model/company.model";
+import {LoginService} from "../service/login.service";
 
 @Component({
   selector: 'app-confirm-account',
@@ -22,7 +23,8 @@ export class ConfirmAccountComponent implements OnInit {
   company: Company=new Company();
 
   constructor(private route: ActivatedRoute,
-              private confirmAccountService: ConfirmAccountService) { }
+              private confirmAccountService: ConfirmAccountService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.route.queryParams
@@ -64,7 +66,10 @@ export class ConfirmAccountComponent implements OnInit {
       this.company.password = this.baseUser.password;
 
 
-      this.confirmAccountService.updateCompany(this.company).subscribe(() => {},
+      this.confirmAccountService.updateCompany(this.company).subscribe((
+        ) => {
+          this.router.navigate(['/account-successfully-created']);
+        },
         error => this.creationError = error.error.message
       );
     }

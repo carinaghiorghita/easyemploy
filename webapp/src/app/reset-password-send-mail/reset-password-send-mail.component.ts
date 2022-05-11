@@ -4,14 +4,12 @@ import {Router} from "@angular/router";
 import {BaseUser} from "../model/baseuser.model";
 
 @Component({
-  selector: 'app-create-account',
-  templateUrl: './create-account.component.html',
-  styleUrls: ['./create-account.component.css']
+  selector: 'app-reset-password',
+  templateUrl: './reset-password-send-mail.component.html',
+  styleUrls: ['./reset-password-send-mail.component.css']
 })
-export class CreateAccountComponent implements OnInit {
+export class ResetPasswordSendMailComponent implements OnInit {
   email: string = "";
-  password: string = "";
-  role: string = "";
 
   errorMessage: string="";
 
@@ -22,16 +20,11 @@ export class CreateAccountComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.role === "")
-      this.errorMessage = "Please choose a role.";
-    else {
-      let newUser = <BaseUser>{email: this.email, password: this.password, role: this.role};
-      this.service.createAccount(newUser)
-        .subscribe((user: any) => {
+      this.service.resetPassword(this.email)
+        .subscribe(() => {
             this.router.navigate(['/resend-confirmation']);
           },
           error => this.errorMessage = error.error.message
         );
     }
-  }
 }

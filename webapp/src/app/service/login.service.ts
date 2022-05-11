@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {BaseUser} from "../model/baseuser.model";
 
@@ -20,6 +20,14 @@ export class LoginService {
     return this.httpClient
       .post<any>('/api/create-account', user);
   }
+
+  resetPassword(email: string): Observable<any>{
+    const params = new HttpParams().set('email', String(email))
+
+    return this.httpClient
+      .get<any>('/api/reset-password', {params});
+  }
+
 
   resendConfirmation(user: BaseUser): Observable<any>{
     return this.httpClient

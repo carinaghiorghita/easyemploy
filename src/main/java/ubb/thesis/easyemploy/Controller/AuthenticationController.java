@@ -1,6 +1,7 @@
 package ubb.thesis.easyemploy.Controller;
 
 import lombok.AllArgsConstructor;
+import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -60,8 +61,7 @@ public class AuthenticationController {
 
         var baseUserValidator = new BaseUserValidator();
         baseUserValidator.validateEmail(user);
-        if(userDto.getPassword().length() < 6)
-            throw new ValidationException("Password is too short!");
+        baseUserValidator.validatePassword(user.getPassword());
 
         if(authenticationService.getUserByEmail(userDto.getEmail()).isPresent())
             throw new RuntimeException("Email already in use!");
@@ -77,6 +77,27 @@ public class AuthenticationController {
         authenticationService.deleteUser(user);
 
         authenticationService.signUp(user.getEmail(),user.getPassword(),role);
+    }
+
+    @GetMapping(value = "/api/reset-password")
+    public void resetPassword(@RequestParam("email") String email) {
+        var user = authenticationService.getUserByEmail(email);
+
+        if(user.isEmpty())
+            throw new IllegalArgumentException("No user with this email exists!");
+
+        authenticationService.resetPassword(user.get());
+    }
+
+    @PostMapping(value = "/api/setNewPassword")
+    public void setNewPassword(@RequestBody BaseUserDto baseUserDto) {
+        var baseUserValidator = new BaseUserValidator();
+        baseUserValidator.validatePassword(baseUserDto.getPassword());
+
+        var user = authenticationService.getUserByEmail(baseUserDto.getEmail()).get();
+
+        user.setPassword(BCrypt.hashpw(baseUserDto.getPassword(), BCrypt.gensalt()));
+        authenticationService.updateUser(user);
     }
 
     @GetMapping(value = "/api/resend-confirmation-expired")

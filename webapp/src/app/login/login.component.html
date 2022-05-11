@@ -7,14 +7,12 @@
 <app-header [link]="'/login'"></app-header>
 
 <div class="main-div">
-<mat-card class="container-login">
+<mat-card class="container-form">
   <mat-card-content>
     <form (submit)="onSubmit()" class="form-login">
       <span class="title-form-login">
         <h1>Login</h1>
       </span>
-      <!--  <input type="text" name="username" placeholder="Username or email" [(ngModel)]="username">-->
-      <!--  <br>-->
       <mat-form-field appearance="fill">
         <mat-label>Username or email</mat-label>
         <input [(ngModel)]="username" matInput name="username" type="text">
@@ -22,12 +20,16 @@
       <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>
         <input [(ngModel)]="password" matInput name="password" type="password">
-      </mat-form-field>
+      </mat-form-field><br>
       <button mat-raised-button color="primary" type="submit">Login</button>
     </form>
     <br>
     <p class="txt1">
       Don't have an account? <a [routerLink]="['/create-account']">Sign Up</a>
+    </p>
+    <br>
+    <p class="txt1">
+      <a [routerLink]="['/reset-password-send-mail']">Reset password</a>
     </p>
     <mat-error *ngIf="errorMessage!==''">
       {{errorMessage}}

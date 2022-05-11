@@ -10,6 +10,7 @@ public class BaseUserValidator {
     public final static String emailUsernameRegex = "^[a-zA-Z0-9._]+";
     public final static String emailDomainProviderRegex = "^[a-zA-Z]+";
     public final static String emailDomainLocationRegex = "^[a-zA-Z]+";
+    //todo include local characters
     public final static String nameRegex = "^[A-Z][a-zA-Z\\-&\\. ]*";
 
     public void validateId(BaseUser entity) throws ValidationException {
@@ -25,6 +26,13 @@ public class BaseUserValidator {
 
         if(!username.matches(usernameRegex))
             throw new ValidationException("Username contains illegal character!");
+    }
+
+    public void validatePassword(String password){
+        if(password.length()<6)
+            throw new ValidationException("Password must have at least 6 characters!");
+
+        //todo check special characters, digits, caps for more security
     }
 
     public void validatePhoneNumber(BaseUser entity){

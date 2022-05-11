@@ -27,6 +27,10 @@ export class ConfirmAccountService {
       .get<any>('/api/resend-confirmation-expired', {params});
   }
 
+  resetPassword(baseUser: BaseUser): Observable<any>{
+    return this.httpClient.post<any>('/api/setNewPassword', baseUser);
+  }
+
 
   getUser(email: string): Observable<any>{
     const params = new HttpParams().set('email', String(email))

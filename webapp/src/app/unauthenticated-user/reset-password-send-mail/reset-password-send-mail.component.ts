@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {LoginService} from "../service/login.service";
+import {LoginService} from "../../service/login.service";
 import {Router} from "@angular/router";
-import {BaseUser} from "../model/baseuser.model";
+import {BaseUser} from "../../model/baseuser.model";
 
 @Component({
   selector: 'app-reset-password',

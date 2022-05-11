@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ConfirmAccountService} from "../service/confirm-account.service";
-import {BaseUser} from "../model/baseuser.model";
-import {User} from "../model/user.model";
-import {Company} from "../model/company.model";
-import {LoginService} from "../service/login.service";
+import {ConfirmAccountService} from "../../service/confirm-account.service";
+import {BaseUser} from "../../model/baseuser.model";
+import {User} from "../../model/user.model";
+import {Company} from "../../model/company.model";
+import {LoginService} from "../../service/login.service";
 
 @Component({
   selector: 'app-confirm-account',

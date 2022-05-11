@@ -35,7 +35,7 @@
       {{errorMessage}}
     </mat-error>
     <mat-error *ngIf="errorMessage.includes('confirm')">
-      Click <a (click)="onResendConfirmation()" [routerLink]="['/resend-confirmation']"> here </a> to resend
+      Click <a (click)="onResendConfirmation()" [routerLink]="['/resend-confirmation']">here</a> to resend the
       confirmation email.
     </mat-error>
   </mat-card-content>

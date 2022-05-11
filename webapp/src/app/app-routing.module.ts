@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {LoginComponent} from "./login/login.component";
-import {LogoutComponent} from "./logout/logout.component";
-import {CreateAccountComponent} from "./create-account/create-account.component";
-import {ConfirmAccountComponent} from "./confirm-account/confirm-account.component";
-import {ResendConfirmationComponent} from "./resend-confirmation/resend-confirmation.component";
-import {ResetPasswordSendMailComponent} from "./reset-password-send-mail/reset-password-send-mail.component";
-import {ResetPasswordComponent} from "./reset-password/reset-password.component";
-import {AccountSuccessfullyCreatedComponent} from "./account-successfully-created/account-successfully-created.component";
-import {PasswordSuccessfullyResetComponent} from "./password-successfully-reset/password-successfully-reset.component";
+import {LoginComponent} from "./unauthenticated-user/login/login.component";
+import {LogoutComponent} from "./commons/logout/logout.component";
+import {CreateAccountComponent} from "./unauthenticated-user/create-account/create-account.component";
+import {ConfirmAccountComponent} from "./unauthenticated-user/confirm-account/confirm-account.component";
+import {ResendConfirmationComponent} from "./unauthenticated-user/resend-confirmation/resend-confirmation.component";
+import {ResetPasswordSendMailComponent} from "./unauthenticated-user/reset-password-send-mail/reset-password-send-mail.component";
+import {ResetPasswordComponent} from "./unauthenticated-user/reset-password/reset-password.component";
+import {AccountSuccessfullyCreatedComponent} from "./unauthenticated-user/account-successfully-created/account-successfully-created.component";
+import {PasswordSuccessfullyResetComponent} from "./unauthenticated-user/password-successfully-reset/password-successfully-reset.component";
 
 const routes: Routes = [
 

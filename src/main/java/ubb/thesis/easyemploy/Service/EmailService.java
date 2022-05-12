@@ -12,7 +12,7 @@ import java.util.Properties;
 @AllArgsConstructor
 public class EmailService {
 
-    public void send(String email, String messageText){
+    public void send(String email, String subject, String messageText){
         final String username = "easyemploy@yahoo.com";
         final String password = "xfzlhhneuafgzcmg";
 
@@ -38,7 +38,7 @@ public class EmailService {
                     Message.RecipientType.TO,
                     InternetAddress.parse(email)
             );
-            message.setSubject("Confirm registration");
+            message.setSubject(subject);
             message.setText(messageText);
 
             Transport.send(message);

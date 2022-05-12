@@ -113,8 +113,10 @@ public class AuthenticationService {
         tokenService.saveToken(token);
 
         String messageText = "Hello! You're one step away from creating your EasyEmploy account!. Click here to confirm your registration: http://localhost:4200/confirm-account?token=" + tokenString;
+        String subject = "Confirm registration";
         emailService.send(
                 email,
+                subject,
                 messageText);
 
     }
@@ -132,8 +134,10 @@ public class AuthenticationService {
         tokenService.saveToken(token);
 
         String messageText = "Hello! Click here to reset your password: http://localhost:4200/reset-password?token=" + tokenString;
+        String subject = "Reset password";
         emailService.send(
                 user.getEmail(),
+                subject,
                 messageText);
 
     }

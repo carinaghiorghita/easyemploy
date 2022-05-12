@@ -42,6 +42,11 @@ public class AuthenticationController {
         return userConverter.convertModelToDto(user.get());
     }
 
+    @GetMapping(value="/api/logout")
+    public void logoutUser(HttpSession httpSession){
+        httpSession.removeAttribute("username");
+    }
+
     @GetMapping(value ="/api/getAuthenticatedUser")
     public BaseUserDto getUser(HttpSession httpSession){
         String username= (String) httpSession.getAttribute("username");
@@ -50,7 +55,7 @@ public class AuthenticationController {
             var baseUserConverter = new BaseUserConverter();
             return baseUserConverter.convertModelToDto(baseUser);
         }
-        return new BaseUserDto(0L,"","","","",false,"");
+        return new BaseUserDto(0L,"","","","",false,"UNAUTH");
     }
 
 

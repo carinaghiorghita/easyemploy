@@ -1,8 +1,15 @@
-<div>
+<nav>
   <a [routerLink]="[link]">
     <img
       src="../../../assets/logo.png"
     />
   </a>
+
+<div class="div-right">
+<!--todo add links-->
+  <a>People</a>
+  <a *ngIf="role !== 'COMPANY'">Jobs</a>
+  <a *ngIf="role !== 'UNAUTH'">Profile</a>
+  <a (click)="logout" *ngIf="role !== 'UNAUTH'">Logout</a>
 </div>
-<!--todo add navigation links-->
+</nav>

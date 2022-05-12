@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CreateAccountComponent } from './unauthenticated-user/create-account/create-account.component';
 import { LoginComponent } from './unauthenticated-user/login/login.component';
-import { LogoutComponent } from './commons/logout/logout.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
@@ -24,20 +23,21 @@ import { ResetPasswordSendMailComponent } from './unauthenticated-user/reset-pas
 import { ResetPasswordComponent } from './unauthenticated-user/reset-password/reset-password.component';
 import { AccountSuccessfullyCreatedComponent } from './unauthenticated-user/account-successfully-created/account-successfully-created.component';
 import { PasswordSuccessfullyResetComponent } from './unauthenticated-user/password-successfully-reset/password-successfully-reset.component';
+import { ProfileComponent } from './commons/profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateAccountComponent,
     LoginComponent,
-    LogoutComponent,
     ConfirmAccountComponent,
     ResendConfirmationComponent,
     HeaderComponent,
     ResetPasswordSendMailComponent,
     ResetPasswordComponent,
     AccountSuccessfullyCreatedComponent,
-    PasswordSuccessfullyResetComponent
+    PasswordSuccessfullyResetComponent,
+    ProfileComponent
   ],
   imports: [
     FormsModule,

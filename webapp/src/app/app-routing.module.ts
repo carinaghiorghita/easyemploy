@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {LoginComponent} from "./unauthenticated-user/login/login.component";
-import {LogoutComponent} from "./commons/logout/logout.component";
 import {CreateAccountComponent} from "./unauthenticated-user/create-account/create-account.component";
 import {ConfirmAccountComponent} from "./unauthenticated-user/confirm-account/confirm-account.component";
 import {ResendConfirmationComponent} from "./unauthenticated-user/resend-confirmation/resend-confirmation.component";
@@ -13,7 +12,6 @@ import {PasswordSuccessfullyResetComponent} from "./unauthenticated-user/passwor
 const routes: Routes = [
 
   {path: 'login', component: LoginComponent},
-  {path: 'logout', component: LogoutComponent},
   {path: 'create-account', component: CreateAccountComponent},
   {path: 'confirm-account', component: ConfirmAccountComponent},
   {path: 'resend-confirmation', component: ResendConfirmationComponent},

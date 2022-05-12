@@ -1,4 +1,22 @@
+nav{
+  height: 7%;
+}
+
 img {
-  width: 15%;
-  height: auto;
+  /*width: 15%;*/
+  /*height: auto;*/
+  width: auto;
+  height: 100%;
+}
+
+.div-right {
+  float: right
+}
+
+a {
+  padding: 14px 16px;
+}
+
+a:hover{
+  cursor: pointer;
 }

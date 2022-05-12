@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {MatIconRegistry} from "@angular/material/icon";
 
 @Component({
   selector: 'app-root',
@@ -10,6 +9,7 @@ import {MatIconRegistry} from "@angular/material/icon";
 })
 export class AppComponent implements OnInit{
   title = 'EasyEmploy';
+  link: string = "";
 
   constructor(private httpClient: HttpClient,
               private router: Router) {
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit{
     this.httpClient
       .get<any>('/api/getAuthenticatedUser')
       .subscribe((baseUser) => {
-        if (baseUser.role == ""
+        if (baseUser.role == "UNAUTH"
           && this.router.url != "/create-account"
           && this.router.url != "/login"
           && this.router.url != "/account-successfully-created"
@@ -28,7 +28,14 @@ export class AppComponent implements OnInit{
           && this.router.url != "/resend-confirmation"
           && !this.router.url.includes("/confirm-account")
           && !this.router.url.includes("/reset-password"))
-          this.router.navigate(['login']);
+            this.router.navigate(['login']);
+
+        if (baseUser.role == "UNAUTH") {
+          this.link = '/login';
+        }
+        else {
+          this.link = '/dashboard';
+        }
       });
   }
 

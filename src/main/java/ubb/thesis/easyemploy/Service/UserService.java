@@ -44,8 +44,8 @@ public class UserService {
         return this.userRepository.findByEmail(email);
     }
 
-    public void saveUser(User User) {
-        userRepository.save(User);
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
 
     @Transactional
@@ -59,6 +59,7 @@ public class UserService {
                     s.setLastName(user.getLastName());
                     s.setEmail(user.getEmail());
                     s.setPhoneNumber(user.getPhoneNumber());
+                    s.setFollowedCompanies(user.getFollowedCompanies());
                 });
     }
 

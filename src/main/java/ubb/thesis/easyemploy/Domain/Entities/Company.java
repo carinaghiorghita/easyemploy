@@ -1,12 +1,17 @@
 package ubb.thesis.easyemploy.Domain.Entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="company")
 public class Company extends BaseUser{
     private String name;
+
+    @ManyToMany
+    Set<User> followers = new HashSet<>();
 
     public Company(String name, String email, String phoneNumber, String username, String password, boolean activated) {
         super(email, phoneNumber, username, password, activated);
@@ -26,6 +31,14 @@ public class Company extends BaseUser{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<User> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(Set<User> followers) {
+        this.followers = followers;
     }
 
     @Override

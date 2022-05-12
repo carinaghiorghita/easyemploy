@@ -43,8 +43,8 @@ public class CompanyService {
         return this.companyRepository.findByEmail(email);
     }
 
-    public void saveCompany(Company Company) {
-        companyRepository.save(Company);
+    public void saveCompany(Company company) {
+        companyRepository.save(company);
     }
 
     @Transactional
@@ -57,6 +57,7 @@ public class CompanyService {
                     s.setName(company.getName());
                     s.setEmail(company.getEmail());
                     s.setPhoneNumber(company.getPhoneNumber());
+                    s.setFollowers(company.getFollowers());
                 });
     }
 

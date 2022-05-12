@@ -53,7 +53,9 @@ export class ConfirmAccountComponent implements OnInit {
       this.user.activated = this.baseUser.activated;
       this.user.password = this.baseUser.password;
 
-      this.confirmAccountService.updateUser(this.user).subscribe(() => {},
+      this.confirmAccountService.updateUser(this.user).subscribe(() => {
+        this.router.navigate(['/account-successfully-created']);
+        },
         error => this.creationError = error.error.message
       );
     }

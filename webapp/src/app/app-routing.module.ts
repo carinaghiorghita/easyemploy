@@ -8,6 +8,8 @@ import {ResetPasswordSendMailComponent} from "./unauthenticated-user/reset-passw
 import {ResetPasswordComponent} from "./unauthenticated-user/reset-password/reset-password.component";
 import {AccountSuccessfullyCreatedComponent} from "./unauthenticated-user/account-successfully-created/account-successfully-created.component";
 import {PasswordSuccessfullyResetComponent} from "./unauthenticated-user/password-successfully-reset/password-successfully-reset.component";
+import {ProfileComponent} from "./commons/profile/profile.component";
+import {DashboardComponent} from "./commons/dashboard/dashboard.component";
 
 const routes: Routes = [
 
@@ -18,8 +20,10 @@ const routes: Routes = [
   {path: 'reset-password-send-mail', component: ResetPasswordSendMailComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
   {path: 'account-successfully-created', component: AccountSuccessfullyCreatedComponent},
-  {path: 'password-successfully-reset', component: PasswordSuccessfullyResetComponent}
+  {path: 'password-successfully-reset', component: PasswordSuccessfullyResetComponent},
 
+  {path: 'dashboard', component: DashboardComponent},
+  {path: 'profile', component: ProfileComponent}
 ];
 
 @NgModule({

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, NgZone, OnInit} from '@angular/core';
 import {MatIconRegistry} from "@angular/material/icon";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
@@ -16,7 +16,8 @@ export class HeaderComponent implements OnInit {
   @Input() link: string | undefined;
 
   constructor(private httpClient: HttpClient,
-              private router: Router) {
+              private router: Router,
+              private zone: NgZone) {
   }
 
   ngOnInit(): void {
@@ -28,8 +29,12 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(): void {
-    this.httpClient.get<any>('/api/logout').subscribe(() =>
-      this.router.navigate(['login'])
+    this.httpClient.get<any>('/api/logout').subscribe(() => {
+      //todo trigger oninit
+      this.zone.run(() => {
+        this.router.navigateByUrl('/login');
+      });
+      }
     );
   }
 }

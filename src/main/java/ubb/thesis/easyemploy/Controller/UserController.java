@@ -32,11 +32,13 @@ public class UserController {
         userValidator.validateUsername(user);
         userValidator.validatePhoneNumber(user);
 
-        if(companyService.getCompanyByUsername(user.getUsername()).isPresent()
-                || userService.getUserByUsername(user.getUsername()).isPresent())
-            throw new ValidationException(
-                    "Username already exists!"
-            );
+        if(userService.getUserById(user.getId()).getUsername().equals("")) {
+            if (companyService.getCompanyByUsername(user.getUsername()).isPresent()
+                    || userService.getUserByUsername(user.getUsername()).isPresent())
+                throw new ValidationException(
+                        "Username already exists!"
+                );
+        }
 
         this.userService.updateUser(user);
     }

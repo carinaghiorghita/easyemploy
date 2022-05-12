@@ -34,9 +34,4 @@ export class LoginService {
       .post<any>('/api/resend-confirmation', user);
   }
 
-  logout(): Observable<any> {
-    return this.httpClient
-      .get<any>('/api/logout');
-  }
-
 }

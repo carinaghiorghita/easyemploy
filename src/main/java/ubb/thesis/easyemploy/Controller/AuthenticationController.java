@@ -37,7 +37,9 @@ public class AuthenticationController {
         }
         if(!user.get().isActivated())
             throw new IllegalStateException("Please confirm your email before proceeding.");
+        var role = user.get() instanceof User ? "USER" : "COMPANY";
         httpSession.setAttribute("username", userDto.getUsername());
+        httpSession.setAttribute("role", role);
         var userConverter = new BaseUserConverter();
         return userConverter.convertModelToDto(user.get());
     }
@@ -45,10 +47,11 @@ public class AuthenticationController {
     @GetMapping(value="/api/logout")
     public void logoutUser(HttpSession httpSession){
         httpSession.removeAttribute("username");
+        httpSession.setAttribute("role", "UNAUTH");
     }
 
     @GetMapping(value ="/api/getAuthenticatedUser")
-    public BaseUserDto getUser(HttpSession httpSession){
+    public BaseUserDto getAuthenticatedUser(HttpSession httpSession){
         String username= (String) httpSession.getAttribute("username");
         if(authenticationService.getUserByUsername(username).isPresent()) {
             BaseUser baseUser = authenticationService.getUserByUsername(username).get();
@@ -58,6 +61,15 @@ public class AuthenticationController {
         return new BaseUserDto(0L,"","","","",false,"UNAUTH");
     }
 
+    @GetMapping(value ="/api/getUserRole")
+    public BaseUserDto getRole(HttpSession httpSession){
+        String role = (String) httpSession.getAttribute("role");
+        if(role==null || role.equals("")) {
+            httpSession.setAttribute("role","UNAUTH");
+            return new BaseUserDto(0L,"","","","",false,"UNAUTH");
+        }
+        return new BaseUserDto(0L,"","","","",false,role);
+    }
 
     @PostMapping(value = "/api/create-account")
     public void createUser(@RequestBody BaseUserDto userDto) {

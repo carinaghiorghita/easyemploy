@@ -29,11 +29,13 @@ public class CompanyController {
         companyValidator.validateUsername(company);
         companyValidator.validatePhoneNumber(company);
 
-        if(companyService.getCompanyByUsername(company.getUsername()).isPresent()
-        || userService.getUserByUsername(company.getUsername()).isPresent())
-            throw new ValidationException(
-                    "Username already exists!"
-            );
+        if(companyService.getCompanyById(company.getId()).getUsername().equals("")) {
+            if (companyService.getCompanyByUsername(company.getUsername()).isPresent()
+                    || userService.getUserByUsername(company.getUsername()).isPresent())
+                throw new ValidationException(
+                        "Username already exists!"
+                );
+        }
 
         this.companyService.updateCompany(company);
     }

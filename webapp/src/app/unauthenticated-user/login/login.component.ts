@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {BaseUser} from "../../model/baseuser.model";
 import {LoginService} from "../../service/login.service";
 import {Router} from "@angular/router";
@@ -14,7 +14,8 @@ export class LoginComponent implements OnInit {
   errorMessage: string = "";
 
   constructor(private service: LoginService,
-              private router: Router) { }
+              private router: Router,
+              private zone: NgZone) { }
 
   ngOnInit(): void {
   }
@@ -22,8 +23,9 @@ export class LoginComponent implements OnInit {
   onSubmit(){
     let loginUser = <BaseUser>{username: this.username, password: this.password};
     this.service.login(loginUser).subscribe( (user) => {
-      console.log(user);
-        //this.router.navigate([user2.role]);
+      this.zone.run(() => {
+        this.router.navigateByUrl('/dashboard');
+      });
     },
       error => {
       this.errorMessage = error.error.message;

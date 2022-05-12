@@ -24,6 +24,8 @@ import { ResetPasswordComponent } from './unauthenticated-user/reset-password/re
 import { AccountSuccessfullyCreatedComponent } from './unauthenticated-user/account-successfully-created/account-successfully-created.component';
 import { PasswordSuccessfullyResetComponent } from './unauthenticated-user/password-successfully-reset/password-successfully-reset.component';
 import { ProfileComponent } from './commons/profile/profile.component';
+import {ProfileService} from "./service/profile.service";
+import { DashboardComponent } from './commons/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import { ProfileComponent } from './commons/profile/profile.component';
     ResetPasswordComponent,
     AccountSuccessfullyCreatedComponent,
     PasswordSuccessfullyResetComponent,
-    ProfileComponent
+    ProfileComponent,
+    DashboardComponent
   ],
   imports: [
     FormsModule,
@@ -56,7 +59,8 @@ import { ProfileComponent } from './commons/profile/profile.component';
   ],
   providers: [
     LoginService,
-    ConfirmAccountService
+    ConfirmAccountService,
+    ProfileService
   ],
   bootstrap: [AppComponent]
 })

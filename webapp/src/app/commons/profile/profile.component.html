@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<meta content="width=device-width" name="viewport"/>
+<html>
+<body>
+
+<div class="main-div">
+  <mat-card class="container-form">
+    <mat-card-content>
+    <h2>Your profile</h2>
+      <form (submit)="onSubmit()" class="form-login">
+<!--    todo maybe create separate component based on role-->
+        <div *ngIf="role==='USER'">
+          <mat-form-field appearance="fill">
+            <mat-label>Username</mat-label>
+            <input [(ngModel)]="user.username" matInput name="username" type="text" [disabled]="true">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>First Name</mat-label>
+            <input [(ngModel)]="user.firstName" matInput name="firstName" type="text" [disabled]="disabled">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Last Name</mat-label>
+            <input [(ngModel)]="user.lastName" matInput name="lastName" type="text" [disabled]="disabled">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Phone Number</mat-label>
+            <input [(ngModel)]="user.phoneNumber" matInput name="phoneNumber" type="text" [disabled]="disabled">
+          </mat-form-field>
+        </div>
+
+        <div *ngIf="role==='COMPANY'">
+          <mat-form-field appearance="fill">
+            <mat-label>Username</mat-label>
+            <input [(ngModel)]="company.username" matInput name="username" type="text" [disabled]="true">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>First Name</mat-label>
+            <input [(ngModel)]="company.name" matInput name="name" type="text" [disabled]="disabled">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Phone Number</mat-label>
+            <input [(ngModel)]="company.phoneNumber" matInput name="phoneNumber" type="text" [disabled]="disabled">
+          </mat-form-field>
+        </div>
+
+
+        <br>
+        <button color="primary" mat-raised-button type="submit">{{buttonText}}</button>
+        <button *ngIf="disabled===false" color="primary" mat-raised-button type="button" (click)="onExitEdit()">Exit Edit</button>
+      </form>
+      <br>
+      <mat-error *ngIf="errorMessage!==''">
+        {{errorMessage}}
+      </mat-error>
+      <br>
+      <mat-error (click)="deleteAccount()">Delete account</mat-error>
+    </mat-card-content>
+  </mat-card>
+</div>
+</body>
+</html>

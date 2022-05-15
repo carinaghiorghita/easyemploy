@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {User} from "../model/user.model";
 import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Company} from "../model/company.model";
 
 @Injectable({
@@ -27,4 +27,9 @@ export class ProfileService {
     return this.httpClient.post<any>('/api/updateCompany', company);
   }
 
+  deleteAccount(username: string): Observable<any>{
+    const params = new HttpParams().set('username', String(username))
+
+    return this.httpClient.delete<any>('/api/deleteAccount',{params});
+  }
 }

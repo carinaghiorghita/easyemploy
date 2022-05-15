@@ -1,7 +1,9 @@
 package ubb.thesis.easyemploy.Controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ubb.thesis.easyemploy.Converter.BaseUserConverter;
 import ubb.thesis.easyemploy.Converter.CompanyConverter;
@@ -10,6 +12,9 @@ import ubb.thesis.easyemploy.Domain.DTO.BaseUserDto;
 import ubb.thesis.easyemploy.Domain.DTO.CompanyDto;
 import ubb.thesis.easyemploy.Domain.DTO.UserDto;
 import ubb.thesis.easyemploy.Domain.Entities.BaseUser;
+import ubb.thesis.easyemploy.Domain.Entities.Company;
+import ubb.thesis.easyemploy.Domain.Entities.User;
+import ubb.thesis.easyemploy.Service.AuthenticationService;
 import ubb.thesis.easyemploy.Service.CompanyService;
 import ubb.thesis.easyemploy.Service.UserService;
 
@@ -20,6 +25,7 @@ import javax.servlet.http.HttpSession;
 public class ProfileController {
     private final UserService userService;
     private final CompanyService companyService;
+    private final AuthenticationService authenticationService;
 
     @GetMapping(value ="/api/getUser")
     public UserDto getUser(HttpSession httpSession) {
@@ -35,5 +41,15 @@ public class ProfileController {
         var company = companyService.getCompanyByUsername(username).get();
         var companyConverter = new CompanyConverter();
         return companyConverter.convertModelToDto(company);
+    }
+
+    @DeleteMapping(value="/api/deleteAccount")
+    public void deleteAccount(@RequestParam("username") String username){
+        var user = this.authenticationService.getUserByUsername(username);
+
+        if(user.get() instanceof User)
+            this.userService.deleteUser((User) user.get());
+        else
+            this.companyService.deleteCompany((Company) user.get());
     }
 }

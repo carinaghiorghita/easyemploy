@@ -23,8 +23,9 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.httpClient
       .get<any>('/api/getAuthenticatedUser')
-      .subscribe( (user) =>
-        this.role = user.role
+      .subscribe( (user) => {
+          this.role = user.role;
+        }
       )
   }
 

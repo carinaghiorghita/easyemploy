@@ -38,7 +38,7 @@ public class AuthenticationController {
         if(!user.get().isActivated())
             throw new IllegalStateException("Please confirm your email before proceeding.");
         var role = user.get() instanceof User ? "USER" : "COMPANY";
-        httpSession.setAttribute("username", userDto.getUsername());
+        httpSession.setAttribute("username", user.get().getUsername());
         httpSession.setAttribute("role", role);
         var userConverter = new BaseUserConverter();
         return userConverter.convertModelToDto(user.get());

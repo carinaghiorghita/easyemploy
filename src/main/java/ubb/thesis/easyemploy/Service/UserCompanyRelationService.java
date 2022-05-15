@@ -3,17 +3,24 @@ package ubb.thesis.easyemploy.Service;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import ubb.thesis.easyemploy.Domain.Entities.Company;
 import ubb.thesis.easyemploy.Domain.Entities.User;
 
+import java.util.HashSet;
+
 @Service
-@AllArgsConstructor
 public class UserCompanyRelationService {
     public static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     private final UserService userService;
     private final CompanyService companyService;
+
+    public UserCompanyRelationService(@Lazy UserService userService, @Lazy CompanyService companyService) {
+        this.userService = userService;
+        this.companyService = companyService;
+    }
 
     public void follow(User user, Company company){
         var follows = user.getFollowedCompanies();
@@ -39,4 +46,23 @@ public class UserCompanyRelationService {
         companyService.updateCompany(company);
     }
 
+    public void unfollowAll(User user){
+        this.companyService.getAllCompanies().forEach(company -> {
+            company.getFollowers().remove(user);
+            companyService.updateCompany(company);
+        });
+
+        user.setFollowedCompanies(new HashSet<>());
+        userService.updateUser(user);
+    }
+
+    public void removeFollowers(Company company){
+        this.userService.getAllUsers().forEach(user -> {
+            user.getFollowedCompanies().remove(company);
+            userService.updateUser(user);
+        });
+
+        company.setFollowers(new HashSet<>());
+        companyService.updateCompany(company);
+    }
 }

@@ -1,10 +1,10 @@
 package ubb.thesis.easyemploy.Service;
 
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ubb.thesis.easyemploy.Domain.Entities.Company;
 import ubb.thesis.easyemploy.Domain.Entities.User;
 import ubb.thesis.easyemploy.Repository.UserRepository;
 
@@ -14,11 +14,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class UserService {
     public static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
+    private final UserCompanyRelationService userCompanyRelationService;
+
     @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public List<User> getAllUsers() {
         List<User> result = userRepository.findAll();
@@ -61,6 +64,12 @@ public class UserService {
                     s.setPhoneNumber(user.getPhoneNumber());
                     s.setFollowedCompanies(user.getFollowedCompanies());
                 });
+    }
+
+    public void deleteUser(User user){
+        //todo check if this actually works on following
+        this.userCompanyRelationService.unfollowAll(user);
+        this.deleteById(user.getId());
     }
 
     public void deleteById(Long id) {

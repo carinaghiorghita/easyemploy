@@ -23,9 +23,11 @@ import { ResetPasswordSendMailComponent } from './unauthenticated-user/reset-pas
 import { ResetPasswordComponent } from './unauthenticated-user/reset-password/reset-password.component';
 import { AccountSuccessfullyCreatedComponent } from './unauthenticated-user/account-successfully-created/account-successfully-created.component';
 import { PasswordSuccessfullyResetComponent } from './unauthenticated-user/password-successfully-reset/password-successfully-reset.component';
-import { ProfileComponent } from './commons/profile/profile.component';
+import {ProfileComponent} from './commons/profile/profile.component';
 import {ProfileService} from "./service/profile.service";
 import { DashboardComponent } from './commons/dashboard/dashboard.component';
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
+import { DeleteDialogComponent } from './commons/delete-dialog/delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { DashboardComponent } from './commons/dashboard/dashboard.component';
     AccountSuccessfullyCreatedComponent,
     PasswordSuccessfullyResetComponent,
     ProfileComponent,
-    DashboardComponent
+    DashboardComponent,
+    DeleteDialogComponent
   ],
   imports: [
     FormsModule,
@@ -55,13 +58,16 @@ import { DashboardComponent } from './commons/dashboard/dashboard.component';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule
   ],
   providers: [
     LoginService,
     ConfirmAccountService,
-    ProfileService
+    ProfileService,
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DeleteDialogComponent]
 })
 export class AppModule { }

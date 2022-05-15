@@ -28,6 +28,8 @@ import {ProfileService} from "./service/profile.service";
 import { DashboardComponent } from './commons/dashboard/dashboard.component';
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
 import { DeleteDialogComponent } from './commons/delete-dialog/delete-dialog.component';
+import { DashboardUserComponent } from './applicant-user/dashboard-user/dashboard-user.component';
+import { DashboardCompanyComponent } from './company-user/dashboard-company/dashboard-company.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { DeleteDialogComponent } from './commons/delete-dialog/delete-dialog.com
     PasswordSuccessfullyResetComponent,
     ProfileComponent,
     DashboardComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    DashboardUserComponent,
+    DashboardCompanyComponent
   ],
   imports: [
     FormsModule,

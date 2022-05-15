@@ -9,10 +9,12 @@ import {ResetPasswordComponent} from "./unauthenticated-user/reset-password/rese
 import {AccountSuccessfullyCreatedComponent} from "./unauthenticated-user/account-successfully-created/account-successfully-created.component";
 import {PasswordSuccessfullyResetComponent} from "./unauthenticated-user/password-successfully-reset/password-successfully-reset.component";
 import {ProfileComponent} from "./commons/profile/profile.component";
-import {DashboardComponent} from "./commons/dashboard/dashboard.component";
+import {DashboardUserComponent} from "./applicant-user/dashboard-user/dashboard-user.component";
+import {DashboardCompanyComponent} from "./company-user/dashboard-company/dashboard-company.component";
 
 const routes: Routes = [
 
+  //unauth
   {path: 'login', component: LoginComponent},
   {path: 'create-account', component: CreateAccountComponent},
   {path: 'confirm-account', component: ConfirmAccountComponent},
@@ -22,8 +24,14 @@ const routes: Routes = [
   {path: 'account-successfully-created', component: AccountSuccessfullyCreatedComponent},
   {path: 'password-successfully-reset', component: PasswordSuccessfullyResetComponent},
 
-  {path: 'dashboard', component: DashboardComponent},
-  {path: 'profile', component: ProfileComponent}
+  //commons
+  {path: 'profile', component: ProfileComponent},
+
+  //user
+  {path: 'dashboard-user', component: DashboardUserComponent},
+
+  //company
+  {path: 'dashboard-company', component: DashboardCompanyComponent},
 ];
 
 @NgModule({

@@ -14,8 +14,7 @@ export class LoginComponent implements OnInit {
   errorMessage: string = "";
 
   constructor(private service: LoginService,
-              private router: Router,
-              private zone: NgZone) { }
+              private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -23,9 +22,7 @@ export class LoginComponent implements OnInit {
   onSubmit(){
     let loginUser = <BaseUser>{username: this.username, password: this.password};
     this.service.login(loginUser).subscribe( (user) => {
-      this.zone.run(() => {
-        this.router.navigateByUrl('/dashboard');
-      });
+      this.router.navigateByUrl(`/dashboard-${user.role.toLowerCase()}`);
     },
       error => {
       this.errorMessage = error.error.message;

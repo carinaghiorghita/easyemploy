@@ -20,7 +20,6 @@ export class AppComponent implements OnInit{
     this.httpClient
       .get<any>('/api/getAuthenticatedUser')
       .subscribe((baseUser) => {
-        console.log(baseUser);
         if (baseUser.role == "UNAUTH"
           && this.router.url != "/create-account"
           && this.router.url != "/login"

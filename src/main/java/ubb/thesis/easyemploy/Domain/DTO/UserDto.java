@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import java.util.Set;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -18,4 +21,6 @@ public class UserDto {
     private String lastName;
     private String phoneNumber;
     private boolean activated;
+    private Set<CompanyDto> following;
+    private Set<PostDto> jobsApplied;
 }

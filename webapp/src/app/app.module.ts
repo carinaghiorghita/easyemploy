@@ -25,7 +25,6 @@ import { AccountSuccessfullyCreatedComponent } from './unauthenticated-user/acco
 import { PasswordSuccessfullyResetComponent } from './unauthenticated-user/password-successfully-reset/password-successfully-reset.component';
 import {ProfileComponent} from './commons/profile/profile.component';
 import {ProfileService} from "./service/profile.service";
-import { DashboardComponent } from './commons/dashboard/dashboard.component';
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
 import { DeleteDialogComponent } from './commons/delete-dialog/delete-dialog.component';
 import { DashboardUserComponent } from './applicant-user/dashboard-user/dashboard-user.component';
@@ -33,6 +32,7 @@ import { DashboardCompanyComponent } from './company-user/dashboard-company/dash
 
 @NgModule({
   declarations: [
+    //unauth
     AppComponent,
     CreateAccountComponent,
     LoginComponent,
@@ -43,10 +43,15 @@ import { DashboardCompanyComponent } from './company-user/dashboard-company/dash
     ResetPasswordComponent,
     AccountSuccessfullyCreatedComponent,
     PasswordSuccessfullyResetComponent,
+
+    //commons
     ProfileComponent,
-    DashboardComponent,
     DeleteDialogComponent,
+
+    //user
     DashboardUserComponent,
+
+    //company
     DashboardCompanyComponent
   ],
   imports: [

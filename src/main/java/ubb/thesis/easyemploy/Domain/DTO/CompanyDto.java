@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import java.util.Set;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -17,4 +20,5 @@ public class CompanyDto {
     private String name;
     private String phoneNumber;
     private boolean activated;
+    private Set<UserDto> followers;
 }

@@ -6,7 +6,7 @@
   </a>
 
 <div class="div-right">
-<!--todo add links and search-->
+<!--todo add search-->
   <a>People</a>
   <a *ngIf="role !== 'COMPANY'">Jobs</a>
   <a [routerLink]="['/profile']" *ngIf="role !== 'UNAUTH'">Profile</a>

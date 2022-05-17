@@ -6,11 +6,15 @@ import {Post} from "../model/post.model";
 @Injectable({
   providedIn: 'root'
 })
-export class DashboardCompanyService {
+export class DashboardService {
 
   constructor(private httpClient: HttpClient) { }
 
   getPostsForCurrentCompany(): Observable<Post[]>{
     return this.httpClient.get<Post[]>('/api/getPostsForCurrentCompany')
+  }
+
+  getPostsFromFollowedCompanies(): Observable<Post[]>{
+    return this.httpClient.get<Post[]>('/api/getPostsFromFollowedCompanies')
   }
 }

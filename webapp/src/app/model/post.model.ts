@@ -9,5 +9,5 @@ export class Post {
   description: string = "";
   dateCreated: string = "";
   company: Company = new Company();
-  applicants: User[] = [];
+  applicants: number = 0;
 }

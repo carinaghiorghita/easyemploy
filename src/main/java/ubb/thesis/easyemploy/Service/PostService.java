@@ -5,10 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ubb.thesis.easyemploy.Domain.Entities.Company;
 import ubb.thesis.easyemploy.Domain.Entities.Post;
+import ubb.thesis.easyemploy.Domain.Entities.User;
 import ubb.thesis.easyemploy.Repository.PostRepository;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,11 +27,20 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public List<Post> getPostsForCompany(Long id){
+    public List<Post> getPostsForCompany(Company company){
         return this.postRepository.findAll()
                 .stream()
-                .filter(p -> p.getCompany().getId().equals(id))
+                .filter(p -> p.getCompany().equals(company))
                 .collect(Collectors.toList());
+    }
+
+    public List<Post> getPostsFromFollowedCompanies(User user){
+        List<Post> posts = new ArrayList<>();
+        user.getFollowedCompanies().forEach(company -> {
+            posts.addAll(this.getPostsForCompany(company));
+        });
+
+        return posts;
     }
 
     public Post getPostById(Long id){

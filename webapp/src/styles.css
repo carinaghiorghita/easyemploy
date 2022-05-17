@@ -114,42 +114,6 @@ textarea:-ms-input-placeholder { color: #adadad;}
   padding: 30px 55px 50px 55px;
 }
 
-
-/*------------------------------------------------------------------
-[ TITLE AND FORM ]*/
-
-.submitProposal-form {
-  width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.submitProposal-form-title {
-  font-family: 'Source Sans Pro', sans-serif;
-  font-size: 40px;
-  font-weight: 300;
-  line-height: 1.5;
-  color: grey;
-  display: block;
-  width: 100%;
-  text-align: center;
-  padding-bottom: 59px;
-}
-
-.submitProposal-form-subtitle {
-  display: block;
-  width: 100%;
-  font-size: 25px;
-  color: #333333;
-  line-height: 1.2;
-  padding-bottom: 5px;
-}
-
 /*------------------------------------------------------------------
 [ INPUT ]*/
 
@@ -197,49 +161,6 @@ textarea.input {
 iframe {
   border: none !important;
 }
-
-.container-submitProposal-form-btn {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding-top: 20px;
-  width: 100%;
-}
-
-.submitProposal-form-btn {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 20px;
-  width: 100%;
-  height: 50px;
-  background-color: #333333;
-  border-radius: 4px;
-
-  font-size: 16px;
-  color: #fff;
-  line-height: 1.2;
-
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-  transition: all 0.4s;
-}
-
-.submitProposal-form-btn:hover {
-  background-color: lightslategray;
-}
-
-
-
 
 
 /*

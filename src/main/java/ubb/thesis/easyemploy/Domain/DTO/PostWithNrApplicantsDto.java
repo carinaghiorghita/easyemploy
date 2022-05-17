@@ -17,7 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Data
 @Builder
-public class PostDto {
+public class PostWithNrApplicantsDto {
     private Long id;
     private String jobTitle;
     private String experienceLevel;
@@ -25,5 +25,5 @@ public class PostDto {
     private String description;
     private String dateCreated;
     private CompanyDto company;
-    private Set<UserDto> applicants;
+    private Integer applicants;
 }

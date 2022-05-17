@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Post} from "../../model/post.model";
-import {DashboardCompanyService} from "../../service/dashboard-company.service";
+import {DashboardService} from "../../service/dashboard.service";
 
 @Component({
   selector: 'app-dashboard-company',
@@ -10,12 +10,12 @@ import {DashboardCompanyService} from "../../service/dashboard-company.service";
 export class DashboardCompanyComponent implements OnInit {
   posts: Post[] = [];
 
-  constructor(private service: DashboardCompanyService) { }
+  constructor(private service: DashboardService) { }
 
   ngOnInit(): void {
     this.service.getPostsForCurrentCompany().subscribe(posts => {
       this.posts = posts;
-    })
+    });
   }
 
 }

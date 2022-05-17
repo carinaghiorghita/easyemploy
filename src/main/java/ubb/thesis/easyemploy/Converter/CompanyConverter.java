@@ -13,12 +13,12 @@ public class CompanyConverter implements Converter<Company, CompanyDto> {
     public CompanyDto convertModelToDto(Company model) {
         UserConverter userConverter = new UserConverter();
 
-        Set<UserDto> followers = new HashSet<>();
-        model.getFollowers().forEach(user ->
-                followers.add(userConverter.convertModelToDto(user))
-        );
+//        Set<UserDto> followers = new HashSet<>();
+//        model.getFollowers().forEach(user ->
+//                followers.add(userConverter.convertModelToDto(user))
+//        );
 
-        return new CompanyDto(model.getId(), model.getEmail(), model.getUsername(), model.getPassword(), model.getName(), model.getPhoneNumber(), model.isActivated(), followers);
+        return new CompanyDto(model.getId(), model.getEmail(), model.getUsername(), model.getPassword(), model.getName(), model.getPhoneNumber(), model.isActivated(), new HashSet<>());
     }
 
     @Override

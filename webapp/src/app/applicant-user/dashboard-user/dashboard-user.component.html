@@ -1,1 +1,23 @@
-<p>dashboard-user works!</p>
+<!DOCTYPE html>
+
+<meta name="viewport" content="width=device-width" />
+<html>
+<body>
+
+<div class="main-div">
+  <mat-card class="scroll-dashboard">
+
+    <a [routerLink]="['/post/{{post.id}}']" *ngFor="let post of posts" class="post-link">
+      <mat-card class="post">
+        {{post.jobTitle}}
+      </mat-card>
+    </a>
+    <h1 *ngIf="posts.length===0">
+      Looks like you don't follow any companies with job listings. <a [routerLink]="['/explore-companies']">Explore some now.</a>
+    </h1>
+
+  </mat-card>
+
+</div>
+</body>
+</html>

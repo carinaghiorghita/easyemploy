@@ -9,7 +9,6 @@ import {Router} from "@angular/router";
 })
 export class AppComponent implements OnInit{
   title = 'EasyEmploy';
-  link: string = "";
 
   constructor(private httpClient: HttpClient,
               private router: Router) {
@@ -29,13 +28,6 @@ export class AppComponent implements OnInit{
           && !this.router.url.includes("/confirm-account")
           && !this.router.url.includes("/reset-password"))
             this.router.navigate(['login']);
-
-        if (baseUser.role == "UNAUTH") {
-          this.link = '/login';
-        }
-        else {
-          this.link = `/dashboard-${baseUser.role.toLowerCase()}`;
-        }
       });
   }
 

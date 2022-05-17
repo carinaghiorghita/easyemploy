@@ -10,8 +10,7 @@ import {HttpClient} from "@angular/common/http";
 export class HeaderComponent implements OnInit {
 
   role: string = "";
-
-  @Input() link: string | undefined;
+  link: string = "";
 
   constructor(private httpClient: HttpClient,
               private router: Router,
@@ -30,6 +29,13 @@ export class HeaderComponent implements OnInit {
       .get<any>('/api/getAuthenticatedUser')
       .subscribe( (user) => {
           this.role = user.role;
+          if (this.role == "UNAUTH") {
+            this.link = '/login';
+          }
+          else {
+            this.link = `/dashboard-${this.role.toLowerCase()}`;
+          }
+
         }
       );
   }

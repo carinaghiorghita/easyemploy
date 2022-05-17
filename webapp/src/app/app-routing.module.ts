@@ -11,6 +11,9 @@ import {PasswordSuccessfullyResetComponent} from "./unauthenticated-user/passwor
 import {ProfileComponent} from "./commons/profile/profile.component";
 import {DashboardUserComponent} from "./applicant-user/dashboard-user/dashboard-user.component";
 import {DashboardCompanyComponent} from "./company-user/dashboard-company/dashboard-company.component";
+import {ExplorePeopleComponent} from "./commons/explore-people/explore-people.component";
+import {ExploreCompaniesComponent} from "./commons/explore-companies/explore-companies.component";
+import {ExploreJobsComponent} from "./commons/explore-jobs/explore-jobs.component";
 
 const routes: Routes = [
 
@@ -26,6 +29,9 @@ const routes: Routes = [
 
   //commons
   {path: 'profile', component: ProfileComponent},
+  {path: 'explore-people', component: ExplorePeopleComponent},
+  {path: 'explore-companies', component: ExploreCompaniesComponent},
+  {path: 'explore-jobs', component: ExploreJobsComponent},
 
   //user
   {path: 'dashboard-user', component: DashboardUserComponent},

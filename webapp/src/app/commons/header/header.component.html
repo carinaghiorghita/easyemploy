@@ -7,8 +7,9 @@
 
 <div class="div-right">
 <!--todo add search-->
-  <a>People</a>
-  <a *ngIf="role !== 'COMPANY'">Jobs</a>
+  <a [routerLink]="['/explore-people']">People</a>
+  <a [routerLink]="['/explore-companies']" *ngIf="role !== 'COMPANY'">Companies</a>
+  <a [routerLink]="['/explore-jobs']" *ngIf="role !== 'COMPANY'">Jobs</a>
   <a [routerLink]="['/profile']" *ngIf="role !== 'UNAUTH'">Profile</a>
   <a (click)="logout()" *ngIf="role !== 'UNAUTH'">Logout</a>
 </div>

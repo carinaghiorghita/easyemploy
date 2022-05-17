@@ -29,6 +29,9 @@ import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dia
 import { DeleteDialogComponent } from './commons/delete-dialog/delete-dialog.component';
 import { DashboardUserComponent } from './applicant-user/dashboard-user/dashboard-user.component';
 import { DashboardCompanyComponent } from './company-user/dashboard-company/dashboard-company.component';
+import { ExplorePeopleComponent } from './commons/explore-people/explore-people.component';
+import { ExploreCompaniesComponent } from './commons/explore-companies/explore-companies.component';
+import { ExploreJobsComponent } from './commons/explore-jobs/explore-jobs.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,10 @@ import { DashboardCompanyComponent } from './company-user/dashboard-company/dash
     DashboardUserComponent,
 
     //company
-    DashboardCompanyComponent
+    DashboardCompanyComponent,
+      ExplorePeopleComponent,
+      ExploreCompaniesComponent,
+      ExploreJobsComponent
   ],
   imports: [
     FormsModule,

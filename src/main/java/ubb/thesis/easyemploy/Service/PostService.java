@@ -24,6 +24,13 @@ public class PostService {
         return postRepository.findAll();
     }
 
+    public List<Post> getPostsForCompany(Long id){
+        return this.postRepository.findAll()
+                .stream()
+                .filter(p -> p.getCompany().getId().equals(id))
+                .collect(Collectors.toList());
+    }
+
     public Post getPostById(Long id){
         return this.postRepository.findAll()
                 .stream()

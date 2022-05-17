@@ -396,6 +396,24 @@ mat-card {
   text-align: center;
 }
 
+.post-link {
+  text-decoration: none;
+}
+
+mat-card.post {
+  max-width: 70%;
+  margin: 2em auto;
+  text-align: justify;
+  cursor: pointer;
+}
+
+mat-card.scroll-dashboard {
+  max-width: 75%;
+  margin: 2em auto;
+  text-align: center;
+  background-color: #E8E8E8;
+}
+
 mat-form-field {
   display: block;
 }

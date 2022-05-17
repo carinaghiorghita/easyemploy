@@ -34,7 +34,7 @@ export class AppComponent implements OnInit{
           this.link = '/login';
         }
         else {
-          this.link = '/dashboard';
+          this.link = `/dashboard-${baseUser.role.toLowerCase()}`;
         }
       });
   }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ubb.thesis.easyemploy.Domain.Entities.Post;
 import ubb.thesis.easyemploy.Service.PostService;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -16,5 +17,13 @@ public class PostController {
     @GetMapping(value = "/api/getPosts")
     public List<Post> getAllPosts(){
         return postService.getAllPosts();
+    }
+
+    @GetMapping(value = "/api/getPostsForCurrentCompany")
+    public List<Post> getPostsForCurrentCompany(HttpSession httpSession){
+        if(httpSession.getAttribute("role").equals("COMPANY"))
+            return postService.getPostsForCompany((Long) httpSession.getAttribute("id"));
+        else
+            throw new IllegalArgumentException("You are not a company!");
     }
 }

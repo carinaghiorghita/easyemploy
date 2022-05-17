@@ -40,6 +40,7 @@ public class AuthenticationController {
         var role = user.get() instanceof User ? "USER" : "COMPANY";
         httpSession.setAttribute("username", user.get().getUsername());
         httpSession.setAttribute("role", role);
+        httpSession.setAttribute("id", user.get().getId());
         var userConverter = new BaseUserConverter();
         return userConverter.convertModelToDto(user.get());
     }
@@ -47,6 +48,7 @@ public class AuthenticationController {
     @GetMapping(value="/api/logout")
     public void logoutUser(HttpSession httpSession){
         httpSession.removeAttribute("username");
+        httpSession.removeAttribute("id");
         httpSession.setAttribute("role", "UNAUTH");
     }
 

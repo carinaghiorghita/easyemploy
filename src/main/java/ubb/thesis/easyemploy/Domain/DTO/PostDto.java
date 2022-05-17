@@ -23,7 +23,7 @@ public class PostDto {
     private String experienceLevel;
     private Integer salary;
     private String description;
-    private LocalDate dateCreated;
+    private String dateCreated;
     private CompanyDto company;
     private Set<UserDto> applicants;
 }

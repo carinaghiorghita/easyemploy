@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,7 +22,7 @@ public class Post {
     private String experienceLevel;
     private Integer salary;
     private String description;
-    private LocalDate dateCreated;
+    private LocalDateTime dateCreated;
 
     @ManyToOne
     @JoinColumn
@@ -33,7 +34,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(Long id, String jobTitle, String experienceLevel, Integer salary, String description, LocalDate dateCreated, Company company) {
+    public Post(Long id, String jobTitle, String experienceLevel, Integer salary, String description, LocalDateTime dateCreated, Company company) {
         this.id = id;
         this.jobTitle = jobTitle;
         this.experienceLevel = experienceLevel;
@@ -42,4 +43,16 @@ public class Post {
         this.dateCreated = dateCreated;
         this.company = company;
     }
+
+    public Post(Long id, String jobTitle, String experienceLevel, Integer salary, String description, LocalDateTime dateCreated, Company company, Set<User> applicants) {
+        this.id = id;
+        this.jobTitle = jobTitle;
+        this.experienceLevel = experienceLevel;
+        this.salary = salary;
+        this.description = description;
+        this.dateCreated = dateCreated;
+        this.company = company;
+        this.applicants = applicants;
+    }
+
 }

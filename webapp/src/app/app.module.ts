@@ -32,6 +32,9 @@ import { DashboardCompanyComponent } from './company-user/dashboard-company/dash
 import { ExplorePeopleComponent } from './commons/explore-people/explore-people.component';
 import { ExploreCompaniesComponent } from './commons/explore-companies/explore-companies.component';
 import { ExploreJobsComponent } from './commons/explore-jobs/explore-jobs.component';
+import { CreatePostComponent } from './company-user/create-post/create-post.component';
+import {MatSelectModule} from "@angular/material/select";
+import {MatOptionModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -58,7 +61,8 @@ import { ExploreJobsComponent } from './commons/explore-jobs/explore-jobs.compon
     DashboardCompanyComponent,
       ExplorePeopleComponent,
       ExploreCompaniesComponent,
-      ExploreJobsComponent
+      ExploreJobsComponent,
+      CreatePostComponent
   ],
   imports: [
     FormsModule,
@@ -74,7 +78,9 @@ import { ExploreJobsComponent } from './commons/explore-jobs/explore-jobs.compon
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule,
+    MatOptionModule
   ],
   providers: [
     LoginService,

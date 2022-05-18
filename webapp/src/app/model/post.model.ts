@@ -5,9 +5,9 @@ export class Post {
   id: number = 0;
   jobTitle: string = "";
   experienceLevel: string = "";
-  salary: number = 0;
+  salary: number | undefined;
   description: string = "";
   dateCreated: string = "";
   company: Company = new Company();
-  applicants: number = 0;
+  applicants: number=0;
 }

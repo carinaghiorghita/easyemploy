@@ -34,8 +34,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(Long id, String jobTitle, String experienceLevel, Integer salary, String description, LocalDateTime dateCreated, Company company) {
-        this.id = id;
+    public Post(String jobTitle, String experienceLevel, Integer salary, String description, LocalDateTime dateCreated, Company company) {
         this.jobTitle = jobTitle;
         this.experienceLevel = experienceLevel;
         this.salary = salary;
@@ -44,8 +43,7 @@ public class Post {
         this.company = company;
     }
 
-    public Post(Long id, String jobTitle, String experienceLevel, Integer salary, String description, LocalDateTime dateCreated, Company company, Set<User> applicants) {
-        this.id = id;
+    public Post(String jobTitle, String experienceLevel, Integer salary, String description, LocalDateTime dateCreated, Company company, Set<User> applicants) {
         this.jobTitle = jobTitle;
         this.experienceLevel = experienceLevel;
         this.salary = salary;

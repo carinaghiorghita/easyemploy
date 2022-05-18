@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<meta content="width=device-width" name="viewport"/>
+<html>
+<body>
+
+<div class="main-div">
+  <mat-card class="container-form">
+    <mat-card-content>
+      <form (submit)="onSubmit()" class="form-login">
+      <span class="title-form-login">
+        <h1>New Job Listing</h1>
+      </span>
+        <mat-form-field appearance="fill">
+          <mat-label>Job Title</mat-label>
+          <input [(ngModel)]="post.jobTitle" matInput name="title" type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Experience Level</mat-label>
+          <mat-select [(ngModel)]="post.experienceLevel" name="experienceLevel">
+            <mat-option *ngFor="let level of levels" value="{{level}}">
+              {{level}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Salary (in €/month)</mat-label>
+          <input matInput [(ngModel)]="post.salary" name="salary" type="number">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea matInput [(ngModel)]="post.description" name="description"></textarea>
+        </mat-form-field>
+        <br>
+        <button color="primary" mat-raised-button type="submit">Create Post</button>
+      </form>
+      <br>
+      <mat-error *ngIf="error!==''">
+        {{error}}
+      </mat-error>
+    </mat-card-content>
+  </mat-card>
+</div>
+</body>
+</html>

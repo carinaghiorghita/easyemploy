@@ -8,6 +8,7 @@ import {BaseUser} from "../../model/baseuser.model";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {DeleteDialogComponent} from "../delete-dialog/delete-dialog.component";
 import {LoginService} from "../../service/login.service";
+import {DeletePostDialogComponent} from "../delete-post-dialog/delete-post-dialog.component";
 
 @Component({
   selector: 'app-profile',
@@ -72,7 +73,7 @@ export class ProfileComponent implements OnInit {
   }
 
   deleteAccount(): void {
-    const dialogRef = this.dialog.open(DeleteDialogComponent);
+    const dialogRef = this.dialog.open(DeletePostDialogComponent);
 
     var username = this.user.username!=="" ? this.user.username : this.company.username;
 

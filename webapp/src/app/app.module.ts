@@ -35,6 +35,8 @@ import { ExploreJobsComponent } from './commons/explore-jobs/explore-jobs.compon
 import { CreatePostComponent } from './company-user/create-post/create-post.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatOptionModule} from "@angular/material/core";
+import { CompanyPostComponent } from './company-user/company-post/company-post.component';
+import { DeletePostDialogComponent } from './commons/delete-post-dialog/delete-post-dialog.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,9 @@ import {MatOptionModule} from "@angular/material/core";
       ExplorePeopleComponent,
       ExploreCompaniesComponent,
       ExploreJobsComponent,
-      CreatePostComponent
+      CreatePostComponent,
+      CompanyPostComponent,
+      DeletePostDialogComponent
   ],
   imports: [
     FormsModule,

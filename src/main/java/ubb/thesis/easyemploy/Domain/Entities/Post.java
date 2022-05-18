@@ -23,6 +23,7 @@ public class Post {
     private Integer salary;
     private String description;
     private LocalDateTime dateCreated;
+    private LocalDateTime dateLastEdited;
 
     @ManyToOne
     @JoinColumn
@@ -34,21 +35,35 @@ public class Post {
     public Post() {
     }
 
-    public Post(String jobTitle, String experienceLevel, Integer salary, String description, LocalDateTime dateCreated, Company company) {
+    public Post(String jobTitle, String experienceLevel, Integer salary, String description, LocalDateTime dateCreated, LocalDateTime dateLastEdited, Company company) {
         this.jobTitle = jobTitle;
         this.experienceLevel = experienceLevel;
         this.salary = salary;
         this.description = description;
         this.dateCreated = dateCreated;
+        this.dateLastEdited = dateLastEdited;
         this.company = company;
     }
 
-    public Post(String jobTitle, String experienceLevel, Integer salary, String description, LocalDateTime dateCreated, Company company, Set<User> applicants) {
+    public Post(String jobTitle, String experienceLevel, Integer salary, String description, LocalDateTime dateCreated, LocalDateTime dateLastEdited, Company company, Set<User> applicants) {
         this.jobTitle = jobTitle;
         this.experienceLevel = experienceLevel;
         this.salary = salary;
         this.description = description;
         this.dateCreated = dateCreated;
+        this.dateLastEdited = dateLastEdited;
+        this.company = company;
+        this.applicants = applicants;
+    }
+
+    public Post(Long id, String jobTitle, String experienceLevel, Integer salary, String description, LocalDateTime dateCreated, LocalDateTime dateLastEdited, Company company, Set<User> applicants) {
+        this.id = id;
+        this.jobTitle = jobTitle;
+        this.experienceLevel = experienceLevel;
+        this.salary = salary;
+        this.description = description;
+        this.dateCreated = dateCreated;
+        this.dateLastEdited = dateLastEdited;
         this.company = company;
         this.applicants = applicants;
     }

@@ -8,6 +8,7 @@ export class Post {
   salary: number | undefined;
   description: string = "";
   dateCreated: string = "";
+  dateLastEdited: string = "";
   company: Company = new Company();
   applicants: number=0;
 }

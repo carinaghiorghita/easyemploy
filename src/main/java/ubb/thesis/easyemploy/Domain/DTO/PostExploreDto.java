@@ -16,6 +16,7 @@ public class PostExploreDto {
     private Integer salary;
     private String description;
     private String dateCreated;
+    private String dateLastEdited;
     private CompanyExploreDto company;
     private Integer applicants;
 }

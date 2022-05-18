@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<meta content="width=device-width" name="viewport"/>
+<html>
+<body>
+
+<div class="main-div">
+  <mat-card class="container-form">
+    <mat-card-content>
+      <h2 class="justify-align">{{post.jobTitle}}</h2>
+      <h3 class="justify-align">Created on {{post.dateCreated | date:'medium'}}.</h3>
+      <h3 class="justify-align">Last edited on {{post.dateLastEdited | date:'medium'}}.</h3>
+      <form (submit)="onSubmit()" class="form-login">
+        <div *ngIf="post">
+          <mat-form-field appearance="fill">
+            <mat-label>Job Title</mat-label>
+            <input [(ngModel)]="post.jobTitle" matInput name="jobTitle" type="text" [disabled]="disabled">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Experience Level</mat-label>
+            <mat-select [(ngModel)]="post.experienceLevel" name="experienceLevel" [disabled]="disabled">
+              <mat-option *ngFor="let level of levels" value="{{level}}">
+                {{level}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Salary (in €/month)</mat-label>
+            <input [(ngModel)]="post.salary" matInput name="salary" type="number" [disabled]="disabled">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput [(ngModel)]="post.description" name="description" [disabled]="disabled"></textarea>
+          </mat-form-field>
+        </div>
+
+        <br>
+        <button color="primary" mat-raised-button type="submit">{{buttonText}}</button>
+        <button *ngIf="disabled===false" color="primary" mat-raised-button type="button" (click)="onExitEdit()">Exit Edit</button>
+      </form>
+      <br>
+      <mat-error *ngIf="errorMessage!==''">
+        {{errorMessage}}
+      </mat-error>
+      <br>
+      <h4 class="justify-align">{{post.applicants}} people have applied to this job. <a>Check who applied.</a></h4>
+      <br>
+      <button class="delete-button" mat-raised-button (click)="deletePost()">Delete post</button>
+    </mat-card-content>
+  </mat-card>
+</div>
+</body>
+</html>

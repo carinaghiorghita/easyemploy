@@ -15,6 +15,7 @@ import {ExplorePeopleComponent} from "./commons/explore-people/explore-people.co
 import {ExploreCompaniesComponent} from "./commons/explore-companies/explore-companies.component";
 import {ExploreJobsComponent} from "./commons/explore-jobs/explore-jobs.component";
 import {CreatePostComponent} from "./company-user/create-post/create-post.component";
+import {CompanyPostComponent} from "./company-user/company-post/company-post.component";
 
 const routes: Routes = [
 
@@ -40,6 +41,7 @@ const routes: Routes = [
   //company
   {path: 'dashboard-company', component: DashboardCompanyComponent},
   {path: 'new-post', component: CreatePostComponent},
+  {path: 'company-post/:id', component: CompanyPostComponent}
 ];
 
 @NgModule({

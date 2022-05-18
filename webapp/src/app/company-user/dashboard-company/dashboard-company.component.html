@@ -9,7 +9,7 @@
 
     <button *ngIf="posts.length!==0" mat-raised-button color="primary" type="button" [routerLink]="['/new-post']">New post</button>
 
-    <a [routerLink]="['/post/{{post.id}}']" *ngFor="let post of posts" class="post-link">
+    <a routerLink="/company-post/{{post.id}}" *ngFor="let post of posts" class="post-link">
     <mat-card class="post">
       {{post.jobTitle}}
       <br>

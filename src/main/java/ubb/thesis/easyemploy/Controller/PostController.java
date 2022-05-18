@@ -1,10 +1,7 @@
 package ubb.thesis.easyemploy.Controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ubb.thesis.easyemploy.Converter.PostConverter;
 import ubb.thesis.easyemploy.Domain.DTO.PostExploreDto;
 import ubb.thesis.easyemploy.Domain.Entities.Company;
@@ -62,7 +59,7 @@ public class PostController {
 
     @PostMapping(value = "/api/savePost")
     public void savePost(@RequestBody PostExploreDto postExploreDto, HttpSession httpSession) throws ParseException {
-        var post = new Post(postExploreDto.getJobTitle(), postExploreDto.getExperienceLevel(), postExploreDto.getSalary(), postExploreDto.getDescription(), LocalDateTime.now(), null);
+        var post = new Post(postExploreDto.getJobTitle(), postExploreDto.getExperienceLevel(), postExploreDto.getSalary(), postExploreDto.getDescription(), LocalDateTime.now(), LocalDateTime.now(), null);
 
         var postValidator = new PostValidator();
         postValidator.validateTitle(post);
@@ -74,4 +71,33 @@ public class PostController {
 
         postService.savePost(post);
     }
+
+    @PostMapping(value = "/api/updatePost")
+    public void updatePost(@RequestBody PostExploreDto postExploreDto) throws ParseException {
+        var postConverter = new PostConverter();
+        var post = postConverter.convertDtoToModel(postExploreDto);
+
+        var postValidator = new PostValidator();
+        postValidator.validateTitle(post);
+        postValidator.validateExperienceLevel(post);
+        postValidator.validateSalary(post);
+
+        post.setDateLastEdited(LocalDateTime.now());
+
+        postService.updatePost(post);
+    }
+
+    @DeleteMapping(value = "/api/deletePost")
+    public void deletePost(@RequestParam("id") Long id){
+        this.postService.deletePost(this.postService.getPostById(id));
+    }
+
+    @GetMapping(value = "/api/getPost")
+    public PostExploreDto getPost(@RequestParam("id") Long id){
+        var postConverter = new PostConverter();
+        var post = this.postService.getPostById(id);
+
+        return postConverter.convertModelToDto(post);
+    }
+
 }

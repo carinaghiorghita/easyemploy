@@ -1,7 +1,6 @@
 package ubb.thesis.easyemploy.Converter;
 
-import ubb.thesis.easyemploy.Domain.DTO.PostWithNrApplicantsDto;
-import ubb.thesis.easyemploy.Domain.DTO.UserDto;
+import ubb.thesis.easyemploy.Domain.DTO.PostExploreDto;
 import ubb.thesis.easyemploy.Domain.Entities.Post;
 
 import java.text.DateFormat;
@@ -9,20 +8,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.util.HashSet;
-import java.util.Set;
 
-public class PostConverter implements Converter<Post, PostWithNrApplicantsDto> {
+public class PostConverter implements Converter<Post, PostExploreDto> {
 
     @Override
-    public PostWithNrApplicantsDto convertModelToDto(Post model) {
+    public PostExploreDto convertModelToDto(Post model) {
         CompanyConverter companyConverter = new CompanyConverter();
         UserConverter userConverter = new UserConverter();
 
-        return new PostWithNrApplicantsDto(model.getId(), model.getJobTitle(), model.getExperienceLevel(), model.getSalary(), model.getDescription(), model.getDateCreated().toString(),companyConverter.convertModelToDto(model.getCompany()),model.getApplicants().size());
+        return new PostExploreDto(model.getId(), model.getJobTitle(), model.getExperienceLevel(), model.getSalary(), model.getDescription(), model.getDateCreated().toString(),companyConverter.convertModelToDto(model.getCompany()),model.getApplicants().size());
     }
 
     @Override
-    public Post convertDtoToModel(PostWithNrApplicantsDto dto) throws ParseException {
+    public Post convertDtoToModel(PostExploreDto dto) throws ParseException {
         CompanyConverter companyConverter = new CompanyConverter();
         UserConverter userConverter = new UserConverter();
         final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");

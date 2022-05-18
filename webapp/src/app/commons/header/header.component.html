@@ -12,5 +12,6 @@
   <a [routerLink]="['/explore-jobs']" *ngIf="role !== 'COMPANY'">Jobs</a>
   <a [routerLink]="['/profile']" *ngIf="role !== 'UNAUTH'">Profile</a>
   <a (click)="logout()" *ngIf="role !== 'UNAUTH'">Logout</a>
+  <a [routerLink]="['/login']" *ngIf="role === 'UNAUTH'">Login</a>
 </div>
 </nav>

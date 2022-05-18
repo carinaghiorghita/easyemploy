@@ -5,10 +5,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ubb.thesis.easyemploy.Converter.CompanyConverter;
-import ubb.thesis.easyemploy.Domain.DTO.CompanyDto;
+import ubb.thesis.easyemploy.Domain.DTO.CompanyExploreDto;
 import ubb.thesis.easyemploy.Domain.Exceptions.ValidationException;
 import ubb.thesis.easyemploy.Domain.Validation.CompanyValidator;
-import ubb.thesis.easyemploy.Domain.Validation.UserValidator;
 import ubb.thesis.easyemploy.Service.CompanyService;
 import ubb.thesis.easyemploy.Service.UserService;
 
@@ -20,9 +19,9 @@ public class CompanyController {
     private final UserService userService;
 
     @PostMapping(value="/api/updateCompany")
-    public void updateCompany(@RequestBody CompanyDto companyDto){
+    public void updateCompany(@RequestBody CompanyExploreDto companyExploreDto){
         var companyConverter = new CompanyConverter();
-        var company = companyConverter.convertDtoToModel(companyDto);
+        var company = companyConverter.convertDtoToModel(companyExploreDto);
 
         var companyValidator = new CompanyValidator();
         companyValidator.validateName(company);

@@ -11,7 +11,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Data
 @Builder
-public class UserDto {
+public class UserExploreDto {
     private Long id;
     private String email;
     private String username;
@@ -20,6 +20,6 @@ public class UserDto {
     private String lastName;
     private String phoneNumber;
     private boolean activated;
-    private Set<CompanyDto> following;
-    private Set<PostWithNrApplicantsDto> jobsApplied;
+    private Set<CompanyExploreDto> following;
+    private Set<PostExploreDto> jobsApplied;
 }

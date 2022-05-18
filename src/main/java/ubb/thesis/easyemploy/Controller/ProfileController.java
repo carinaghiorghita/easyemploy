@@ -5,13 +5,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ubb.thesis.easyemploy.Converter.BaseUserConverter;
 import ubb.thesis.easyemploy.Converter.CompanyConverter;
 import ubb.thesis.easyemploy.Converter.UserConverter;
-import ubb.thesis.easyemploy.Domain.DTO.BaseUserDto;
-import ubb.thesis.easyemploy.Domain.DTO.CompanyDto;
-import ubb.thesis.easyemploy.Domain.DTO.UserDto;
-import ubb.thesis.easyemploy.Domain.Entities.BaseUser;
+import ubb.thesis.easyemploy.Domain.DTO.CompanyExploreDto;
+import ubb.thesis.easyemploy.Domain.DTO.UserExploreDto;
 import ubb.thesis.easyemploy.Domain.Entities.Company;
 import ubb.thesis.easyemploy.Domain.Entities.User;
 import ubb.thesis.easyemploy.Service.AuthenticationService;
@@ -28,7 +25,7 @@ public class ProfileController {
     private final AuthenticationService authenticationService;
 
     @GetMapping(value ="/api/getUser")
-    public UserDto getUser(HttpSession httpSession) {
+    public UserExploreDto getUser(HttpSession httpSession) {
         String username = (String) httpSession.getAttribute("username");
         var user = userService.getUserByUsername(username).get();
         var userConverter = new UserConverter();
@@ -36,7 +33,7 @@ public class ProfileController {
     }
 
     @GetMapping(value ="/api/getCompany")
-    public CompanyDto getCompany(HttpSession httpSession){
+    public CompanyExploreDto getCompany(HttpSession httpSession){
         String username = (String) httpSession.getAttribute("username");
         var company = companyService.getCompanyByUsername(username).get();
         var companyConverter = new CompanyConverter();

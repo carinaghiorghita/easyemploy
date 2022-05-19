@@ -37,6 +37,9 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatOptionModule} from "@angular/material/core";
 import { CompanyPostComponent } from './company-user/company-post/company-post.component';
 import { DeletePostDialogComponent } from './commons/delete-post-dialog/delete-post-dialog.component';
+import { ViewPostComponent } from './applicant-user/view-post/view-post.component';
+import { ProfileCompanyComponent } from './commons/profile-company/profile-company.component';
+import { ProfileUserComponent } from './commons/profile-user/profile-user.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +69,10 @@ import { DeletePostDialogComponent } from './commons/delete-post-dialog/delete-p
       ExploreJobsComponent,
       CreatePostComponent,
       CompanyPostComponent,
-      DeletePostDialogComponent
+      DeletePostDialogComponent,
+      ViewPostComponent,
+      ProfileCompanyComponent,
+      ProfileUserComponent
   ],
   imports: [
     FormsModule,

@@ -16,6 +16,7 @@ import {ExploreCompaniesComponent} from "./commons/explore-companies/explore-com
 import {ExploreJobsComponent} from "./commons/explore-jobs/explore-jobs.component";
 import {CreatePostComponent} from "./company-user/create-post/create-post.component";
 import {CompanyPostComponent} from "./company-user/company-post/company-post.component";
+import {ViewPostComponent} from "./applicant-user/view-post/view-post.component";
 
 const routes: Routes = [
 
@@ -37,6 +38,7 @@ const routes: Routes = [
 
   //user
   {path: 'dashboard-user', component: DashboardUserComponent},
+  {path: 'view-post/:id', component: ViewPostComponent},
 
   //company
   {path: 'dashboard-company', component: DashboardCompanyComponent},

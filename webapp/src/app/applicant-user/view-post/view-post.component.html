@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<meta name="viewport" content="width=device-width" />
+<html>
+<body>
+
+<div class="main-div">
+  <mat-card class="view-post">
+    <a routerLink="/apply/{{post.id}}">
+    <button color="primary" mat-raised-button id="apply">Apply</button>
+    </a>
+    <h2 class="justify-align">{{post.jobTitle}}</h2>
+    <h3 class="justify-align">Created on {{post.dateCreated | date:'medium'}}.</h3>
+    <h3 class="justify-align">Last edited on {{post.dateLastEdited | date:'medium'}}.</h3>
+    <br>
+    <h3 class="justify-align">Experience Level: {{post.experienceLevel}}</h3>
+    <h3 class="justify-align">Salary: {{post.salary}}</h3>
+    <br>
+    <h3>Job Description:</h3>
+    <div>{{post.description}}</div>
+  </mat-card>
+</div>
+</body>
+</html>

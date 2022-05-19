@@ -24,8 +24,7 @@ export class CompanyPostComponent implements OnInit {
 
   readonly levels: string[] = ['Internship', 'Junior', 'Mid-Level', 'Senior','Any'];
 
-  constructor(private httpClient: HttpClient,
-              private service: PostService,
+  constructor(private service: PostService,
               private router: Router,
               public dialog: MatDialog,
               private route: ActivatedRoute) {

@@ -6,9 +6,7 @@
 
 <div class="main-div">
   <mat-card class="view-post">
-    <a routerLink="/apply/{{post.id}}">
-    <button color="primary" mat-raised-button id="apply">Apply</button>
-    </a>
+    <button color="primary" mat-raised-button id="apply" (click)="onApply()">Apply</button>
     <h2 class="justify-align">{{post.jobTitle}}</h2>
     <h3 class="justify-align">Created on {{post.dateCreated | date:'medium'}}.</h3>
     <h3 class="justify-align">Last edited on {{post.dateLastEdited | date:'medium'}}.</h3>

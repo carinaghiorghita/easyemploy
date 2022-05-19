@@ -40,6 +40,7 @@ import { DeletePostDialogComponent } from './commons/delete-post-dialog/delete-p
 import { ViewPostComponent } from './applicant-user/view-post/view-post.component';
 import { ProfileCompanyComponent } from './commons/profile-company/profile-company.component';
 import { ProfileUserComponent } from './commons/profile-user/profile-user.component';
+import { UserLoginDialogComponent } from './commons/user-login-dialog/user-login-dialog.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { ProfileUserComponent } from './commons/profile-user/profile-user.compon
       DeletePostDialogComponent,
       ViewPostComponent,
       ProfileCompanyComponent,
-      ProfileUserComponent
+      ProfileUserComponent,
+      UserLoginDialogComponent
   ],
   imports: [
     FormsModule,

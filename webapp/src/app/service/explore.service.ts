@@ -12,8 +12,8 @@ export class ExploreService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getUsers(): Observable<User[]>{
-    return this.httpClient.get<User[]>('/api/getUsers')
+  getUsersExceptCurrent(): Observable<User[]>{
+    return this.httpClient.get<User[]>('/api/getUsersExceptCurrent')
   }
 
   getCompanies(): Observable<Company[]>{

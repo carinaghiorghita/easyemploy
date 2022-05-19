@@ -13,7 +13,7 @@ export class ExplorePeopleComponent implements OnInit {
   constructor(private service: ExploreService) { }
 
   ngOnInit(): void {
-    this.service.getUsers().subscribe(users => {
+    this.service.getUsersExceptCurrent().subscribe(users => {
       this.users = users;
     });
 

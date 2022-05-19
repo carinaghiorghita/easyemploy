@@ -17,6 +17,8 @@ import {ExploreJobsComponent} from "./commons/explore-jobs/explore-jobs.componen
 import {CreatePostComponent} from "./company-user/create-post/create-post.component";
 import {CompanyPostComponent} from "./company-user/company-post/company-post.component";
 import {ViewPostComponent} from "./applicant-user/view-post/view-post.component";
+import {ProfileUserComponent} from "./commons/profile-user/profile-user.component";
+import {ProfileCompanyComponent} from "./commons/profile-company/profile-company.component";
 
 const routes: Routes = [
 
@@ -35,6 +37,8 @@ const routes: Routes = [
   {path: 'explore-people', component: ExplorePeopleComponent},
   {path: 'explore-companies', component: ExploreCompaniesComponent},
   {path: 'explore-jobs', component: ExploreJobsComponent},
+  {path: 'profile-user/:id', component: ProfileUserComponent},
+  {path: 'profile-company/:id', component: ProfileCompanyComponent},
 
   //user
   {path: 'dashboard-user', component: DashboardUserComponent},

@@ -15,8 +15,18 @@ export class ProfileService {
     return this.httpClient.get<User>('/api/getUser');
   }
 
+  getUserById(id: number): Observable<User> {
+    const params = new HttpParams().set('id', Number(id))
+    return this.httpClient.get<User>('/api/getUserById', {params});
+  }
+
   getCompany(): Observable<Company> {
     return this.httpClient.get<Company>('/api/getCompany');
+  }
+
+  getCompanyById(id: number): Observable<Company> {
+    const params = new HttpParams().set('id', Number(id))
+    return this.httpClient.get<Company>('/api/getCompanyById', {params});
   }
 
   updateUser(user: User): Observable<any>{

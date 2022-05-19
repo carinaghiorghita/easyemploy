@@ -7,7 +7,7 @@
 <div class="main-div">
   <mat-card class="scroll-dashboard">
 
-    <a [routerLink]="['/profile-company/{{company.id}}']" *ngFor="let company of companies" class="post-link">
+    <a routerLink='/profile-company/{{company.id}}' *ngFor="let company of companies" class="post-link">
       <mat-card class="post">
         {{company.name}}
 

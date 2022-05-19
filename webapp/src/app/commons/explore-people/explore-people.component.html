@@ -7,7 +7,7 @@
 <div class="main-div">
   <mat-card class="scroll-dashboard">
 
-    <a [routerLink]="['/profile-user/{{user.id}}']" *ngFor="let user of users" class="post-link">
+    <a routerLink='/profile-user/{{user.id}}' *ngFor="let user of users" class="post-link">
       <mat-card class="post">
         {{user.firstName}} {{user.lastName}}
 

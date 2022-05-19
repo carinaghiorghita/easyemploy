@@ -27,7 +27,9 @@ export class AppComponent implements OnInit{
           && this.router.url != "/resend-confirmation"
           && !this.router.url.includes("/confirm-account")
           && !this.router.url.includes("/reset-password")
-          && !this.router.url.includes("/explore"))
+          && !this.router.url.includes("/explore")
+          && !this.router.url.includes("/profile-")
+          && this.router.url != ("/view-post"))
             this.router.navigate(['login']);
       });
   }

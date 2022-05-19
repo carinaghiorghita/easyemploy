@@ -32,10 +32,24 @@ public class ProfileController {
         return userConverter.convertModelToDto(user);
     }
 
+    @GetMapping(value ="/api/getUserById")
+    public UserExploreDto getUserById(@RequestParam("id") Long id) {
+        var user = userService.getUserById(id);
+        var userConverter = new UserConverter();
+        return userConverter.convertModelToDto(user);
+    }
+
     @GetMapping(value ="/api/getCompany")
     public CompanyExploreDto getCompany(HttpSession httpSession){
         String username = (String) httpSession.getAttribute("username");
         var company = companyService.getCompanyByUsername(username).get();
+        var companyConverter = new CompanyConverter();
+        return companyConverter.convertModelToDto(company);
+    }
+
+    @GetMapping(value ="/api/getCompanyById")
+    public CompanyExploreDto getCompanyById(@RequestParam("id") Long id) {
+        var company = companyService.getCompanyById(id);
         var companyConverter = new CompanyConverter();
         return companyConverter.convertModelToDto(company);
     }

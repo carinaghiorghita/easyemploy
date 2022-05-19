@@ -1,5 +1,8 @@
 nav{
   height: 7%;
+  /*width: 100%;*/
+  /*position: fixed;*/
+  background-color: #BEBEBE;
 }
 
 img {
@@ -9,16 +12,34 @@ img {
   height: 100%;
 }
 
-.div-right {
-  float: right
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
-a {
-  padding: 14px 16px;
-  text-decoration: none;
+li {
+  float: right;
+}
+
+li a {
+  display: block;
   color: black;
+  text-align: center;
+  padding: 15px 16px;
+  text-decoration: none;
 }
 
-a:hover{
-  cursor: pointer;
+li a:hover {
+  background-color: black;
+  color: white;
+}
+
+.div-right a{
+  float: left;
+  height: 100%;
 }

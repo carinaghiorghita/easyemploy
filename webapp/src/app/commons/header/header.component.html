@@ -1,17 +1,17 @@
 <nav>
+
+<ul class="div-right">
   <a [routerLink]="[link]">
     <img
       src="../../../assets/logo.png"
     />
   </a>
-
-<div class="div-right">
 <!--todo add search-->
-  <a [routerLink]="['/explore-people']">People</a>
-  <a [routerLink]="['/explore-companies']" *ngIf="role !== 'COMPANY'">Companies</a>
-  <a [routerLink]="['/explore-jobs']" *ngIf="role !== 'COMPANY'">Jobs</a>
-  <a [routerLink]="['/profile']" *ngIf="role !== 'UNAUTH'">Profile</a>
-  <a (click)="logout()" *ngIf="role !== 'UNAUTH'">Logout</a>
-  <a [routerLink]="['/login']" *ngIf="role === 'UNAUTH'">Login</a>
-</div>
+  <li><a [routerLink]="['/explore-people']">People</a></li>
+  <li><a [routerLink]="['/explore-companies']" *ngIf="role !== 'COMPANY'">Companies</a></li>
+  <li><a [routerLink]="['/explore-jobs']" *ngIf="role !== 'COMPANY'">Jobs</a></li>
+  <li><a [routerLink]="['/profile']" *ngIf="role !== 'UNAUTH'">Profile</a></li>
+  <li><a (click)="logout()" *ngIf="role !== 'UNAUTH'">Logout</a></li>
+  <li><a [routerLink]="['/login']" *ngIf="role === 'UNAUTH'">Login</a></li>
+</ul>
 </nav>

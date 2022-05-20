@@ -1,10 +1,7 @@
 package ubb.thesis.easyemploy.Controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ubb.thesis.easyemploy.Converter.CompanyConverter;
 import ubb.thesis.easyemploy.Converter.UserConverter;
 import ubb.thesis.easyemploy.Domain.DTO.CompanyExploreDto;
@@ -13,9 +10,11 @@ import ubb.thesis.easyemploy.Domain.Entities.Company;
 import ubb.thesis.easyemploy.Domain.Entities.User;
 import ubb.thesis.easyemploy.Service.AuthenticationService;
 import ubb.thesis.easyemploy.Service.CompanyService;
+import ubb.thesis.easyemploy.Service.UserCompanyRelationService;
 import ubb.thesis.easyemploy.Service.UserService;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashSet;
 
 @RestController
 @AllArgsConstructor
@@ -23,10 +22,13 @@ public class ProfileController {
     private final UserService userService;
     private final CompanyService companyService;
     private final AuthenticationService authenticationService;
+    private final UserCompanyRelationService userCompanyRelationService;
 
     @GetMapping(value ="/api/getUser")
     public UserExploreDto getUser(HttpSession httpSession) {
         String username = (String) httpSession.getAttribute("username");
+        if(username==null)
+            return new UserExploreDto(0L,"","","","","","",false,new HashSet<>(),new HashSet<>());
         var user = userService.getUserByUsername(username).get();
         var userConverter = new UserConverter();
         return userConverter.convertModelToDto(user);
@@ -63,4 +65,23 @@ public class ProfileController {
         else
             this.companyService.deleteCompany((Company) user.get());
     }
+
+    @PostMapping(value="/api/follow")
+    public void follow(@RequestBody CompanyExploreDto companyDto, HttpSession httpSession){
+        var companyConverter = new CompanyConverter();
+        var company = companyConverter.convertDtoToModel(companyDto);
+        var user = this.userService.getUserById((Long)httpSession.getAttribute("id"));
+
+        this.userCompanyRelationService.follow(user, company);
+    }
+
+    @PostMapping(value="/api/unfollow")
+    public void unfollow(@RequestBody CompanyExploreDto companyDto, HttpSession httpSession){
+        var companyConverter = new CompanyConverter();
+        var company = companyConverter.convertDtoToModel(companyDto);
+        var user = this.userService.getUserById((Long)httpSession.getAttribute("id"));
+
+        this.userCompanyRelationService.unfollow(user, company);
+    }
+
 }

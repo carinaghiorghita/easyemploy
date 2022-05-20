@@ -42,4 +42,16 @@ export class ProfileService {
 
     return this.httpClient.delete<any>('/api/deleteAccount',{params});
   }
+
+  follow(company: Company): Observable<any>{
+    return this.httpClient.post<any>('/api/follow',company);
+  }
+
+  unfollow(company: Company): Observable<any>{
+    return this.httpClient.post<any>('/api/unfollow',company);
+  }
+
+  getFollowedCompanies(): Observable<any>{
+    return this.httpClient.get('/api/getFollowedCompanies');
+  }
 }

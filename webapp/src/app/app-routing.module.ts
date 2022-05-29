@@ -19,6 +19,7 @@ import {CompanyPostComponent} from "./company-user/company-post/company-post.com
 import {ViewPostComponent} from "./applicant-user/view-post/view-post.component";
 import {ProfileUserComponent} from "./commons/profile-user/profile-user.component";
 import {ProfileCompanyComponent} from "./commons/profile-company/profile-company.component";
+import {VideoSessionComponent} from "./commons/video-session/video-session.component";
 
 const routes: Routes = [
 
@@ -39,6 +40,7 @@ const routes: Routes = [
   {path: 'explore-jobs', component: ExploreJobsComponent},
   {path: 'profile-user/:id', component: ProfileUserComponent},
   {path: 'profile-company/:id', component: ProfileCompanyComponent},
+  {path: 'video-session/:id', component: VideoSessionComponent},
 
   //user
   {path: 'dashboard-user', component: DashboardUserComponent},

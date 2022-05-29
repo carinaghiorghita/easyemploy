@@ -1,0 +1,10 @@
+#remote-container {
+  position: relative;
+}
+
+#local-container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  /*todo fix layout*/
+}

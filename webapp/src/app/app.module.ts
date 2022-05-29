@@ -12,11 +12,11 @@ import {LoginService} from "./service/login.service";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmAccountComponent } from './unauthenticated-user/confirm-account/confirm-account.component';
 import { ResendConfirmationComponent } from './unauthenticated-user/resend-confirmation/resend-confirmation.component';
-import {MatFormField, MatFormFieldModule, MatLabel} from "@angular/material/form-field";
+import { MatFormFieldModule} from "@angular/material/form-field";
 import {ConfirmAccountService} from "./service/confirm-account.service";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
-import {MatCardContent, MatCardModule} from "@angular/material/card";
+import { MatCardModule} from "@angular/material/card";
 import {MatIconModule} from "@angular/material/icon";
 import { HeaderComponent } from './commons/header/header.component';
 import { ResetPasswordSendMailComponent } from './unauthenticated-user/reset-password-send-mail/reset-password-send-mail.component';
@@ -41,6 +41,8 @@ import { ViewPostComponent } from './applicant-user/view-post/view-post.componen
 import { ProfileCompanyComponent } from './commons/profile-company/profile-company.component';
 import { ProfileUserComponent } from './commons/profile-user/profile-user.component';
 import { UserLoginDialogComponent } from './commons/user-login-dialog/user-login-dialog.component';
+import { VideoSessionComponent } from './commons/video-session/video-session.component';
+import {MatGridListModule, MatGridTile} from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [
@@ -74,7 +76,8 @@ import { UserLoginDialogComponent } from './commons/user-login-dialog/user-login
       ViewPostComponent,
       ProfileCompanyComponent,
       ProfileUserComponent,
-      UserLoginDialogComponent
+      UserLoginDialogComponent,
+      VideoSessionComponent
   ],
   imports: [
     FormsModule,
@@ -92,7 +95,8 @@ import { UserLoginDialogComponent } from './commons/user-login-dialog/user-login
     MatIconModule,
     MatDialogModule,
     MatSelectModule,
-    MatOptionModule
+    MatOptionModule,
+    MatGridListModule,
   ],
   providers: [
     LoginService,

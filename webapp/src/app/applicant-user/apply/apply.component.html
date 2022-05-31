@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<meta content="width=device-width" name="viewport"/>
+<html>
+<body>
+
+<div class="main-div">
+  <!--    class: scroll-dashboard maybe for mat-card-->
+  <mat-card class="container-form">
+    <mat-card-content>
+
+    <label class="btn btn-default">
+  <input type="file" (change)="selectFile($event)" />
+</label>
+<button color="primary" mat-raised-button [disabled]="!file" (click)="upload()">
+  Upload
+</button>
+
+    </mat-card-content>
+  </mat-card>
+</div>
+</body>
+</html>

@@ -43,6 +43,7 @@ import { ProfileUserComponent } from './commons/profile-user/profile-user.compon
 import { UserLoginDialogComponent } from './commons/user-login-dialog/user-login-dialog.component';
 import { VideoSessionComponent } from './commons/video-session/video-session.component';
 import {MatGridListModule, MatGridTile} from "@angular/material/grid-list";
+import { ApplyComponent } from './applicant-user/apply/apply.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import {MatGridListModule, MatGridTile} from "@angular/material/grid-list";
       ProfileCompanyComponent,
       ProfileUserComponent,
       UserLoginDialogComponent,
-      VideoSessionComponent
+      VideoSessionComponent,
+      ApplyComponent
   ],
   imports: [
     FormsModule,

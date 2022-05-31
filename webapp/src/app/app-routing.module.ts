@@ -20,6 +20,7 @@ import {ViewPostComponent} from "./applicant-user/view-post/view-post.component"
 import {ProfileUserComponent} from "./commons/profile-user/profile-user.component";
 import {ProfileCompanyComponent} from "./commons/profile-company/profile-company.component";
 import {VideoSessionComponent} from "./commons/video-session/video-session.component";
+import {ApplyComponent} from "./applicant-user/apply/apply.component";
 
 const routes: Routes = [
 
@@ -45,6 +46,7 @@ const routes: Routes = [
   //user
   {path: 'dashboard-user', component: DashboardUserComponent},
   {path: 'view-post/:id', component: ViewPostComponent},
+  {path: 'apply/:id', component: ApplyComponent},
 
   //company
   {path: 'dashboard-company', component: DashboardCompanyComponent},

@@ -1,6 +1,7 @@
 HELP.md
 target/
 build/
+.tmp
 
 ### STS ###
 .apt_generated

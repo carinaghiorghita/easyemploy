@@ -1,7 +1,6 @@
 HELP.md
 target/
 build/
-.tmp
 
 ### STS ###
 .apt_generated
@@ -40,3 +39,4 @@ out/
 .vscode/
 /build/resources/main/application.properties
 /target/classes/
+/src/main/resources/targetFile.tmp

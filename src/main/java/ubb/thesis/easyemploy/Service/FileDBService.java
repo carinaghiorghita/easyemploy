@@ -18,18 +18,17 @@ public class FileDBService {
     @Autowired
     private final FileDBRepository fileDBRepository;
 
-    public FileDB save(MultipartFile file, String user, boolean isCV) throws IOException {
+    @Transactional
+    public FileDB save(MultipartFile file, String user, Long post, boolean isCV) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        FileDB fileDB = new FileDB(fileName, file.getContentType(), file.getBytes(), user, isCV);
-        if(isCV && !fileDBRepository.existsFileDBByUsernameAndIsCV(user, true)) {
-            this.fileDBRepository.deleteByUsernameAndIsCV(user, true);
-            return fileDBRepository.save(fileDB);
+        FileDB fileDB = new FileDB(fileName, file.getContentType(), file.getBytes(), user, post, isCV);
+        if(isCV && fileDBRepository.existsFileDBByUsernameAndPostIdAndIsCV(user, post, true)) {
+            this.fileDBRepository.deleteByUsernameAndPostIdAndIsCV(user, post, true);
         }
-        else if(!isCV && !fileDBRepository.existsFileDBByUsernameAndIsCV(user, false)) {
-            this.fileDBRepository.deleteByUsernameAndIsCV(user, false);
-            return fileDBRepository.save(fileDB);
+        else if(!isCV && fileDBRepository.existsFileDBByUsernameAndPostIdAndIsCV(user, post, false)) {
+            this.fileDBRepository.deleteByUsernameAndPostIdAndIsCV(user, post, false);
         }
-        return null;
+        return fileDBRepository.save(fileDB);
     }
 
     @Transactional
@@ -58,7 +57,7 @@ public class FileDBService {
     }
 
     @Transactional
-    public void deleteByUsername(String username){
-        fileDBRepository.deleteByUsername(username);
+    public void deleteByUsername(String username, Long post){
+        fileDBRepository.deleteByUsernameAndPostId(username, post);
     }
 }

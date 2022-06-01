@@ -11,8 +11,9 @@ export class FileUploadService {
 
   constructor(private http:HttpClient) { }
 
-  uploadFiles(CV: File, CL: File):Observable<any> {
+  uploadFiles(CV: File, CL: File, postId: number):Observable<any> {
     let formData: FormData = new FormData();
+    formData.append('post',String(postId));
     formData.append('CV', CV, CV.name);
     if(CL) {
       formData.append('CL', CL, CL.name);
@@ -21,8 +22,9 @@ export class FileUploadService {
     return this.http.post<any>('/api/uploadFilesCV', formData);
   }
 
-  editApplication(CV: File, CL: File):Observable<any> {
+  editApplication(CV: File, CL: File, postId: number):Observable<any> {
     let formData: FormData = new FormData();
+    formData.append('post',String(postId));
     if(CL) {
       formData.append('CL', CL, CL.name);
       if(CV){

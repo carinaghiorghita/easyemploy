@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface FileDBRepository extends JpaRepository<FileDB, Long> {
     List<FileDB> findAllByUsername(String username);
-    boolean existsFileDBByUsernameAndIsCV(String username, boolean isCV);
-    void deleteByUsernameAndIsCV(String username, boolean isCV);
-    void deleteByUsername(String username);
+    boolean existsFileDBByUsernameAndPostIdAndIsCV(String username, Long postId, boolean isCV);
+    void deleteByUsernameAndPostIdAndIsCV(String username, Long postId, boolean isCV);
+    void deleteByUsernameAndPostId(String username, Long postId);
 }

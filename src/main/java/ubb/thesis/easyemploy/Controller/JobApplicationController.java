@@ -64,7 +64,7 @@ public class JobApplicationController {
         var username = (String) httpSession.getAttribute("username");
         var key = new JobApplicationKey(userId, postId);
 
-        fileDBService.deleteByUsername(username);
+        fileDBService.deleteByUsername(username, postId);
         jobApplicationService.deleteById(key);
     }
 }

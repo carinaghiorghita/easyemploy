@@ -52,7 +52,7 @@ export class ApplyComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.service.uploadFiles(this.CV as File, this.CL as File).subscribe(
+    this.service.uploadFiles(this.CV as File, this.CL as File, this.jobApplication.postId).subscribe(
       () => this.service.saveApplication(this.jobApplication).subscribe(
         () => this.router.navigateByUrl(`/view-post/${this.jobApplication.postId}`)      )
     );

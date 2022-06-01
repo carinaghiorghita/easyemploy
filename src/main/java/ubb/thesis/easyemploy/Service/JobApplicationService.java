@@ -59,4 +59,8 @@ public class JobApplicationService {
         application.setCV(null);
         return application;
     }
+
+    public void deleteById(JobApplicationKey key){
+        jobApplicationRepository.deleteById(key);
+    }
 }

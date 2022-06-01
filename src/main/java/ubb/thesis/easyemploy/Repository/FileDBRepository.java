@@ -11,4 +11,5 @@ public interface FileDBRepository extends JpaRepository<FileDB, Long> {
     List<FileDB> findAllByUsername(String username);
     boolean existsFileDBByUsernameAndIsCV(String username, boolean isCV);
     void deleteByUsernameAndIsCV(String username, boolean isCV);
+    void deleteByUsername(String username);
 }

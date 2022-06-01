@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {JobApplication} from "../../model/job.application.model";
 import {FileUploadService} from "../../service/file-upload.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {DeletePostDialogComponent} from "../../commons/delete-post-dialog/delete-post-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {DeleteApplicationDialogComponent} from "../../commons/delete-application-dialog/delete-application-dialog.component";
 
 @Component({
   selector: 'app-edit-application',
@@ -19,7 +22,8 @@ export class EditApplicationComponent implements OnInit {
 
   constructor(private service: FileUploadService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
     // @ts-ignore
@@ -62,7 +66,21 @@ export class EditApplicationComponent implements OnInit {
   onSubmit(): void {
     this.service.editApplication(this.CV as File, this.CL as File).subscribe(
       () => this.service.saveApplication(this.jobApplication).subscribe(
-        () => this.router.navigateByUrl(`/view-post/${this.jobApplication.postId}`)      )
+        () => this.router.navigateByUrl(`/view-post/${this.jobApplication.postId}`)
+      )
     );
   }
+
+  removeApplication(): void {
+    const dialogRef = this.dialog.open(DeleteApplicationDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.service.removeApplication(this.jobApplication).subscribe(() =>
+          this.router.navigateByUrl(`/view-post/${this.jobApplication.postId}`)
+        );
+      }
+    });
+  }
+
 }

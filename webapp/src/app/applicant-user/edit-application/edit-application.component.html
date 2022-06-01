@@ -85,9 +85,12 @@
           <button color="primary" mat-raised-button type="submit" [disabled]="message.includes('CV')">
             Edit
           </button>
+
         </div>
 
       </form>
+      <br>
+      <mat-error id="clickable" (click)="removeApplication()">Remove application</mat-error>
     </mat-card-content>
   </mat-card>
 </div>

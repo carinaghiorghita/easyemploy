@@ -53,10 +53,18 @@ public class JobApplicationController {
         jobApplicationService.update(jobApplication);
     }
 
-
     @GetMapping(value = "/api/getApplication")
     public JobApplicationDto getApplication(@RequestParam("userId") Long userId, @RequestParam("postId") Long postId){
         var jobApplication = jobApplicationService.getByIdNoFiles(new JobApplicationKey(userId, postId));
         return new JobApplicationDto(jobApplication.getSalutations(), jobApplication.getFirstName(), jobApplication.getLastName(), jobApplication.getDob().toString(), jobApplication.getEmail(), jobApplication.getPhone(), jobApplication.getAddress(), postId, userId);
+    }
+
+    @DeleteMapping(value = "/api/removeApplication")
+    public void removeApplication(@RequestParam("userId") Long userId, @RequestParam("postId") Long postId, HttpSession httpSession){
+        var username = (String) httpSession.getAttribute("username");
+        var key = new JobApplicationKey(userId, postId);
+
+        fileDBService.deleteByUsername(username);
+        jobApplicationService.deleteById(key);
     }
 }

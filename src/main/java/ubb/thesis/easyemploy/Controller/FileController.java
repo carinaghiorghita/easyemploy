@@ -88,6 +88,17 @@ public class FileController {
         }
     }
 
+    @PostMapping(value="/api/uploadFilesCL")
+    public void uploadCL(@RequestParam("CL") MultipartFile CL, HttpSession httpSession){
+        try {
+            var user = (String) httpSession.getAttribute("username");
+
+            fileDBService.save(CL, user, false);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
     @GetMapping(value="/api/getFile")
     public FileDto getFile(@RequestParam("id") Long id) {
         String fileDownloadUri = ServletUriComponentsBuilder

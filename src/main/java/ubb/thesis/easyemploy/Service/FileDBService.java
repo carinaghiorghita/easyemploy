@@ -57,4 +57,8 @@ public class FileDBService {
         return coverLetters.get(0);
     }
 
+    @Transactional
+    public void deleteByUsername(String username){
+        fileDBRepository.deleteByUsername(username);
+    }
 }

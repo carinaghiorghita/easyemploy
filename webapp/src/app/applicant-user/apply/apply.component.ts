@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpClient, HttpEventType, HttpResponse} from "@angular/common/http";
 import {FileUploadService} from "../../service/file-upload.service";
-import {Observable} from "rxjs";
 import {JobApplication} from "../../model/job.application.model";
 import {ActivatedRoute, Router} from "@angular/router";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-apply',
@@ -16,6 +16,9 @@ export class ApplyComponent implements OnInit {
   jobApplication: JobApplication = new JobApplication();
 
   readonly sals: string[] = ['Mr.', 'Mrs.', 'Ms.', 'None'];
+  readonly minDate = moment().subtract(100,'years');
+  readonly maxDate = moment().subtract(16,'years');
+
   message = '';
 
   constructor(private service: FileUploadService,
@@ -25,6 +28,7 @@ export class ApplyComponent implements OnInit {
   ngOnInit(): void {
     // @ts-ignore
     this.jobApplication.postId = +this.route.snapshot.paramMap.get('id');
+    this.jobApplication.dob = this.maxDate.toDate();
   }
 
   selectCV(event: Event) {

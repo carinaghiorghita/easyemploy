@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {DeletePostDialogComponent} from "../../commons/delete-post-dialog/delete-post-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteApplicationDialogComponent} from "../../commons/delete-application-dialog/delete-application-dialog.component";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-edit-application',
@@ -18,6 +19,9 @@ export class EditApplicationComponent implements OnInit {
   jobApplication: JobApplication = new JobApplication();
 
   readonly sals: string[] = ['Mr.', 'Mrs.', 'Ms.', 'None'];
+  readonly minDate = moment().subtract(100,'years');
+  readonly maxDate = moment().subtract(16,'years');
+
   message = '';
 
   constructor(private service: FileUploadService,

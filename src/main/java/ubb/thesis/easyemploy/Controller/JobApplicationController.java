@@ -1,9 +1,7 @@
 package ubb.thesis.easyemploy.Controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ubb.thesis.easyemploy.Domain.DTO.JobApplicationDto;
 import ubb.thesis.easyemploy.Domain.Entities.JobApplication;
 import ubb.thesis.easyemploy.Domain.Entities.JobApplicationKey;
@@ -37,5 +35,28 @@ public class JobApplicationController {
         var jobApplication = new JobApplication(new JobApplicationKey(user.getId(), post.getId()),user,post,CV,CL, jobApplicationDto.getSalutations(), jobApplicationDto.getFirstName(), jobApplicationDto.getLastName(), LocalDate.of(year, month, day), jobApplicationDto.getEmail(), jobApplicationDto.getPhone(), jobApplicationDto.getAddress());
 
         jobApplicationService.save(jobApplication);
+    }
+
+    @PostMapping(value = "/api/updateApplication")
+    public void updateApplication(@RequestBody JobApplicationDto jobApplicationDto, HttpSession httpSession){
+        var post = postService.getPostById(jobApplicationDto.getPostId());
+        var user = userService.getUserByUsername((String) httpSession.getAttribute("username")).get();
+        var CV = fileDBService.getCVByUsername((String) httpSession.getAttribute("username"));
+        var CL = fileDBService.getCLByUsername((String) httpSession.getAttribute("username"));
+
+        var year = Integer.parseInt(jobApplicationDto.getDob().substring(0,4));
+        var month = Integer.parseInt(jobApplicationDto.getDob().substring(5,7));
+        var day = Integer.parseInt(jobApplicationDto.getDob().substring(8,10));
+
+        var jobApplication = new JobApplication(new JobApplicationKey(user.getId(), post.getId()),user,post,CV,CL, jobApplicationDto.getSalutations(), jobApplicationDto.getFirstName(), jobApplicationDto.getLastName(), LocalDate.of(year, month, day), jobApplicationDto.getEmail(), jobApplicationDto.getPhone(), jobApplicationDto.getAddress());
+
+        jobApplicationService.update(jobApplication);
+    }
+
+
+    @GetMapping(value = "/api/getApplication")
+    public JobApplicationDto getApplication(@RequestParam("userId") Long userId, @RequestParam("postId") Long postId){
+        var jobApplication = jobApplicationService.getByIdNoFiles(new JobApplicationKey(userId, postId));
+        return new JobApplicationDto(jobApplication.getSalutations(), jobApplication.getFirstName(), jobApplication.getLastName(), jobApplication.getDob().toString(), jobApplication.getEmail(), jobApplication.getPhone(), jobApplication.getAddress(), postId, userId);
     }
 }

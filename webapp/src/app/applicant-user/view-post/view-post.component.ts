@@ -41,7 +41,10 @@ export class ViewPostComponent implements OnInit {
       .get<any>('/api/getAuthenticatedUser')
       .subscribe((user) => {
         if(user.role==='USER'){
-          this.router.navigateByUrl(`/apply/${this.post.id}`);
+          if(this.buttonText==="Apply")
+            this.router.navigate(["/apply",this.post.id]);
+          else
+            this.router.navigate(["/edit-application",this.post.id, user.id]);
         }
         else {
           const dialogRef = this.dialog.open(UserLoginDialogComponent);

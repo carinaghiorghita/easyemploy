@@ -7,4 +7,5 @@ export class JobApplication {
   phone: string = "";
   address: string = "";
   postId: number = 0;
+  userId: number = 0;
 }

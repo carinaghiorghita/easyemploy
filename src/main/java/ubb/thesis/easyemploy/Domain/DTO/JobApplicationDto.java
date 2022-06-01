@@ -20,5 +20,6 @@ public class JobApplicationDto {
     private String phone;
     private String address;
     private Long postId;
+    private Long userId;
 
 }

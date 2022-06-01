@@ -21,10 +21,14 @@ public class FileDBService {
     public FileDB save(MultipartFile file, String user, boolean isCV) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         FileDB fileDB = new FileDB(fileName, file.getContentType(), file.getBytes(), user, isCV);
-        if(isCV && !fileDBRepository.existsFileDBByUsernameAndIsCV(user, true))
+        if(isCV && !fileDBRepository.existsFileDBByUsernameAndIsCV(user, true)) {
+            this.fileDBRepository.deleteByUsernameAndIsCV(user, true);
             return fileDBRepository.save(fileDB);
-        else if(!isCV && !fileDBRepository.existsFileDBByUsernameAndIsCV(user, false))
+        }
+        else if(!isCV && !fileDBRepository.existsFileDBByUsernameAndIsCV(user, false)) {
+            this.fileDBRepository.deleteByUsernameAndIsCV(user, false);
             return fileDBRepository.save(fileDB);
+        }
         return null;
     }
 

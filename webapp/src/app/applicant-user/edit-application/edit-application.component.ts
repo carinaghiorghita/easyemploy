@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient, HttpEventType, HttpResponse} from "@angular/common/http";
-import {FileUploadService} from "../../service/file-upload.service";
-import {Observable} from "rxjs";
 import {JobApplication} from "../../model/job.application.model";
+import {FileUploadService} from "../../service/file-upload.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
-  selector: 'app-apply',
-  templateUrl: './apply.component.html',
-  styleUrls: ['./apply.component.css']
+  selector: 'app-edit-application',
+  templateUrl: './edit-application.component.html',
+  styleUrls: ['./edit-application.component.css']
 })
-export class ApplyComponent implements OnInit {
+export class EditApplicationComponent implements OnInit {
+  userId: number = 0;
   CV: File | undefined;
   CL: File | undefined;
   jobApplication: JobApplication = new JobApplication();
@@ -24,7 +23,16 @@ export class ApplyComponent implements OnInit {
 
   ngOnInit(): void {
     // @ts-ignore
-    this.jobApplication.postId = +this.route.snapshot.paramMap.get('id');
+    this.jobApplication.postId = +this.route.snapshot.paramMap.get('id1');
+    // @ts-ignore
+    this.userId = +this.route.snapshot.paramMap.get('id2');
+
+    this.service.getApplication(this.userId, this.jobApplication.postId).subscribe(
+      (jobApplication) => {
+        this.jobApplication = jobApplication;
+        console.log(jobApplication);
+      }
+    );
   }
 
   selectCV(event: Event) {
@@ -52,7 +60,7 @@ export class ApplyComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.service.uploadFiles(this.CV as File, this.CL as File).subscribe(
+    this.service.editApplication(this.CV as File, this.CL as File).subscribe(
       () => this.service.saveApplication(this.jobApplication).subscribe(
         () => this.router.navigateByUrl(`/view-post/${this.jobApplication.postId}`)      )
     );

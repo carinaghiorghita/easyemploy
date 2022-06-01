@@ -44,7 +44,9 @@ import { UserLoginDialogComponent } from './commons/user-login-dialog/user-login
 import { VideoSessionComponent } from './commons/video-session/video-session.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import { ApplyComponent } from './applicant-user/apply/apply.component';
-import {MatDatepickerModule, MatDatepickerToggle} from "@angular/material/datepicker";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import { EditApplicationComponent } from './applicant-user/edit-application/edit-application.component';
+import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [
@@ -80,7 +82,8 @@ import {MatDatepickerModule, MatDatepickerToggle} from "@angular/material/datepi
       ProfileUserComponent,
       UserLoginDialogComponent,
       VideoSessionComponent,
-      ApplyComponent
+      ApplyComponent,
+      EditApplicationComponent
   ],
   imports: [
     FormsModule,
@@ -101,14 +104,15 @@ import {MatDatepickerModule, MatDatepickerToggle} from "@angular/material/datepi
     MatOptionModule,
     MatGridListModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatMomentDateModule
   ],
   providers: [
     LoginService,
     ConfirmAccountService,
     ProfileService,
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
-    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
   ],
   bootstrap: [AppComponent],
   entryComponents: [DeleteDialogComponent]

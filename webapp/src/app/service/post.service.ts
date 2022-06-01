@@ -27,4 +27,9 @@ export class PostService {
     const params = new HttpParams().set('id', Number(id))
     return this.httpClient.get<any>('/api/getPost', {params});
   }
+
+  hasApplied(id: number): Observable<boolean>{
+    const params = new HttpParams().set('id', Number(id))
+    return this.httpClient.get<any>('/api/hasApplied', {params});
+  }
 }

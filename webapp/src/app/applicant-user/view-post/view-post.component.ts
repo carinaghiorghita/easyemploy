@@ -14,6 +14,7 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class ViewPostComponent implements OnInit {
   post: Post = new Post();
+  buttonText: string = "";
 
   constructor(private service: PostService,
               private route: ActivatedRoute,
@@ -24,10 +25,15 @@ export class ViewPostComponent implements OnInit {
   ngOnInit(): void {
     // @ts-ignore
     const id = +this.route.snapshot.paramMap.get('id');
+
     this.service.getPost(id)
       .subscribe(post => {
         this.post = post;
       });
+
+    this.service.hasApplied(id).subscribe(
+      (result) => this.buttonText = result ? "Edit application" : "Apply"
+    )
   }
 
   onApply(): void {

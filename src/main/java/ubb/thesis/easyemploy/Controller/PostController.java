@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ubb.thesis.easyemploy.Converter.PostConverter;
 import ubb.thesis.easyemploy.Domain.DTO.PostExploreDto;
 import ubb.thesis.easyemploy.Domain.Entities.Company;
+import ubb.thesis.easyemploy.Domain.Entities.JobApplicationKey;
 import ubb.thesis.easyemploy.Domain.Entities.Post;
 import ubb.thesis.easyemploy.Domain.Validation.PostValidator;
 import ubb.thesis.easyemploy.Service.CompanyService;
@@ -102,4 +103,9 @@ public class PostController {
         return postConverter.convertModelToDto(post);
     }
 
+    @GetMapping(value="/api/hasApplied")
+    public boolean hasApplied(@RequestParam("id") Long id, HttpSession httpSession){
+        JobApplicationKey jobApplicationKey = new JobApplicationKey((Long) httpSession.getAttribute("id"), id);
+        return jobApplicationService.exists(jobApplicationKey);
+    }
 }

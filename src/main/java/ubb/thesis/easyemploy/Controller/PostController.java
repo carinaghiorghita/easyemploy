@@ -7,6 +7,7 @@ import ubb.thesis.easyemploy.Domain.DTO.PostExploreDto;
 import ubb.thesis.easyemploy.Domain.Entities.Company;
 import ubb.thesis.easyemploy.Domain.Entities.JobApplicationKey;
 import ubb.thesis.easyemploy.Domain.Entities.Post;
+import ubb.thesis.easyemploy.Domain.Entities.User;
 import ubb.thesis.easyemploy.Domain.Validation.PostValidator;
 import ubb.thesis.easyemploy.Service.CompanyService;
 import ubb.thesis.easyemploy.Service.JobApplicationService;
@@ -46,18 +47,41 @@ public class PostController {
             throw new IllegalArgumentException("You are not a company!");
     }
 
-    @GetMapping(value = "/api/getPostsFromFollowedCompanies")
+    @GetMapping(value = "/api/getPostsFromFollowedCompaniesNotApplied")
     public List<PostExploreDto> getPostsFromFollowedCompanies(HttpSession httpSession){
         if(httpSession.getAttribute("role").equals("USER")) {
             PostConverter postConverter = new PostConverter(jobApplicationService);
             List<PostExploreDto> postsDto = new ArrayList<>();
 
-            postService.getPostsFromFollowedCompanies(userService.getUserById((Long) httpSession.getAttribute("id")))
+            User user = userService.getUserById((Long) httpSession.getAttribute("id"));
+            List<Post> jobsApplied = jobApplicationService.getPostsForApplicant(user);
+
+            postService.getPostsFromFollowedCompanies(user)
+                .stream()
+                .filter(post -> !jobsApplied.contains(post))
                 .forEach(post -> postsDto.add(postConverter.convertModelToDto(post)));
+
             postsDto.sort((p1, p2) -> p2.getDateCreated().compareTo(p1.getDateCreated()));
             return postsDto;
-        }else
+        } else
             throw new IllegalArgumentException("You are not a user!");
+    }
+
+    @GetMapping(value = "/api/getPostsApplied")
+    public List<PostExploreDto> getPostsApplied(HttpSession httpSession){
+        if(httpSession.getAttribute("role").equals("USER")) {
+            PostConverter postConverter = new PostConverter(jobApplicationService);
+            List<PostExploreDto> postsDto = new ArrayList<>();
+
+            User user = userService.getUserById((Long) httpSession.getAttribute("id"));
+            jobApplicationService.getPostsForApplicant(user)
+                    .forEach(post -> postsDto.add(postConverter.convertModelToDto(post)));
+
+            postsDto.sort((p1, p2) -> p2.getDateCreated().compareTo(p1.getDateCreated()));
+            return postsDto;
+        } else
+            throw new IllegalArgumentException("You are not a user!");
+
     }
 
     @PostMapping(value = "/api/savePost")

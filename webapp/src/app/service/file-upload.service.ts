@@ -38,6 +38,11 @@ export class FileUploadService {
 
   saveApplication(jobApplication: JobApplication){
     console.log(jobApplication);
+    return this.http.post<any>('/api/saveApplication', jobApplication);
+  }
+
+  updateApplication(jobApplication: JobApplication){
+    console.log(jobApplication);
     return this.http.post<any>('/api/updateApplication', jobApplication);
   }
 

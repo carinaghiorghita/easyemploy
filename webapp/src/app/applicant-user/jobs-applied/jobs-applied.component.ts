@@ -3,19 +3,18 @@ import {Post} from "../../model/post.model";
 import {DashboardService} from "../../service/dashboard.service";
 
 @Component({
-  selector: 'app-dashboard-user',
-  templateUrl: './dashboard-user.component.html',
-  styleUrls: ['./dashboard-user.component.css']
+  selector: 'app-jobs-applied',
+  templateUrl: './jobs-applied.component.html',
+  styleUrls: ['./jobs-applied.component.css']
 })
-export class DashboardUserComponent implements OnInit {
+export class JobsAppliedComponent implements OnInit {
   posts: Post[] = [];
 
   constructor(private service: DashboardService) { }
 
   ngOnInit(): void {
-    this.service.getPostsFromFollowedCompaniesNotApplied().subscribe(posts => {
+    this.service.getPostsApplied().subscribe(posts => {
       this.posts = posts;
     });
   }
-
 }

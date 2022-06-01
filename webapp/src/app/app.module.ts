@@ -48,6 +48,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import { EditApplicationComponent } from './applicant-user/edit-application/edit-application.component';
 import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DeleteApplicationDialogComponent } from './commons/delete-application-dialog/delete-application-dialog.component';
+import { JobsAppliedComponent } from './applicant-user/jobs-applied/jobs-applied.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { DeleteApplicationDialogComponent } from './commons/delete-application-d
       VideoSessionComponent,
       ApplyComponent,
       EditApplicationComponent,
-      DeleteApplicationDialogComponent
+      DeleteApplicationDialogComponent,
+      JobsAppliedComponent
   ],
   imports: [
     FormsModule,

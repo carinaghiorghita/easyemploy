@@ -65,7 +65,7 @@ export class EditApplicationComponent implements OnInit {
 
   onSubmit(): void {
     this.service.editApplication(this.CV as File, this.CL as File).subscribe(
-      () => this.service.saveApplication(this.jobApplication).subscribe(
+      () => this.service.updateApplication(this.jobApplication).subscribe(
         () => this.router.navigateByUrl(`/view-post/${this.jobApplication.postId}`)
       )
     );

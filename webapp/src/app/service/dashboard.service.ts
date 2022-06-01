@@ -14,7 +14,11 @@ export class DashboardService {
     return this.httpClient.get<Post[]>('/api/getPostsForCurrentCompany')
   }
 
-  getPostsFromFollowedCompanies(): Observable<Post[]>{
-    return this.httpClient.get<Post[]>('/api/getPostsFromFollowedCompanies')
+  getPostsFromFollowedCompaniesNotApplied(): Observable<Post[]>{
+    return this.httpClient.get<Post[]>('/api/getPostsFromFollowedCompaniesNotApplied')
+  }
+
+  getPostsApplied(): Observable<Post[]>{
+    return this.httpClient.get<Post[]>('/api/getPostsApplied')
   }
 }

@@ -48,6 +48,14 @@ public class JobApplicationService {
                 .collect(Collectors.toList());
     }
 
+    public List<Post> getPostsForApplicant(User user){
+        return jobApplicationRepository.findAll()
+                .stream()
+                .filter(jobApplication -> jobApplication.getUser().getId().equals(user.getId()))
+                .map(JobApplication::getPost)
+                .collect(Collectors.toList());
+    }
+
     public boolean exists(JobApplicationKey jobApplicationKey){
         return jobApplicationRepository.existsById(jobApplicationKey);
     }

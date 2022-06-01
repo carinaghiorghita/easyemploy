@@ -10,7 +10,7 @@ public class UserConverter implements Converter<User, UserExploreDto> {
     @Override
     public UserExploreDto convertModelToDto(User model) {
         CompanyConverter companyConverter = new CompanyConverter();
-        PostConverter postConverter = new PostConverter();
+        //PostConverter postConverter = new PostConverter();
 
 //        Set<CompanyExploreDto> followedCompanies = new HashSet<>();
 //        model.getFollowedCompanies().forEach(company ->
@@ -21,7 +21,7 @@ public class UserConverter implements Converter<User, UserExploreDto> {
 //        model.getJobsApplied().forEach(post ->
 //                jobs.add(postConverter.convertModelToDto(post))
 //        );
-        return new UserExploreDto(model.getId(), model.getEmail(), model.getUsername(), model.getPassword(), model.getFirstName(), model.getLastName(), model.getPhoneNumber(), model.isActivated(), new HashSet<>(), new HashSet<>());
+        return new UserExploreDto(model.getId(), model.getEmail(), model.getUsername(), model.getPassword(), model.getFirstName(), model.getLastName(), model.getPhoneNumber(), model.isActivated(), new HashSet<>());
     }
 
     @Override

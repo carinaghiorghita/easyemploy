@@ -29,8 +29,8 @@ public class Post {
     @JoinColumn
     private Company company;
 
-    @ManyToMany
-    private Set<User> applicants = new HashSet<>();
+//    @OneToMany(mappedBy = "post")
+//    Set<JobApplication> jobApplications;
 
     public Post() {
     }
@@ -45,18 +45,8 @@ public class Post {
         this.company = company;
     }
 
-    public Post(String jobTitle, String experienceLevel, Integer salary, String description, LocalDateTime dateCreated, LocalDateTime dateLastEdited, Company company, Set<User> applicants) {
-        this.jobTitle = jobTitle;
-        this.experienceLevel = experienceLevel;
-        this.salary = salary;
-        this.description = description;
-        this.dateCreated = dateCreated;
-        this.dateLastEdited = dateLastEdited;
-        this.company = company;
-        this.applicants = applicants;
-    }
 
-    public Post(Long id, String jobTitle, String experienceLevel, Integer salary, String description, LocalDateTime dateCreated, LocalDateTime dateLastEdited, Company company, Set<User> applicants) {
+    public Post(Long id, String jobTitle, String experienceLevel, Integer salary, String description, LocalDateTime dateCreated, LocalDateTime dateLastEdited, Company company) {
         this.id = id;
         this.jobTitle = jobTitle;
         this.experienceLevel = experienceLevel;
@@ -65,7 +55,7 @@ public class Post {
         this.dateCreated = dateCreated;
         this.dateLastEdited = dateLastEdited;
         this.company = company;
-        this.applicants = applicants;
+        //this.applicants = applicants;
     }
 
 }

@@ -14,6 +14,7 @@ import ubb.thesis.easyemploy.Domain.Entities.Company;
 import ubb.thesis.easyemploy.Domain.Entities.Post;
 import ubb.thesis.easyemploy.Domain.Entities.User;
 import ubb.thesis.easyemploy.Service.CompanyService;
+import ubb.thesis.easyemploy.Service.JobApplicationService;
 import ubb.thesis.easyemploy.Service.PostService;
 import ubb.thesis.easyemploy.Service.UserService;
 
@@ -27,10 +28,11 @@ public class ExploreController {
     private final PostService postService;
     private final UserService userService;
     private final CompanyService companyService;
+    private final JobApplicationService jobApplicationService;
 
     @GetMapping(value = "/api/getPosts")
     public List<PostExploreDto> getAllPosts(){
-        PostConverter postConverter = new PostConverter();
+        PostConverter postConverter = new PostConverter(jobApplicationService);
         List<PostExploreDto> postsDto = new ArrayList<>();
 
         postService.getAllPosts().forEach(post ->

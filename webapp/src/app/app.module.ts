@@ -34,7 +34,7 @@ import { ExploreCompaniesComponent } from './commons/explore-companies/explore-c
 import { ExploreJobsComponent } from './commons/explore-jobs/explore-jobs.component';
 import { CreatePostComponent } from './company-user/create-post/create-post.component';
 import {MatSelectModule} from "@angular/material/select";
-import {MatOptionModule} from "@angular/material/core";
+import {MAT_DATE_LOCALE, MatNativeDateModule, MatOptionModule} from "@angular/material/core";
 import { CompanyPostComponent } from './company-user/company-post/company-post.component';
 import { DeletePostDialogComponent } from './commons/delete-post-dialog/delete-post-dialog.component';
 import { ViewPostComponent } from './applicant-user/view-post/view-post.component';
@@ -42,8 +42,9 @@ import { ProfileCompanyComponent } from './commons/profile-company/profile-compa
 import { ProfileUserComponent } from './commons/profile-user/profile-user.component';
 import { UserLoginDialogComponent } from './commons/user-login-dialog/user-login-dialog.component';
 import { VideoSessionComponent } from './commons/video-session/video-session.component';
-import {MatGridListModule, MatGridTile} from "@angular/material/grid-list";
+import {MatGridListModule} from "@angular/material/grid-list";
 import { ApplyComponent } from './applicant-user/apply/apply.component';
+import {MatDatepickerModule, MatDatepickerToggle} from "@angular/material/datepicker";
 
 @NgModule({
   declarations: [
@@ -99,12 +100,15 @@ import { ApplyComponent } from './applicant-user/apply/apply.component';
     MatSelectModule,
     MatOptionModule,
     MatGridListModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     LoginService,
     ConfirmAccountService,
     ProfileService,
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
   ],
   bootstrap: [AppComponent],
   entryComponents: [DeleteDialogComponent]

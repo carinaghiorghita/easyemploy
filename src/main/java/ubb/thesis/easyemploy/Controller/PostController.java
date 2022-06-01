@@ -8,6 +8,7 @@ import ubb.thesis.easyemploy.Domain.Entities.Company;
 import ubb.thesis.easyemploy.Domain.Entities.Post;
 import ubb.thesis.easyemploy.Domain.Validation.PostValidator;
 import ubb.thesis.easyemploy.Service.CompanyService;
+import ubb.thesis.easyemploy.Service.JobApplicationService;
 import ubb.thesis.easyemploy.Service.PostService;
 import ubb.thesis.easyemploy.Service.UserService;
 
@@ -28,11 +29,12 @@ public class PostController {
     private final PostService postService;
     private final UserService userService;
     private final CompanyService companyService;
+    private final JobApplicationService jobApplicationService;
 
     @GetMapping(value = "/api/getPostsForCurrentCompany")
     public List<PostExploreDto> getPostsForCurrentCompany(HttpSession httpSession){
         if(httpSession.getAttribute("role").equals("COMPANY")) {
-            PostConverter postConverter = new PostConverter();
+            PostConverter postConverter = new PostConverter(jobApplicationService);
             List<PostExploreDto> postsDto = new ArrayList<>();
 
             postService.getPostsForCompany(companyService.getCompanyById((Long) httpSession.getAttribute("id")))
@@ -46,7 +48,7 @@ public class PostController {
     @GetMapping(value = "/api/getPostsFromFollowedCompanies")
     public List<PostExploreDto> getPostsFromFollowedCompanies(HttpSession httpSession){
         if(httpSession.getAttribute("role").equals("USER")) {
-            PostConverter postConverter = new PostConverter();
+            PostConverter postConverter = new PostConverter(jobApplicationService);
             List<PostExploreDto> postsDto = new ArrayList<>();
 
             postService.getPostsFromFollowedCompanies(userService.getUserById((Long) httpSession.getAttribute("id")))
@@ -74,7 +76,7 @@ public class PostController {
 
     @PostMapping(value = "/api/updatePost")
     public void updatePost(@RequestBody PostExploreDto postExploreDto) throws ParseException {
-        var postConverter = new PostConverter();
+        var postConverter = new PostConverter(jobApplicationService);
         var post = postConverter.convertDtoToModel(postExploreDto);
 
         var postValidator = new PostValidator();
@@ -94,7 +96,7 @@ public class PostController {
 
     @GetMapping(value = "/api/getPost")
     public PostExploreDto getPost(@RequestParam("id") Long id){
-        var postConverter = new PostConverter();
+        var postConverter = new PostConverter(jobApplicationService);
         var post = this.postService.getPostById(id);
 
         return postConverter.convertModelToDto(post);

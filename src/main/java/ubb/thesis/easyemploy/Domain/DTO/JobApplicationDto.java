@@ -5,20 +5,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-public class UserExploreDto {
-    private Long id;
-    private String email;
-    private String username;
-    private String password;
+public class JobApplicationDto {
+    private String salutations;
     private String firstName;
     private String lastName;
-    private String phoneNumber;
-    private boolean activated;
-    private Set<CompanyExploreDto> following;
+    private String dob;
+    private String email;
+    private String phone;
+    private String address;
+    private Long postId;
+
 }

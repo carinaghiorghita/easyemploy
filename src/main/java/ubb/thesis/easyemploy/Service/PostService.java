@@ -20,8 +20,6 @@ import java.util.stream.Collectors;
 public class PostService {
     public static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    private final UserPostRelationService userPostRelationService;
-
     @Autowired
     private final PostRepository postRepository;
 
@@ -58,8 +56,6 @@ public class PostService {
     }
 
     public void deletePost(Post post){
-        //todo check if delete from users applications works lmao
-        this.userPostRelationService.removeAllApplicants(post);
         postRepository.deleteById(post.getId());
     }
 
@@ -67,7 +63,6 @@ public class PostService {
     public void updatePost(Post post){
         postRepository.findById(post.getId())
                 .ifPresent(p -> {
-                    p.setApplicants(post.getApplicants());
                     p.setCompany(post.getCompany());
                     p.setDateCreated(post.getDateCreated());
                     p.setDateLastEdited(post.getDateLastEdited());

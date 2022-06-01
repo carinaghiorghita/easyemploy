@@ -15,8 +15,8 @@ public class User extends BaseUser {
     @ManyToMany
     Set<Company> followedCompanies = new HashSet<>();
 
-    @ManyToMany
-    Set<Post> jobsApplied = new HashSet<>();
+//    @OneToMany(mappedBy = "post")
+//    Set<JobApplication> jobApplications;
 
     public User(String firstName, String lastName, String email, String phoneNumber, String username, String password, boolean activated) {
         super(email, phoneNumber, username, password, activated);
@@ -56,14 +56,6 @@ public class User extends BaseUser {
 
     public void setFollowedCompanies(Set<Company> followedCompanies) {
         this.followedCompanies = followedCompanies;
-    }
-
-    public Set<Post> getJobsApplied() {
-        return jobsApplied;
-    }
-
-    public void setJobsApplied(Set<Post> jobsApplied) {
-        this.jobsApplied = jobsApplied;
     }
 
     @Override

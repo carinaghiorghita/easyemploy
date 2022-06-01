@@ -8,14 +8,86 @@
   <!--    class: scroll-dashboard maybe for mat-card-->
   <mat-card class="container-form">
     <mat-card-content>
+      <form (submit)="onSubmit()" class="form-login">
+        <span class="title-form-login">
+          <h1>Apply</h1>
+        </span>
 
-    <label class="btn btn-default">
-  <input type="file" (change)="selectFile($event)" />
-</label>
-<button color="primary" mat-raised-button [disabled]="!file" (click)="upload()">
-  Upload
-</button>
+        <mat-label class="btn btn-default">
+          CV:
+        </mat-label>
+        <input type="file" accept="application/pdf" (change)="selectCV($event)" />
+        <br>
 
+        <mat-label class="btn btn-default">
+          Cover Letter:
+        </mat-label>
+        <input type="file" accept="application/pdf" (change)="selectCL($event)" />
+
+        <mat-error *ngIf="message.includes('CV')">{{message}}</mat-error>
+
+        <div *ngIf="CV && !message.includes('CV')">
+        <mat-form-field appearance="fill">
+          <mat-label>
+            Salutation
+          </mat-label>
+          <mat-select [(ngModel)]="jobApplication.salutation" name="salutation">
+            <mat-option *ngFor="let sal of sals" value="{{sal}}">
+              {{sal}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>
+            First Name
+          </mat-label>
+          <input [(ngModel)]="jobApplication.firstName" matInput name="firstName" type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>
+            Last Name
+          </mat-label>
+          <input [(ngModel)]="jobApplication.lastName" matInput name="lastName" type="text">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Date of Birth</mat-label>
+          <input matInput [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>
+            Email
+          </mat-label>
+          <input [(ngModel)]="jobApplication.email" matInput name="email" type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>
+            Phone number
+          </mat-label>
+          <input [(ngModel)]="jobApplication.phone" matInput name="phone" type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>
+            Address
+          </mat-label>
+          <textarea matInput [(ngModel)]="jobApplication.address" matInput name="address"></textarea>
+        </mat-form-field>
+
+          <br>
+
+        <button color="primary" mat-raised-button type="submit">
+          Apply
+        </button>
+        </div>
+
+      </form>
     </mat-card-content>
   </mat-card>
 </div>

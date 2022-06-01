@@ -1,4 +1,4 @@
-package ubb.thesis.easyemploy.Domain.Entities;
+package ubb.thesis.easyemploy.Domain.DTO;
 
 public class ResponseMessage {
     private String message;

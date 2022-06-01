@@ -67,7 +67,6 @@ public class UserService {
     }
 
     public void deleteUser(User user){
-        //todo check if this actually works on following
         this.userCompanyRelationService.unfollowAll(user);
         this.deleteById(user.getId());
     }

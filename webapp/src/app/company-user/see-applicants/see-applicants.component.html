@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<meta name="viewport" content="width=device-width" />
+<html>
+<body>
+
+<div class="main-div">
+  <mat-card class="scroll-dashboard">
+
+    <a routerLink='/application/{{postId}}/{{user.id}}' *ngFor="let user of users" class="post-link">
+      <mat-card class="post">
+        {{user.firstName}} {{user.lastName}}
+
+      </mat-card>
+    </a>
+  </mat-card>
+
+</div>
+</body>
+</html>

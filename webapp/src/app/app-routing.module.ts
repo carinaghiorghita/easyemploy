@@ -23,6 +23,8 @@ import {VideoSessionComponent} from "./commons/video-session/video-session.compo
 import {ApplyComponent} from "./applicant-user/apply/apply.component";
 import {EditApplicationComponent} from "./applicant-user/edit-application/edit-application.component";
 import {JobsAppliedComponent} from "./applicant-user/jobs-applied/jobs-applied.component";
+import {SeeApplicantsComponent} from "./company-user/see-applicants/see-applicants.component";
+import {ApplicationComponent} from "./company-user/application/application.component";
 
 const routes: Routes = [
 
@@ -55,7 +57,9 @@ const routes: Routes = [
   //company
   {path: 'dashboard-company', component: DashboardCompanyComponent},
   {path: 'new-post', component: CreatePostComponent},
-  {path: 'company-post/:id', component: CompanyPostComponent}
+  {path: 'company-post/:id', component: CompanyPostComponent},
+  {path: 'see-applicants/:id', component: SeeApplicantsComponent},
+  {path: 'application/:id1/:id2', component: ApplicationComponent}
 ];
 
 @NgModule({

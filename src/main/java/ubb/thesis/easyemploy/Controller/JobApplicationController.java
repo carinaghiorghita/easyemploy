@@ -2,9 +2,12 @@ package ubb.thesis.easyemploy.Controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ubb.thesis.easyemploy.Converter.UserConverter;
 import ubb.thesis.easyemploy.Domain.DTO.JobApplicationDto;
+import ubb.thesis.easyemploy.Domain.DTO.UserExploreDto;
 import ubb.thesis.easyemploy.Domain.Entities.JobApplication;
 import ubb.thesis.easyemploy.Domain.Entities.JobApplicationKey;
+import ubb.thesis.easyemploy.Domain.Entities.Post;
 import ubb.thesis.easyemploy.Service.FileDBService;
 import ubb.thesis.easyemploy.Service.JobApplicationService;
 import ubb.thesis.easyemploy.Service.PostService;
@@ -12,6 +15,8 @@ import ubb.thesis.easyemploy.Service.UserService;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -66,5 +71,16 @@ public class JobApplicationController {
 
         fileDBService.deleteByUsername(username, postId);
         jobApplicationService.deleteById(key);
+    }
+
+    @GetMapping(value = "/api/getApplicants")
+    public List<UserExploreDto> getApplicantsForPost(@RequestParam("postId") Long postId){
+        UserConverter userConverter = new UserConverter();
+        List<UserExploreDto> users = new ArrayList<>();
+
+        jobApplicationService.getApplicantsForPost(postService.getPostById(postId))
+                .forEach(user -> users.add(userConverter.convertModelToDto(user)));
+
+        return users;
     }
 }

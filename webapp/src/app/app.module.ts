@@ -49,6 +49,8 @@ import { EditApplicationComponent } from './applicant-user/edit-application/edit
 import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DeleteApplicationDialogComponent } from './commons/delete-application-dialog/delete-application-dialog.component';
 import { JobsAppliedComponent } from './applicant-user/jobs-applied/jobs-applied.component';
+import { SeeApplicantsComponent } from './company-user/see-applicants/see-applicants.component';
+import { ApplicationComponent } from './company-user/application/application.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +89,9 @@ import { JobsAppliedComponent } from './applicant-user/jobs-applied/jobs-applied
       ApplyComponent,
       EditApplicationComponent,
       DeleteApplicationDialogComponent,
-      JobsAppliedComponent
+      JobsAppliedComponent,
+      SeeApplicantsComponent,
+      ApplicationComponent
   ],
   imports: [
     FormsModule,

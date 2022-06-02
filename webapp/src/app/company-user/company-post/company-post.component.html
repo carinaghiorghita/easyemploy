@@ -46,7 +46,8 @@
         {{errorMessage}}
       </mat-error>
       <br>
-      <h4 class="justify-align">{{post.applicants}} people have applied to this job. <a>Check who applied.</a></h4>
+      <h4 class="justify-align" *ngIf="post.applicants===1">One person has applied to this job. <a routerLink='/see-applicants/{{post.id}}'>Check who applied</a>.</h4>
+      <h4 class="justify-align" *ngIf="post.applicants!==1">{{post.applicants}} people have applied to this job. <a>Check who applied.</a></h4>
       <br>
       <button class="delete-button" mat-raised-button (click)="deletePost()">Delete post</button>
     </mat-card-content>

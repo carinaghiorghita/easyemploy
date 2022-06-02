@@ -95,6 +95,20 @@ public class JobApplicationController {
         return dto;
     }
 
+    @GetMapping(value = "/api/getApplicationPost")
+    public JobApplicationDto getApplicationPost(@RequestParam("postId") Long postId, HttpSession httpSession){
+        //we need to work around returning the pdf files themselves, we only need their ID
+        var userId = (Long) httpSession.getAttribute("id");
+        var jobApplication = jobApplicationService.getByIdNoFiles(new JobApplicationKey(userId, postId));
+        var date = jobApplication.getInterviewTime()==null ? "" : jobApplication.getInterviewTime().toString();
+
+        var dto = new JobApplicationDto(jobApplication.getSalutations(), jobApplication.getFirstName(), jobApplication.getLastName(), jobApplication.getDob().toString(), jobApplication.getEmail(), jobApplication.getPhone(), jobApplication.getAddress(), postId, userId, 0L, 0L, jobApplication.getFeedback(), date, jobApplication.getInterviewLink());
+        dto.setCVId(fileDBService.getFileId(userId,postId,true));
+        dto.setCLId(fileDBService.getFileId(userId,postId,false));
+
+        return dto;
+    }
+
     @DeleteMapping(value = "/api/removeApplication")
     public void removeApplication(@RequestParam("userId") Long userId, @RequestParam("postId") Long postId){
         var key = new JobApplicationKey(userId, postId);

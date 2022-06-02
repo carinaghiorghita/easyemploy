@@ -6,6 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import {DeletePostDialogComponent} from "../../commons/delete-post-dialog/delete-post-dialog.component";
 import {UserLoginDialogComponent} from "../../commons/user-login-dialog/user-login-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {JobApplication} from "../../model/job.application.model";
 
 @Component({
   selector: 'app-view-post',
@@ -14,7 +15,14 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class ViewPostComponent implements OnInit {
   post: Post = new Post();
+  application: JobApplication = new JobApplication();
+
   buttonText: string = "";
+  feedbackText: string = "See feedback";
+  interviewText: string = "See interview details";
+
+  feedback: boolean = false;
+  interview: boolean = false;
 
   constructor(private service: PostService,
               private route: ActivatedRoute,
@@ -32,7 +40,16 @@ export class ViewPostComponent implements OnInit {
       });
 
     this.service.hasApplied(id).subscribe(
-      (result) => this.buttonText = result ? "Edit application" : "Apply"
+      (result) => {
+        this.buttonText = result ? "Edit application" : "Apply";
+        if(result){
+          this.service.getApplication(id).subscribe(
+            (app) => {
+              this.application = app;
+            }
+          )
+        }
+      }
     )
   }
 
@@ -57,5 +74,15 @@ export class ViewPostComponent implements OnInit {
 
         }
       })
+  }
+
+  toggleFeedback(){
+    this.feedback = !this.feedback;
+    this.feedbackText = this.feedback ? "Close feedback" : "See feedback";
+  }
+
+  toggleInterview(){
+    this.interview = !this.interview;
+    this.interviewText = this.interview ? "Close interview details" : "See interview details";
   }
 }

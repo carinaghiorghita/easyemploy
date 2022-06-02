@@ -16,6 +16,20 @@
     <br>
     <h3>Job Description:</h3>
     <div>{{post.description}}</div>
+    <br><br>
+
+    <button *ngIf="application.feedback" mat-raised-button color="primary" type="button" (click)="toggleFeedback()">{{feedbackText}}</button><br><br>
+
+    <div *ngIf="feedback">
+      <h4>{{application.feedback}}</h4>
+    </div>
+
+    <button *ngIf="application.interviewLink" mat-raised-button color="primary" type="button" (click)="toggleInterview()">{{interviewText}}</button>
+    <div *ngIf="interview"><br>
+      <h4>Interview date and time: {{application.interviewTime | date:'medium'}}</h4>
+      <h4><a href="{{application.interviewLink}}">Access interview here</a></h4>
+    </div>
+
   </mat-card>
 </div>
 </body>

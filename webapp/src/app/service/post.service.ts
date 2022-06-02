@@ -38,4 +38,9 @@ export class PostService {
     const params = new HttpParams().set('postId', Number(postId));
     return this.httpClient.get<any>('/api/getApplicants', {params});
   }
+
+  getApplication(postId: number): Observable<any>{
+    const params = new HttpParams().set('postId', Number(postId));
+    return this.httpClient.get<any>('/api/getApplicationPost', {params});
+  }
 }

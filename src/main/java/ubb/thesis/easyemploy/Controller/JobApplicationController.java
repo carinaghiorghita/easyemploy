@@ -8,10 +8,7 @@ import ubb.thesis.easyemploy.Domain.DTO.UserExploreDto;
 import ubb.thesis.easyemploy.Domain.Entities.JobApplication;
 import ubb.thesis.easyemploy.Domain.Entities.JobApplicationKey;
 import ubb.thesis.easyemploy.Domain.Entities.Post;
-import ubb.thesis.easyemploy.Service.FileDBService;
-import ubb.thesis.easyemploy.Service.JobApplicationService;
-import ubb.thesis.easyemploy.Service.PostService;
-import ubb.thesis.easyemploy.Service.UserService;
+import ubb.thesis.easyemploy.Service.*;
 
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
@@ -30,6 +27,7 @@ public class JobApplicationController {
     private final UserService userService;
     private final PostService postService;
     private final FileDBService fileDBService;
+    private final EmailService emailService;
 
     @PostMapping(value = "/api/saveApplication")
     public void saveApplication(@RequestBody JobApplicationDto jobApplicationDto, HttpSession httpSession){
@@ -80,6 +78,14 @@ public class JobApplicationController {
         var jobApplication = new JobApplication(new JobApplicationKey(user.getId(), post.getId()),user,post,CV,CL, jobApplicationDto.getSalutations(), jobApplicationDto.getFirstName(), jobApplicationDto.getLastName(), LocalDate.of(year, month, day), jobApplicationDto.getEmail(), jobApplicationDto.getPhone(), jobApplicationDto.getAddress(), jobApplicationDto.getFeedback(), date, jobApplicationDto.getInterviewLink());
 
         jobApplicationService.update(jobApplication);
+
+        String messageText = "Hello! Your job application has received an update. Check it here: http://localhost:4200/view-post/"+post.getId();
+        String subject = "Application update";
+        emailService.send(
+                jobApplication.getEmail(),
+                subject,
+                messageText);
+
     }
 
     @GetMapping(value = "/api/getApplication")

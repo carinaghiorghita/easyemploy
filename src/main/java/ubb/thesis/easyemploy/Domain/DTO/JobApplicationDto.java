@@ -26,4 +26,7 @@ public class JobApplicationDto {
     private String feedback;
     private String interviewTime;
     private String interviewLink;
+    private String dateCreated;
+    private String dateLastEdited;
+
 }

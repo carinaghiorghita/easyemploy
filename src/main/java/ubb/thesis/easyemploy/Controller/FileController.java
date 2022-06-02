@@ -118,5 +118,6 @@ public class FileController {
         FileDB fileDB = fileDBService.getById(Long.parseLong(id));
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
-                .body(fileDB.getData());    }
+                .body(fileDB.getData());
+    }
 }

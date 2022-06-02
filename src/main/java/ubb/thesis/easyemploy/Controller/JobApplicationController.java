@@ -1,16 +1,20 @@
 package ubb.thesis.easyemploy.Controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ubb.thesis.easyemploy.Converter.UserConverter;
 import ubb.thesis.easyemploy.Domain.DTO.JobApplicationDto;
 import ubb.thesis.easyemploy.Domain.DTO.UserExploreDto;
+import ubb.thesis.easyemploy.Domain.Entities.FileDB;
 import ubb.thesis.easyemploy.Domain.Entities.JobApplication;
 import ubb.thesis.easyemploy.Domain.Entities.JobApplicationKey;
 import ubb.thesis.easyemploy.Domain.Entities.Post;
 import ubb.thesis.easyemploy.Service.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,13 +44,13 @@ public class JobApplicationController {
         var month = Integer.parseInt(jobApplicationDto.getDob().substring(5,7));
         var day = Integer.parseInt(jobApplicationDto.getDob().substring(8,10));
 
-        var jobApplication = new JobApplication(new JobApplicationKey(user.getId(), post.getId()),user,post,CV,CL, jobApplicationDto.getSalutations(), jobApplicationDto.getFirstName(), jobApplicationDto.getLastName(), LocalDate.of(year, month, day), jobApplicationDto.getEmail(), jobApplicationDto.getPhone(), jobApplicationDto.getAddress(), "", null, "");
+        var jobApplication = new JobApplication(new JobApplicationKey(user.getId(), post.getId()),user,post,CV,CL, jobApplicationDto.getSalutations(), jobApplicationDto.getFirstName(), jobApplicationDto.getLastName(), LocalDate.of(year, month, day), jobApplicationDto.getEmail(), jobApplicationDto.getPhone(), jobApplicationDto.getAddress(), "", null, "", LocalDateTime.now(), LocalDateTime.now());
 
         jobApplicationService.save(jobApplication);
     }
 
     @PostMapping(value = "/api/updateApplication")
-    public void updateApplication(@RequestBody JobApplicationDto jobApplicationDto, HttpSession httpSession){
+    public void updateApplication(@RequestBody JobApplicationDto jobApplicationDto, HttpSession httpSession) throws ParseException {
         var post = postService.getPostById(jobApplicationDto.getPostId());
         var user = userService.getUserByUsername((String) httpSession.getAttribute("username")).get();
         var CV = fileDBService.getCVByUser((Long) httpSession.getAttribute("id"));
@@ -56,7 +60,10 @@ public class JobApplicationController {
         var month = Integer.parseInt(jobApplicationDto.getDob().substring(5,7));
         var day = Integer.parseInt(jobApplicationDto.getDob().substring(8,10));
 
-        var jobApplication = new JobApplication(new JobApplicationKey(user.getId(), post.getId()),user,post,CV,CL, jobApplicationDto.getSalutations(), jobApplicationDto.getFirstName(), jobApplicationDto.getLastName(), LocalDate.of(year, month, day), jobApplicationDto.getEmail(), jobApplicationDto.getPhone(), jobApplicationDto.getAddress(), jobApplicationDto.getFeedback(), null, "");
+        final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+        var date = jobApplicationDto.getDateCreated().equals("") ? LocalDateTime.now() : formatter.parse(jobApplicationDto.getDateCreated()).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+        var jobApplication = new JobApplication(new JobApplicationKey(user.getId(), post.getId()),user,post,CV,CL, jobApplicationDto.getSalutations(), jobApplicationDto.getFirstName(), jobApplicationDto.getLastName(), LocalDate.of(year, month, day), jobApplicationDto.getEmail(), jobApplicationDto.getPhone(), jobApplicationDto.getAddress(), jobApplicationDto.getFeedback(), null, "", date, LocalDateTime.now());
 
         jobApplicationService.update(jobApplication);
     }
@@ -74,8 +81,10 @@ public class JobApplicationController {
 
         final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
         var date = formatter.parse(jobApplicationDto.getInterviewTime()).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        var createdDate = formatter.parse(jobApplicationDto.getDateCreated()).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        var editedDate = formatter.parse(jobApplicationDto.getDateLastEdited()).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
-        var jobApplication = new JobApplication(new JobApplicationKey(user.getId(), post.getId()),user,post,CV,CL, jobApplicationDto.getSalutations(), jobApplicationDto.getFirstName(), jobApplicationDto.getLastName(), LocalDate.of(year, month, day), jobApplicationDto.getEmail(), jobApplicationDto.getPhone(), jobApplicationDto.getAddress(), jobApplicationDto.getFeedback(), date, jobApplicationDto.getInterviewLink());
+        var jobApplication = new JobApplication(new JobApplicationKey(user.getId(), post.getId()),user,post,CV,CL, jobApplicationDto.getSalutations(), jobApplicationDto.getFirstName(), jobApplicationDto.getLastName(), LocalDate.of(year, month, day), jobApplicationDto.getEmail(), jobApplicationDto.getPhone(), jobApplicationDto.getAddress(), jobApplicationDto.getFeedback(), date, jobApplicationDto.getInterviewLink(), createdDate, editedDate);
 
         jobApplicationService.update(jobApplication);
 
@@ -93,8 +102,10 @@ public class JobApplicationController {
         //we need to work around returning the pdf files themselves, we only need their ID
         var jobApplication = jobApplicationService.getByIdNoFiles(new JobApplicationKey(userId, postId));
         var date = jobApplication.getInterviewTime()==null ? "" : jobApplication.getInterviewTime().toString();
+        var createdDate = jobApplication.getDateCreated().toString();
+        var editedDate = jobApplication.getDateLastEdited().toString();
 
-        var dto = new JobApplicationDto(jobApplication.getSalutations(), jobApplication.getFirstName(), jobApplication.getLastName(), jobApplication.getDob().toString(), jobApplication.getEmail(), jobApplication.getPhone(), jobApplication.getAddress(), postId, userId, 0L, 0L, jobApplication.getFeedback(), date, jobApplication.getInterviewLink());
+        var dto = new JobApplicationDto(jobApplication.getSalutations(), jobApplication.getFirstName(), jobApplication.getLastName(), jobApplication.getDob().toString(), jobApplication.getEmail(), jobApplication.getPhone(), jobApplication.getAddress(), postId, userId, 0L, 0L, jobApplication.getFeedback(), date, jobApplication.getInterviewLink(), createdDate, editedDate);
         dto.setCVId(fileDBService.getFileId(userId,postId,true));
         dto.setCLId(fileDBService.getFileId(userId,postId,false));
 
@@ -107,8 +118,10 @@ public class JobApplicationController {
         var userId = (Long) httpSession.getAttribute("id");
         var jobApplication = jobApplicationService.getByIdNoFiles(new JobApplicationKey(userId, postId));
         var date = jobApplication.getInterviewTime()==null ? "" : jobApplication.getInterviewTime().toString();
+        var createdDate = jobApplication.getDateCreated().toString();
+        var editedDate = jobApplication.getDateLastEdited().toString();
 
-        var dto = new JobApplicationDto(jobApplication.getSalutations(), jobApplication.getFirstName(), jobApplication.getLastName(), jobApplication.getDob().toString(), jobApplication.getEmail(), jobApplication.getPhone(), jobApplication.getAddress(), postId, userId, 0L, 0L, jobApplication.getFeedback(), date, jobApplication.getInterviewLink());
+        var dto = new JobApplicationDto(jobApplication.getSalutations(), jobApplication.getFirstName(), jobApplication.getLastName(), jobApplication.getDob().toString(), jobApplication.getEmail(), jobApplication.getPhone(), jobApplication.getAddress(), postId, userId, 0L, 0L, jobApplication.getFeedback(), date, jobApplication.getInterviewLink(), createdDate, editedDate);
         dto.setCVId(fileDBService.getFileId(userId,postId,true));
         dto.setCLId(fileDBService.getFileId(userId,postId,false));
 
@@ -132,5 +145,13 @@ public class JobApplicationController {
                 .forEach(user -> users.add(userConverter.convertModelToDto(user)));
 
         return users;
+    }
+
+    @GetMapping(value = "/api/getExcel/{postId}")
+    public ResponseEntity getExcel(@PathVariable String postId) throws IOException {
+        var post = postService.getPostById(Long.parseLong(postId));
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + post.getJobTitle() + "_Applications.xlsx\"")
+                .body(jobApplicationService.getExcel(post));
     }
 }

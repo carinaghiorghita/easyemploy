@@ -9,6 +9,8 @@
     <h1>Application</h1>
 
     <h2 class="justify-align">{{application.salutations}} {{application.firstName}} {{application.lastName}}</h2>
+    <h3 class="justify-align">Created on {{application.dateCreated | date:'medium'}}.</h3>
+    <h3 class="justify-align">Last edited on {{application.dateLastEdited | date:'medium'}}.</h3>
 
     <div style="text-align: center;">
     <a class="icon-container" href="{{CV.url}}">
@@ -24,10 +26,10 @@
     </a>
     </div>
 
-    <h3 class="justify-align">Date of birth: {{application.dob | date:'mediumDate'}}</h3>
-    <h3 class="justify-align">Email: {{application.email}}</h3>
-    <h3 class="justify-align">Phone: {{application.phone}}</h3>
-    <h3 class="justify-align">Address: {{application.address}}</h3>
+    <h4 class="justify-align">Date of birth: {{application.dob | date:'mediumDate'}}</h4>
+    <h4 class="justify-align">Email: {{application.email}}</h4>
+    <h4 class="justify-align">Phone: {{application.phone}}</h4>
+    <h4 class="justify-align">Address: {{application.address}}</h4>
 
     <div style="text-align: center;">
       <button mat-raised-button color="primary" type="button" (click)="toggleFeedback()">{{feedbackText}}</button><br><br>

@@ -48,4 +48,8 @@ public class JobApplication {
     private String feedback;
     private LocalDateTime interviewTime;
     private String interviewLink;
+
+    private LocalDateTime dateCreated;
+    private LocalDateTime dateLastEdited;
+
 }

@@ -13,4 +13,6 @@ export class JobApplication {
   feedback: string = "";
   interviewTime: string = "";
   interviewLink: string = "";
+  dateCreated: string = "";
+  dateLastEdited: string = "";
 }

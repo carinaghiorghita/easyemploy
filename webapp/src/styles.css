@@ -363,6 +363,16 @@ mat-card.view-post {
   text-align: justify;
 }
 
+mat-card.view-application {
+  max-width: 50%;
+  margin: 2em auto;
+  text-align: justify;
+}
+
 .view-post h1 {
+  text-align: center;
+}
+
+.view-application h1 {
   text-align: center;
 }

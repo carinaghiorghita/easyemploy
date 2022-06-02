@@ -1,5 +1,5 @@
 export class JobApplication {
-  salutation: string = "";
+  salutations: string = "";
   firstName: string = "";
   lastName: string = "";
   dob: Date = new Date();
@@ -8,4 +8,6 @@ export class JobApplication {
   address: string = "";
   postId: number = 0;
   userId: number = 0;
+  cvid: number = 0;
+  clid: number = 0;
 }

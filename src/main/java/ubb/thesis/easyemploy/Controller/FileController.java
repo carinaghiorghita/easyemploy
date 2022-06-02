@@ -68,10 +68,10 @@ public class FileController {
     @PostMapping(value="/api/uploadFiles")
     public void upload(@RequestParam("CV") MultipartFile CV, @RequestParam("CL") MultipartFile CL, @RequestParam("post") String post, HttpSession httpSession){
         try {
-            var user = (String) httpSession.getAttribute("username");
+            var userId = (Long) httpSession.getAttribute("id");
 
-            fileDBService.save(CV, user, Long.parseLong(post), true);
-            fileDBService.save(CL, user, Long.parseLong(post), false);
+            fileDBService.save(CV, userId, Long.parseLong(post), true);
+            fileDBService.save(CL, userId, Long.parseLong(post), false);
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -80,9 +80,9 @@ public class FileController {
     @PostMapping(value="/api/uploadFilesCV")
     public void uploadCV(@RequestParam("CV") MultipartFile CV, @RequestParam("post") String post, HttpSession httpSession){
         try {
-            var user = (String) httpSession.getAttribute("username");
+            var userId = (Long) httpSession.getAttribute("id");
 
-            fileDBService.save(CV, user, Long.parseLong(post),true);
+            fileDBService.save(CV, userId, Long.parseLong(post),true);
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -91,9 +91,9 @@ public class FileController {
     @PostMapping(value="/api/uploadFilesCL")
     public void uploadCL(@RequestParam("CL") MultipartFile CL, @RequestParam("post") String post, HttpSession httpSession){
         try {
-            var user = (String) httpSession.getAttribute("username");
+            var userId = (Long) httpSession.getAttribute("id");
 
-            fileDBService.save(CL, user, Long.parseLong(post), false);
+            fileDBService.save(CL, userId, Long.parseLong(post), false);
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -109,7 +109,7 @@ public class FileController {
         return new FileDto(
                 "",
                 fileDownloadUri,
-                "",
+                "application/pdf",
                 0);
     }
 

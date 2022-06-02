@@ -21,5 +21,6 @@ public class JobApplicationDto {
     private String address;
     private Long postId;
     private Long userId;
-
+    private Long CVId;
+    private Long CLId;
 }

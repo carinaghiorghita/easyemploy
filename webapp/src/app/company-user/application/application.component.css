@@ -1,0 +1,14 @@
+.icon{
+  width: 48px;
+}
+
+.icon-container{
+  margin: 0 100px 0 100px;
+}
+
+button {
+  width: 70%;
+  height: 40px;
+  border-radius: 15px;
+  font-size: 20px;
+}

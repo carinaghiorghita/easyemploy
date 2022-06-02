@@ -19,18 +19,18 @@ public class FileDB {
     @Lob
     private byte[] data;
 
-    private String username;
+    private Long userId;
     private Long postId;
     private boolean isCV;
 
     public FileDB() {
     }
 
-    public FileDB(String name, String type, byte[] data, String user, Long postId, boolean isCV) {
+    public FileDB(String name, String type, byte[] data, Long user, Long postId, boolean isCV) {
         this.name = name;
         this.type = type;
         this.data = data;
-        this.username = user;
+        this.userId = user;
         this.postId = postId;
         this.isCV = isCV;
     }

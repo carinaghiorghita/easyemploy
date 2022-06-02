@@ -19,14 +19,14 @@ public class FileDBService {
     private final FileDBRepository fileDBRepository;
 
     @Transactional
-    public FileDB save(MultipartFile file, String user, Long post, boolean isCV) throws IOException {
+    public FileDB save(MultipartFile file, Long user, Long post, boolean isCV) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         FileDB fileDB = new FileDB(fileName, file.getContentType(), file.getBytes(), user, post, isCV);
-        if(isCV && fileDBRepository.existsFileDBByUsernameAndPostIdAndIsCV(user, post, true)) {
-            this.fileDBRepository.deleteByUsernameAndPostIdAndIsCV(user, post, true);
+        if(isCV && fileDBRepository.existsFileDBByUserIdAndPostIdAndIsCV(user, post, true)) {
+            this.fileDBRepository.deleteByUserIdAndPostIdAndIsCV(user, post, true);
         }
-        else if(!isCV && fileDBRepository.existsFileDBByUsernameAndPostIdAndIsCV(user, post, false)) {
-            this.fileDBRepository.deleteByUsernameAndPostIdAndIsCV(user, post, false);
+        else if(!isCV && fileDBRepository.existsFileDBByUserIdAndPostIdAndIsCV(user, post, false)) {
+            this.fileDBRepository.deleteByUserIdAndPostIdAndIsCV(user, post, false);
         }
         return fileDBRepository.save(fileDB);
     }
@@ -37,8 +37,8 @@ public class FileDBService {
     }
 
     @Transactional
-    public FileDB getCVByUsername(String username){
-        return fileDBRepository.findAllByUsername(username)
+    public FileDB getCVByUser(Long userId){
+        return fileDBRepository.findAllByUserId(userId)
                 .stream()
                 .filter(FileDB::isCV)
                 .collect(Collectors.toList())
@@ -46,8 +46,8 @@ public class FileDBService {
     }
 
     @Transactional
-    public FileDB getCLByUsername(String username){
-        var coverLetters = fileDBRepository.findAllByUsername(username)
+    public FileDB getCLByUser(Long userId){
+        var coverLetters = fileDBRepository.findAllByUserId(userId)
                 .stream()
                 .filter(fileDB -> !fileDB.isCV())
                 .collect(Collectors.toList());
@@ -57,7 +57,12 @@ public class FileDBService {
     }
 
     @Transactional
-    public void deleteByUsername(String username, Long post){
-        fileDBRepository.deleteByUsernameAndPostId(username, post);
+    public void deleteByUser(Long userId, Long post){
+        fileDBRepository.deleteByUserIdAndPostId(userId, post);
+    }
+
+    @Transactional
+    public Long getFileId(Long userId, Long post, boolean isCV){
+        return fileDBRepository.findFileDBByUserIdAndPostIdAndIsCV(userId, post, isCV).getId();
     }
 }

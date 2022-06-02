@@ -30,8 +30,8 @@ public class JobApplicationController {
     public void saveApplication(@RequestBody JobApplicationDto jobApplicationDto, HttpSession httpSession){
         var post = postService.getPostById(jobApplicationDto.getPostId());
         var user = userService.getUserByUsername((String) httpSession.getAttribute("username")).get();
-        var CV = fileDBService.getCVByUsername((String) httpSession.getAttribute("username"));
-        var CL = fileDBService.getCLByUsername((String) httpSession.getAttribute("username"));
+        var CV = fileDBService.getCVByUser((Long) httpSession.getAttribute("id"));
+        var CL = fileDBService.getCLByUser((Long) httpSession.getAttribute("id"));
 
         var year = Integer.parseInt(jobApplicationDto.getDob().substring(0,4));
         var month = Integer.parseInt(jobApplicationDto.getDob().substring(5,7));
@@ -46,8 +46,8 @@ public class JobApplicationController {
     public void updateApplication(@RequestBody JobApplicationDto jobApplicationDto, HttpSession httpSession){
         var post = postService.getPostById(jobApplicationDto.getPostId());
         var user = userService.getUserByUsername((String) httpSession.getAttribute("username")).get();
-        var CV = fileDBService.getCVByUsername((String) httpSession.getAttribute("username"));
-        var CL = fileDBService.getCLByUsername((String) httpSession.getAttribute("username"));
+        var CV = fileDBService.getCVByUser((Long) httpSession.getAttribute("id"));
+        var CL = fileDBService.getCLByUser((Long) httpSession.getAttribute("id"));
 
         var year = Integer.parseInt(jobApplicationDto.getDob().substring(0,4));
         var month = Integer.parseInt(jobApplicationDto.getDob().substring(5,7));
@@ -60,16 +60,20 @@ public class JobApplicationController {
 
     @GetMapping(value = "/api/getApplication")
     public JobApplicationDto getApplication(@RequestParam("userId") Long userId, @RequestParam("postId") Long postId){
+        //we need to work around returning the pdf files themselves, we only need their ID
         var jobApplication = jobApplicationService.getByIdNoFiles(new JobApplicationKey(userId, postId));
-        return new JobApplicationDto(jobApplication.getSalutations(), jobApplication.getFirstName(), jobApplication.getLastName(), jobApplication.getDob().toString(), jobApplication.getEmail(), jobApplication.getPhone(), jobApplication.getAddress(), postId, userId);
+        var dto = new JobApplicationDto(jobApplication.getSalutations(), jobApplication.getFirstName(), jobApplication.getLastName(), jobApplication.getDob().toString(), jobApplication.getEmail(), jobApplication.getPhone(), jobApplication.getAddress(), postId, userId, 0L, 0L);
+        dto.setCVId(fileDBService.getFileId(userId,postId,true));
+        dto.setCLId(fileDBService.getFileId(userId,postId,false));
+
+        return dto;
     }
 
     @DeleteMapping(value = "/api/removeApplication")
-    public void removeApplication(@RequestParam("userId") Long userId, @RequestParam("postId") Long postId, HttpSession httpSession){
-        var username = (String) httpSession.getAttribute("username");
+    public void removeApplication(@RequestParam("userId") Long userId, @RequestParam("postId") Long postId){
         var key = new JobApplicationKey(userId, postId);
 
-        fileDBService.deleteByUsername(username, postId);
+        fileDBService.deleteByUser(userId, postId);
         jobApplicationService.deleteById(key);
     }
 

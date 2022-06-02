@@ -18,7 +18,7 @@ export class EditApplicationComponent implements OnInit {
   CL: File | undefined;
   jobApplication: JobApplication = new JobApplication();
 
-  readonly sals: string[] = ['Mr.', 'Mrs.', 'Ms.', 'None'];
+  readonly salutations: string[] = ['Mr.', 'Mrs.', 'Ms.', 'None'];
   readonly minDate = moment().subtract(100,'years');
   readonly maxDate = moment().subtract(16,'years');
 

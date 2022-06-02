@@ -31,7 +31,26 @@
 
     <div style="text-align: center;">
       <button mat-raised-button color="primary" type="button" (click)="toggleFeedback()">{{feedbackText}}</button><br><br>
+
+      <div *ngIf="feedback">
+        <mat-form-field>
+          <textarea matInput [(ngModel)]="application.feedback" name="feedback" placeholder="Enter feedback..."></textarea>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="button" class="send-feedback" (click)="sendFeedback()">Send</button>
+      </div>
+
       <button mat-raised-button color="primary" type="button" (click)="toggleCall()">{{interviewText}}</button>
+
+      <div *ngIf="interview">
+        <mat-form-field>
+          <input matInput type="datetime-local" placeholder="Date and Time:" [(ngModel)]="application.interviewTime">
+        </mat-form-field><br>
+
+        <h4>Interview link: {{interviewLink}}</h4>
+
+        <button mat-raised-button color="primary" type="button" class="send-feedback" (click)="sendInterview()" [disabled]="!application.interviewTime">Send</button>
+
+      </div>
     </div>
 
   </mat-card>

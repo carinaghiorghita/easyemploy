@@ -44,9 +44,16 @@ export class FileUploadService {
   }
 
   updateApplication(jobApplication: JobApplication){
-    console.log(jobApplication);
     return this.http.post<any>('/api/updateApplication', jobApplication);
   }
+
+  sendFeedback(jobApplication: JobApplication){
+    return this.http.post<any>('/api/sendFeedback', jobApplication);
+  }
+
+  // sendInterview(jobApplication: JobApplication){
+  //   return this.http.post<any>('/api/sendInterview', jobApplication);
+  // }
 
   removeApplication(jobApplication: JobApplication): Observable<any>{
     const params = new HttpParams().set('userId', jobApplication.userId).set('postId',jobApplication.postId);

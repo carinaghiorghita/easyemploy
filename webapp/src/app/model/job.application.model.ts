@@ -10,4 +10,7 @@ export class JobApplication {
   userId: number = 0;
   cvid: number = 0;
   clid: number = 0;
+  feedback: string = "";
+  interviewTime: string = "";
+  interviewLink: string = "";
 }

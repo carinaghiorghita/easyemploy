@@ -37,6 +37,9 @@ public class JobApplicationService {
                     p.setLastName(jobApplication.getLastName());
                     p.setPhone(jobApplication.getPhone());
                     p.setSalutations(jobApplication.getSalutations());
+                    p.setFeedback(jobApplication.getFeedback());
+                    p.setInterviewTime(jobApplication.getInterviewTime());
+                    p.setInterviewLink(jobApplication.getInterviewLink());
                 });
     }
 

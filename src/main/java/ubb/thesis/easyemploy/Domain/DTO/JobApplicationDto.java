@@ -23,4 +23,7 @@ public class JobApplicationDto {
     private Long userId;
     private Long CVId;
     private Long CLId;
+    private String feedback;
+    private String interviewTime;
+    private String interviewLink;
 }

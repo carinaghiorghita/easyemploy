@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Table(name = "job_application")
 @Entity
@@ -43,4 +44,8 @@ public class JobApplication {
     private String email;
     private String phone;
     private String address;
+
+    private String feedback;
+    private LocalDateTime interviewTime;
+    private String interviewLink;
 }

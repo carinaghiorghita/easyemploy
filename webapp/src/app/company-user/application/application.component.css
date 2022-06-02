@@ -12,3 +12,13 @@ button {
   border-radius: 15px;
   font-size: 20px;
 }
+
+mat-form-field {
+  width: 70%;
+}
+
+.send-feedback{
+  width: 10%;
+  font-size: 15px;
+  margin: 0 0 10px 20px;
+}

@@ -43,4 +43,8 @@ export class PostService {
     const params = new HttpParams().set('postId', Number(postId));
     return this.httpClient.get<any>('/api/getApplicationPost', {params});
   }
+
+  getInterviewsCurrentUser():Observable<any>{
+    return this.httpClient.get('/api/getInterviewsCurrentUser');
+  }
 }

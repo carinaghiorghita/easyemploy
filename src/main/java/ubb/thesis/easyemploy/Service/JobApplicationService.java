@@ -145,6 +145,37 @@ public class JobApplicationService {
         return application;
     }
 
+    @Transactional
+    public List<JobApplication> getApplicationsWithInterviewsForUser(Long userId){
+        List<JobApplication> applications = jobApplicationRepository.findAll()
+                .stream()
+                .filter(jobApplication -> jobApplication.getUser().getId().equals(userId) && !jobApplication.getInterviewLink().equals(""))
+                .collect(Collectors.toList());
+
+        applications.forEach(jobApplication ->
+            {
+                jobApplication.setCV(null);
+                jobApplication.setCL(null);
+            });
+
+        return applications;
+    }
+
+    @Transactional
+    public List<JobApplication> getApplicationsForPost(Post post){
+        var applications = jobApplicationRepository.findAll()
+                .stream()
+                .filter(jobApplication -> jobApplication.getPost().equals(post))
+                .collect(Collectors.toList());
+
+        applications.forEach(jobApplication -> {
+            jobApplication.setCV(null);
+            jobApplication.setCL(null);
+        });
+
+        return applications;
+    }
+
     public void deleteById(JobApplicationKey key){
         jobApplicationRepository.deleteById(key);
     }

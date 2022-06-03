@@ -5,9 +5,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ubb.thesis.easyemploy.Converter.UserConverter;
+import ubb.thesis.easyemploy.Domain.DTO.InterviewDto;
 import ubb.thesis.easyemploy.Domain.DTO.JobApplicationDto;
 import ubb.thesis.easyemploy.Domain.DTO.UserExploreDto;
-import ubb.thesis.easyemploy.Domain.Entities.FileDB;
 import ubb.thesis.easyemploy.Domain.Entities.JobApplication;
 import ubb.thesis.easyemploy.Domain.Entities.JobApplicationKey;
 import ubb.thesis.easyemploy.Domain.Entities.Post;
@@ -29,6 +29,7 @@ import java.util.List;
 public class JobApplicationController {
     private final JobApplicationService jobApplicationService;
     private final UserService userService;
+    private final CompanyService companyService;
     private final PostService postService;
     private final FileDBService fileDBService;
     private final EmailService emailService;
@@ -126,6 +127,35 @@ public class JobApplicationController {
         dto.setCLId(fileDBService.getFileId(userId,postId,false));
 
         return dto;
+    }
+
+    @GetMapping(value = "/api/getInterviewsCurrentUser")
+    public List<InterviewDto> getInterviewsCurrentUser(HttpSession httpSession){
+        var role = (String) httpSession.getAttribute("role");
+        List<InterviewDto> dtos = new ArrayList<>();
+
+        if(role.equals("USER")){
+            jobApplicationService.getApplicationsWithInterviewsForUser((Long) httpSession.getAttribute("id"))
+                .forEach(jobApplication -> {
+                    var dto = new InterviewDto(jobApplication.getFeedback(), jobApplication.getInterviewTime().toString(), jobApplication.getInterviewLink(), jobApplication.getPost().getJobTitle(), jobApplication.getPost().getCompany().getName());
+                    dtos.add(dto);
+                });
+        }
+        else if (role.equals("COMPANY")){
+            List<Post> postsForCompany = postService.getPostsForCompany(companyService.getCompanyById((Long) httpSession.getAttribute("id")));
+            postsForCompany.forEach(post ->
+                jobApplicationService.getApplicationsForPost(post)
+                    .forEach(jobApplication -> {
+                        var dto = new InterviewDto(jobApplication.getFeedback(), jobApplication.getInterviewTime().toString(), jobApplication.getInterviewLink(), post.getJobTitle(), jobApplication.getSalutations()+" "+jobApplication.getFirstName()+" "+jobApplication.getLastName());
+                        dtos.add(dto);
+                    })
+            );
+        }
+        else {
+            throw new IllegalArgumentException("Access not allowed");
+        }
+
+        return dtos;
     }
 
     @DeleteMapping(value = "/api/removeApplication")

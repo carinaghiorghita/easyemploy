@@ -1,0 +1,14 @@
+::ng-deep button.interview-date {
+  background: #b3c6ff;
+  border-radius: 100%;
+}
+
+.interview-detail h4 {
+  text-align: justify;
+  margin: 0;
+  padding: 0;
+}
+
+a:hover {
+  cursor: pointer;
+}

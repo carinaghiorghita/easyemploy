@@ -51,6 +51,7 @@ import { DeleteApplicationDialogComponent } from './commons/delete-application-d
 import { JobsAppliedComponent } from './applicant-user/jobs-applied/jobs-applied.component';
 import { SeeApplicantsComponent } from './company-user/see-applicants/see-applicants.component';
 import { ApplicationComponent } from './company-user/application/application.component';
+import { CalendarComponent } from './commons/calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { ApplicationComponent } from './company-user/application/application.com
       DeleteApplicationDialogComponent,
       JobsAppliedComponent,
       SeeApplicantsComponent,
-      ApplicationComponent
+      ApplicationComponent,
+      CalendarComponent
   ],
   imports: [
     FormsModule,

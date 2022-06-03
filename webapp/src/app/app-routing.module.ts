@@ -25,6 +25,7 @@ import {EditApplicationComponent} from "./applicant-user/edit-application/edit-a
 import {JobsAppliedComponent} from "./applicant-user/jobs-applied/jobs-applied.component";
 import {SeeApplicantsComponent} from "./company-user/see-applicants/see-applicants.component";
 import {ApplicationComponent} from "./company-user/application/application.component";
+import {CalendarComponent} from "./commons/calendar/calendar.component";
 
 const routes: Routes = [
 
@@ -46,6 +47,7 @@ const routes: Routes = [
   {path: 'profile-user/:id', component: ProfileUserComponent},
   {path: 'profile-company/:id', component: ProfileCompanyComponent},
   {path: 'video-session/:id', component: VideoSessionComponent},
+  {path: 'calendar', component: CalendarComponent},
 
   //user
   {path: 'dashboard-user', component: DashboardUserComponent},

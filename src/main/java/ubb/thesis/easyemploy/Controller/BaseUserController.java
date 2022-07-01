@@ -20,6 +20,7 @@ public class BaseUserController {
 
     @GetMapping(value = "/api/getUserByEmail")
     public BaseUserDto getUserByEmail(@RequestParam("email") String email) {
+        email = email.replace("%2B","+");
         var user = userService.getUserByEmail(email);
         var baseUserConverter = new BaseUserConverter();
         if(user.isEmpty()){

@@ -38,7 +38,6 @@ export class EditApplicationComponent implements OnInit {
     this.service.getApplication(this.userId, this.jobApplication.postId).subscribe(
       (jobApplication) => {
         this.jobApplication = jobApplication;
-        console.log(jobApplication);
       }
     );
   }
@@ -68,6 +67,8 @@ export class EditApplicationComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if(this.jobApplication.salutations==="None")
+    this.jobApplication.salutations="";
     this.service.editApplication(this.CV as File, this.CL as File, this.jobApplication.postId).subscribe(
       () => this.service.updateApplication(this.jobApplication).subscribe(
         () => this.router.navigateByUrl(`/view-post/${this.jobApplication.postId}`)

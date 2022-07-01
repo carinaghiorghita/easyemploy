@@ -18,6 +18,7 @@ public class CompanyExploreDto {
     private String password;
     private String name;
     private String phoneNumber;
+    private String description;
     private boolean activated;
     private Set<UserExploreDto> followers;
 }

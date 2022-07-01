@@ -90,11 +90,11 @@ public class AuthenticationService {
 
     public void signUp(String email, String password, String role){
         if(role.equals("USER")){
-            var user = new User("","",email,"","",this.hashPassword(password),false);
+            var user = new User("","",email,"","",this.hashPassword(password),"",false);
             userService.saveUser(user);
         }
         else if(role.equals("COMPANY")){
-            var company = new Company("",email,"","",this.hashPassword(password),false);
+            var company = new Company("",email,"","",this.hashPassword(password),"",false);
             companyService.saveCompany(company);
         }
         else {
@@ -112,7 +112,7 @@ public class AuthenticationService {
 
         tokenService.saveToken(token);
 
-        String messageText = "Hello! You're one step away from creating your EasyEmploy account!. Click here to confirm your registration: http://localhost:4200/confirm-account?token=" + tokenString;
+        String messageText = "Hello! You're one step away from creating your EasyEmploy account. Click here to confirm your registration: http://localhost:4200/confirm-account?token=" + tokenString;
         String subject = "Confirm registration";
         emailService.send(
                 email,

@@ -5,5 +5,6 @@ export class Company {
   password: string = "";
   name: string = "";
   phoneNumber: string = "";
+  description: string="";
   activated: boolean=false;
 }

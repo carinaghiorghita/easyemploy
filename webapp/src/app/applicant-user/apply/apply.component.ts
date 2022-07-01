@@ -42,6 +42,7 @@ export class ApplyComponent implements OnInit {
         this.jobApplication.firstName = this.message.split(" ")[0];
         this.jobApplication.lastName = this.message.split(" ")[1];
         this.jobApplication.email = this.message.split(" ")[2];
+        this.jobApplication.phone = this.message.split(" ")[3];
       },
       err => {
         console.log(err);
@@ -56,6 +57,8 @@ export class ApplyComponent implements OnInit {
   }
 
   onSubmit(): void {
+    if(this.jobApplication.salutations==="None")
+      this.jobApplication.salutations="";
     this.service.uploadFiles(this.CV as File, this.CL as File, this.jobApplication.postId).subscribe(
       () => this.service.saveApplication(this.jobApplication).subscribe(
         () => this.router.navigateByUrl(`/view-post/${this.jobApplication.postId}`)      )

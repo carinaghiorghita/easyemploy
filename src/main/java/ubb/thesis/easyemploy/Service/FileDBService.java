@@ -37,8 +37,8 @@ public class FileDBService {
     }
 
     @Transactional
-    public FileDB getCVByUser(Long userId){
-        return fileDBRepository.findAllByUserId(userId)
+    public FileDB getCVByUser(Long userId, Long postId){
+        return fileDBRepository.findAllByUserIdAndPostId(userId, postId)
                 .stream()
                 .filter(FileDB::isCV)
                 .collect(Collectors.toList())
@@ -46,8 +46,8 @@ public class FileDBService {
     }
 
     @Transactional
-    public FileDB getCLByUser(Long userId){
-        var coverLetters = fileDBRepository.findAllByUserId(userId)
+    public FileDB getCLByUser(Long userId, Long postId){
+        var coverLetters = fileDBRepository.findAllByUserIdAndPostId(userId, postId)
                 .stream()
                 .filter(fileDB -> !fileDB.isCV())
                 .collect(Collectors.toList());
@@ -63,6 +63,9 @@ public class FileDBService {
 
     @Transactional
     public Long getFileId(Long userId, Long post, boolean isCV){
-        return fileDBRepository.findFileDBByUserIdAndPostIdAndIsCV(userId, post, isCV).getId();
+        var file = fileDBRepository.findFileDBByUserIdAndPostIdAndIsCV(userId, post, isCV);
+        if(file!=null)
+            return file.getId();
+        return -1L;
     }
 }

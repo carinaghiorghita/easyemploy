@@ -13,19 +13,19 @@ public class User extends BaseUser {
     private String lastName;
 
     @ManyToMany
-    Set<Company> followedCompanies = new HashSet<>();
+    private Set<Company> followedCompanies = new HashSet<>();
 
 //    @OneToMany(mappedBy = "post")
 //    Set<JobApplication> jobApplications;
 
-    public User(String firstName, String lastName, String email, String phoneNumber, String username, String password, boolean activated) {
-        super(email, phoneNumber, username, password, activated);
+    public User(String firstName, String lastName, String email, String phoneNumber, String username, String password, String description, boolean activated) {
+        super(email, phoneNumber, username, password, description, activated);
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public User(Long id, String firstName, String lastName, String email, String phoneNumber, String username, String password, boolean activated) {
-        super(id, email, phoneNumber, username, password, activated);
+    public User(Long id, String firstName, String lastName, String email, String phoneNumber, String username, String password, String description, boolean activated) {
+        super(id, email, phoneNumber, username, password, description, activated);
         this.firstName = firstName;
         this.lastName = lastName;
     }

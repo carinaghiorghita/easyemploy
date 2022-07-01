@@ -1,12 +1,10 @@
 <nav>
-
 <ul class="div-right">
   <a [routerLink]="[link]">
     <img
       src="../../../assets/logo.png"
     />
   </a>
-<!--todo add search-->
   <li><a [routerLink]="['/login']" *ngIf="role === 'UNAUTH'">Login</a></li>
   <li><a (click)="logout()" *ngIf="role !== 'UNAUTH'">Logout</a></li>
   <li><a [routerLink]="['/profile']" *ngIf="role !== 'UNAUTH'">Profile</a></li>

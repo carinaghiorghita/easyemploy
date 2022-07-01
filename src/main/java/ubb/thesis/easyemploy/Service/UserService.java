@@ -63,6 +63,7 @@ public class UserService {
                     s.setEmail(user.getEmail());
                     s.setPhoneNumber(user.getPhoneNumber());
                     s.setFollowedCompanies(user.getFollowedCompanies());
+                    s.setDescription(user.getDescription());
                 });
     }
 

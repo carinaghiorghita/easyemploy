@@ -7,3 +7,12 @@ h3 {
   float: right;
 
 }
+
+a {
+  text-decoration: underline;
+  color: black;
+}
+
+a:hover {
+  cursor: pointer;
+}

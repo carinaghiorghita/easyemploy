@@ -15,6 +15,7 @@ public class BaseUserDto {
     private String username;
     private String password;
     private String phoneNumber;
+    private String description;
     private boolean activated;
     private String role;
 }

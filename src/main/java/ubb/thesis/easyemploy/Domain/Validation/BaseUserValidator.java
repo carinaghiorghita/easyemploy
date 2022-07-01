@@ -7,11 +7,10 @@ import ubb.thesis.easyemploy.Domain.Exceptions.ValidationException;
 public class BaseUserValidator {
     public final static String usernameRegex = "^[a-zA-Z0-9\\-_.]*";
     public final static String phoneNumberRegex = "^[0-9+#)( ]*";
-    public final static String emailUsernameRegex = "^[a-zA-Z0-9._]+";
+    public final static String emailUsernameRegex = "^[a-zA-Z0-9._+]+";
     public final static String emailDomainProviderRegex = "^[a-zA-Z]+";
     public final static String emailDomainLocationRegex = "^[a-zA-Z]+";
-    //todo include local characters
-    public final static String nameRegex = "^[A-Z][a-zA-Z\\-&\\. ]*";
+    public final static String nameRegex = "^(?U)[\\p{Alpha}\\-&. ]+";
 
     public void validateId(BaseUser entity) throws ValidationException {
         if(entity.getId()==null || entity.getId()<0)

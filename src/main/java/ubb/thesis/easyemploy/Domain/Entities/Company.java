@@ -16,13 +16,13 @@ public class Company extends BaseUser{
     @ManyToMany
     private Set<User> followers = new HashSet<>();
 
-    public Company(String name, String email, String phoneNumber, String username, String password, boolean activated) {
-        super(email, phoneNumber, username, password, activated);
+    public Company(String name, String email, String phoneNumber, String username, String password, String description, boolean activated) {
+        super(email, phoneNumber, username, password, description, activated);
         this.name = name;
     }
 
-    public Company(Long id, String name, String email, String phoneNumber, String username, String password, boolean activated) {
-        super(id, email, phoneNumber, username, password, activated);
+    public Company(Long id, String name, String email, String phoneNumber, String username, String password, String description, boolean activated) {
+        super(id, email, phoneNumber, username, password, description, activated);
         this.name = name;
     }
 

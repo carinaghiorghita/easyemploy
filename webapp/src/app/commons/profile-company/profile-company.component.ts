@@ -24,6 +24,8 @@ export class ProfileCompanyComponent implements OnInit {
     this.service.getCompanyById(id)
       .subscribe(company => {
         this.company = company;
+        var re = /\+.*@/;
+        this.company.email = this.company.email.replace(re,"@");
         this.service.getUser().subscribe(user => {
           this.authUser=user;
           if(user.id!==0){

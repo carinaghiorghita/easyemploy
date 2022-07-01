@@ -38,8 +38,8 @@ public class JobApplicationController {
     public void saveApplication(@RequestBody JobApplicationDto jobApplicationDto, HttpSession httpSession){
         var post = postService.getPostById(jobApplicationDto.getPostId());
         var user = userService.getUserByUsername((String) httpSession.getAttribute("username")).get();
-        var CV = fileDBService.getCVByUser((Long) httpSession.getAttribute("id"));
-        var CL = fileDBService.getCLByUser((Long) httpSession.getAttribute("id"));
+        var CV = fileDBService.getCVByUser((Long) httpSession.getAttribute("id"),jobApplicationDto.getPostId());
+        var CL = fileDBService.getCLByUser((Long) httpSession.getAttribute("id"),jobApplicationDto.getPostId());
 
         var year = Integer.parseInt(jobApplicationDto.getDob().substring(0,4));
         var month = Integer.parseInt(jobApplicationDto.getDob().substring(5,7));
@@ -54,8 +54,8 @@ public class JobApplicationController {
     public void updateApplication(@RequestBody JobApplicationDto jobApplicationDto, HttpSession httpSession) throws ParseException {
         var post = postService.getPostById(jobApplicationDto.getPostId());
         var user = userService.getUserByUsername((String) httpSession.getAttribute("username")).get();
-        var CV = fileDBService.getCVByUser((Long) httpSession.getAttribute("id"));
-        var CL = fileDBService.getCLByUser((Long) httpSession.getAttribute("id"));
+        var CV = fileDBService.getCVByUser((Long) httpSession.getAttribute("id"),jobApplicationDto.getPostId());
+        var CL = fileDBService.getCLByUser((Long) httpSession.getAttribute("id"),jobApplicationDto.getPostId());
 
         var year = Integer.parseInt(jobApplicationDto.getDob().substring(0,4));
         var month = Integer.parseInt(jobApplicationDto.getDob().substring(5,7));
@@ -73,8 +73,8 @@ public class JobApplicationController {
     public void sendFeedback(@RequestBody JobApplicationDto jobApplicationDto) throws ParseException {
         var post = postService.getPostById(jobApplicationDto.getPostId());
         var user = userService.getUserById(jobApplicationDto.getUserId());
-        var CV = fileDBService.getCVByUser(jobApplicationDto.getUserId());
-        var CL = fileDBService.getCLByUser(jobApplicationDto.getUserId());
+        var CV = fileDBService.getCVByUser(jobApplicationDto.getUserId(),jobApplicationDto.getPostId());
+        var CL = fileDBService.getCLByUser(jobApplicationDto.getUserId(),jobApplicationDto.getPostId());
 
         var year = Integer.parseInt(jobApplicationDto.getDob().substring(0,4));
         var month = Integer.parseInt(jobApplicationDto.getDob().substring(5,7));
@@ -89,7 +89,7 @@ public class JobApplicationController {
 
         jobApplicationService.update(jobApplication);
 
-        String messageText = "Hello! Your job application has received an update. Check it here: http://localhost:4200/view-post/"+post.getId();
+        String messageText = "Hello! Your job application has received an update. Check it here: http://localhost:4200/view-post/"+post.getId()+".";
         String subject = "Application update";
         emailService.send(
                 jobApplication.getEmail(),
@@ -181,7 +181,8 @@ public class JobApplicationController {
     public ResponseEntity getExcel(@PathVariable String postId) throws IOException {
         var post = postService.getPostById(Long.parseLong(postId));
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + post.getJobTitle() + "_Applications.xlsx\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + post.getJobTitle() + "_Applications.xlsx\"")
                 .body(jobApplicationService.getExcel(post));
     }
 }

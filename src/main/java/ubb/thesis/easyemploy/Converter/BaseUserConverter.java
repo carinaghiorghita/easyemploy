@@ -12,11 +12,11 @@ public class BaseUserConverter implements Converter<BaseUser, BaseUserDto> {
     @Override
     public BaseUserDto convertModelToDto(BaseUser model) {
         String role = model instanceof User ? "USER" : "COMPANY";
-        return new BaseUserDto(model.getId(), model.getEmail(), model.getUsername(), model.getPassword(), model.getPhoneNumber(), model.isActivated(), role);
+        return new BaseUserDto(model.getId(), model.getEmail(), model.getUsername(), model.getPassword(), model.getPhoneNumber(), model.getDescription(), model.isActivated(), role);
     }
 
     @Override
     public BaseUser convertDtoToModel(BaseUserDto dto) {
-        return new BaseUser(dto.getId(), dto.getEmail(), dto.getPhoneNumber(), dto.getUsername(), dto.getPassword(), dto.isActivated());
+        return new BaseUser(dto.getId(), dto.getEmail(), dto.getPhoneNumber(), dto.getUsername(), dto.getPassword(), dto.getDescription(), dto.isActivated());
     }
 }

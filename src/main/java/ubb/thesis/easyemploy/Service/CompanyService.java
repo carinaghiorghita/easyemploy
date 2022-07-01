@@ -62,6 +62,7 @@ public class CompanyService {
                     s.setEmail(company.getEmail());
                     s.setPhoneNumber(company.getPhoneNumber());
                     s.setFollowers(company.getFollowers());
+                    s.setDescription(company.getDescription());
                 });
     }
 

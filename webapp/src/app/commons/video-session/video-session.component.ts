@@ -11,6 +11,7 @@ declare var apiRTC: any;
 export class VideoSessionComponent implements OnInit {
 
   conversationId: string | null = '';
+  active: boolean = false;
 
   constructor(private route: ActivatedRoute) {
   }
@@ -52,8 +53,10 @@ export class VideoSessionComponent implements OnInit {
 
       // event listener: stream is added to/removed from conversation
       conversation.on('streamAdded', (stream: any) => {
-        stream.addInDiv('remote-container', 'remote-media-' + stream.streamId, {}, false);
+        this.active = true;
+        stream.addInDiv('remote-container', 'remote-media-' + stream.streamId, {width: '100%', height: '100%'}, false);
       }).on('streamRemoved', (stream: any) => {
+        this.active = false;
         stream.removeFromDiv('remote-container', 'remote-media-' + stream.streamId);
       });
 
@@ -71,7 +74,7 @@ export class VideoSessionComponent implements OnInit {
           // save local stream
           localStream = stream;
           stream.removeFromDiv('local-container', 'local-media');
-          stream.addInDiv('local-container', 'local-media', {}, true);
+          stream.addInDiv('local-container', 'local-media', {width: '100%', height: '100%'}, true);
 
           // join conversation
           conversation.join()

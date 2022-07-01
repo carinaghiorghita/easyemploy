@@ -41,8 +41,6 @@ export class ApplicationComponent implements OnInit {
         this.service.getFile(app.cvid).subscribe((CV) => this.CV = CV);
         this.service.getFile(app.clid).subscribe((CL) => this.CL = CL);
 
-        console.log(app);
-
         if (this.application.feedback === "" || this.application.feedback === null)
           this.feedbackText = "Send feedback";
         else
@@ -77,7 +75,9 @@ export class ApplicationComponent implements OnInit {
         this.interviewText = "Edit interview details";
     }
     else {
+
       this.interviewLink = "http://localhost:4200/video-session/" + uuidv4();
+
       this.interviewText = "Close";
     }
   }

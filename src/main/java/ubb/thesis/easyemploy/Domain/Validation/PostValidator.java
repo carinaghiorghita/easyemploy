@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PostValidator {
-    public final static String titleRegex = "^[A-Z][a-zA-Z\\-&\\. ]*";
+    public final static String titleRegex = "^(?U)[\\p{Alpha}\\-&\\. ]*";
     public final static List<String> validExperienceLevels = Arrays.asList("Internship", "Junior", "Mid-Level", "Senior", "Any");
 
     public void validateTitle(Post post){

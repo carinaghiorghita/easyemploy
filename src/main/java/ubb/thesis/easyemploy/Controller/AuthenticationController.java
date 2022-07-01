@@ -22,14 +22,13 @@ import javax.servlet.http.HttpSession;
 @RestController
 @AllArgsConstructor
 public class AuthenticationController {
-    public static final Logger logger = LoggerFactory.getLogger(UserService.class);
-
     private final AuthenticationService authenticationService;
     private final TokenService tokenService;
 
     @PostMapping(value = "/api/login")
     public BaseUserDto loginUser(@RequestBody BaseUserDto userDto, HttpSession httpSession) {
-        var user = authenticationService.loginByUsername(userDto.getUsername(), userDto.getPassword());
+        var user = authenticationService
+                .loginByUsername(userDto.getUsername(), userDto.getPassword());
         if(user.isEmpty()) {
             user = authenticationService.loginByEmail(userDto.getUsername(), userDto.getPassword());
             if(user.isEmpty())
@@ -60,7 +59,7 @@ public class AuthenticationController {
             var baseUserConverter = new BaseUserConverter();
             return baseUserConverter.convertModelToDto(baseUser);
         }
-        return new BaseUserDto(0L,"","","","",false,"UNAUTH");
+        return new BaseUserDto(0L,"","","","","",false,"UNAUTH");
     }
 
     @GetMapping(value ="/api/getUserRole")
@@ -68,9 +67,9 @@ public class AuthenticationController {
         String role = (String) httpSession.getAttribute("role");
         if(role==null || role.equals("")) {
             httpSession.setAttribute("role","UNAUTH");
-            return new BaseUserDto(0L,"","","","",false,"UNAUTH");
+            return new BaseUserDto(0L,"","","","","",false,"UNAUTH");
         }
-        return new BaseUserDto(0L,"","","","",false,role);
+        return new BaseUserDto(0L,"","","","","",false,role);
     }
 
     @PostMapping(value = "/api/create-account")

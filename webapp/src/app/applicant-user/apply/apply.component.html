@@ -13,16 +13,20 @@
           <h1>Apply</h1>
         </span>
 
+        <div class="centered">
         <mat-label class="btn btn-default">
           CV:
         </mat-label>
         <input type="file" accept="application/pdf" (change)="selectCV($event)" />
-        <br>
+          <p>CV must contain: first and last name, e-mail, phone number</p>
+        </div>
 
+        <div class="centered" *ngIf="jobApplication.email!==''">
         <mat-label class="btn btn-default">
           Cover Letter:
         </mat-label>
         <input type="file" accept="application/pdf" (change)="selectCL($event)" />
+        </div><br>
 
         <mat-error *ngIf="message.includes('CV')">{{message}}</mat-error>
 

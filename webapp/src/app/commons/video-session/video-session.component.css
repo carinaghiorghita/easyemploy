@@ -1,10 +1,44 @@
-#remote-container {
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  margin: 0;
+}
+
+#conference {
   position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+#remote-container {
+  position: absolute;
+  /*left:0;*/
+  /*right:0;*/
+  /*top: 0;*/
+  /*bottom: 0;*/
+  /*margin: 0 auto;*/
+  /*width: 50%;*/
+  /*height: 80%;*/
+  top: 50%;
+  left: 50%;
+  width: auto;
+  height: auto;
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -o-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  z-index: 1;
 }
 
 #local-container {
   position: absolute;
-  bottom: 0;
+  width: 25%;
+  height: auto;
+  bottom: 0px;
   right: 0;
-  /*todo fix layout*/
+  z-index: 2;
 }

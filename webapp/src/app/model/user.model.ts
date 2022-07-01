@@ -6,5 +6,6 @@ export class User {
   firstName: string = "";
   lastName: string = "";
   phoneNumber: string = "";
+  description: string="";
   activated: boolean=false;
 }

@@ -34,10 +34,12 @@ public class FileController {
             try (OutputStream os = new FileOutputStream(simpleFile)) {
                 os.write(CV.getBytes());
             }
+
             PDFTextStripper pdfTextStripper = new PDFTextStripper();
             PDDocument document = PDDocument.load(simpleFile);
 
             String content = pdfTextStripper.getText(document);
+
             content = content.replace("\u00a0"," \r\n");
             content = content.replaceAll("(\\r|\\n)", "");
             content = content.replaceAll("( )+", " ");
@@ -46,17 +48,32 @@ public class FileController {
             var split = content.split(" ");
 
             if(split.length < 2)
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage("Could not process CV."));
+                return ResponseEntity
+                        .status(HttpStatus.EXPECTATION_FAILED)
+                        .body(new ResponseMessage("Could not process CV."));
 
             var firstName = split[0];
             var lastName = split[1];
 
-            var emailList = Arrays.stream(split).filter(word -> word.contains("@")).collect(Collectors.toList());
+            var emailList = Arrays.stream(split)
+                    .filter(word -> word.contains("@")).collect(Collectors.toList());
+
             if(emailList.size()<1)
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage("Could not process CV."));
+                return ResponseEntity
+                        .status(HttpStatus.EXPECTATION_FAILED)
+                        .body(new ResponseMessage("Could not process CV."));
             var email = emailList.get(0);
 
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(firstName+" "+lastName+" "+email));
+            var phoneList = Arrays.stream(split)
+                    .filter(word -> word.matches("[+#(0-9][+#)(0-9]{3,}[0-9)]")).collect(Collectors.toList());
+
+            if(phoneList.size()<1)
+                return ResponseEntity
+                        .status(HttpStatus.EXPECTATION_FAILED)
+                        .body(new ResponseMessage("Could not process CV."));
+            var phone = phoneList.get(0);
+
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(firstName+" "+lastName+" "+email+" "+phone));
         }
         catch (Exception e){
             e.printStackTrace();
@@ -117,7 +134,8 @@ public class FileController {
     public ResponseEntity getFileBytes(@PathVariable String id) {
         FileDB fileDB = fileDBService.getById(Long.parseLong(id));
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + fileDB.getName() + "\"")
                 .body(fileDB.getData());
     }
 }

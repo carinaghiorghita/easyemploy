@@ -28,7 +28,7 @@ public class ProfileController {
     public UserExploreDto getUser(HttpSession httpSession) {
         String username = (String) httpSession.getAttribute("username");
         if(username==null)
-            return new UserExploreDto(0L,"","","","","","",false,new HashSet<>());
+            return new UserExploreDto(0L,"","","","","","","",false,new HashSet<>());
         var user = userService.getUserByUsername(username).get();
         var userConverter = new UserConverter();
         return userConverter.convertModelToDto(user);

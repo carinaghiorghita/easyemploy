@@ -23,7 +23,7 @@ export class CreatePostComponent implements OnInit {
   onSubmit(){
     this.service.savePost(this.post).subscribe(
       () => {this.router.navigate(['/dashboard-company'])},
-      error => {this.error=error.error.message;console.log(error);}
+      error => this.error=error.error.message
     );
   }
 

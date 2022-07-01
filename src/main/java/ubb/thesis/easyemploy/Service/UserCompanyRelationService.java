@@ -12,8 +12,6 @@ import java.util.HashSet;
 
 @Service
 public class UserCompanyRelationService {
-    public static final Logger logger = LoggerFactory.getLogger(UserService.class);
-
     private final UserService userService;
     private final CompanyService companyService;
 

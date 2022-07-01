@@ -7,7 +7,9 @@
 <div class="main-div">
   <mat-card class="scroll-dashboard">
 
-    <button mat-raised-button color="primary" type="button" [routerLink]="['/jobs-applied']">See your applications</button>
+    <button mat-raised-button color="primary" type="button" [routerLink]="['/jobs-applied']">
+      See your applications
+    </button>
 
     <a routerLink='/view-post/{{post.id}}' *ngFor="let post of posts" class="post-link">
       <mat-card class="post">
@@ -15,7 +17,8 @@
       </mat-card>
     </a>
     <h2 *ngIf="posts.length===0">
-      Looks like you don't follow any companies with job listings. <a [routerLink]="['/explore-companies']">Explore some now.</a>
+      Looks like you don't follow any companies with job listings.
+      <a [routerLink]="['/explore-companies']">Explore some now.</a>
     </h2>
 
   </mat-card>

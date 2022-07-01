@@ -8,18 +8,18 @@
   <mat-card class="view-application">
     <h1>Application</h1>
 
-    <h2 class="justify-align">{{application.salutations}} {{application.firstName}} {{application.lastName}}</h2>
+    <h2 class="justify-align"><a routerLink='/profile-user/{{application.userId}}'>{{application.salutations}} {{application.firstName}} {{application.lastName}}</a></h2>
     <h3 class="justify-align">Created on {{application.dateCreated | date:'medium'}}.</h3>
     <h3 class="justify-align">Last edited on {{application.dateLastEdited | date:'medium'}}.</h3>
 
     <div style="text-align: center;">
-    <a class="icon-container" href="{{CV.url}}">
+    <a *ngIf="this.application.cvid!==-1" class="icon-container" href="{{CV.url}}">
       <img class="icon"
            src="../../../assets/cv.png"
       />
     </a>
 
-    <a class="icon-container" href="{{CL.url}}">
+    <a *ngIf="this.application.clid!==-1" class="icon-container" href="{{CL.url}}">
       <img class="icon"
            src="../../../assets/cl.png"
       />
@@ -44,6 +44,7 @@
       <button mat-raised-button color="primary" type="button" (click)="toggleCall()">{{interviewText}}</button>
 
       <div *ngIf="interview">
+        <br>
         <mat-form-field>
           <input matInput type="datetime-local" placeholder="Date and Time:" [(ngModel)]="application.interviewTime">
         </mat-form-field><br>

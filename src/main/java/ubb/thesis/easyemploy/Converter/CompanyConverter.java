@@ -15,11 +15,11 @@ public class CompanyConverter implements Converter<Company, CompanyExploreDto> {
 //                followers.add(userConverter.convertModelToDto(user))
 //        );
 
-        return new CompanyExploreDto(model.getId(), model.getEmail(), model.getUsername(), model.getPassword(), model.getName(), model.getPhoneNumber(), model.isActivated(), new HashSet<>());
+        return new CompanyExploreDto(model.getId(), model.getEmail(), model.getUsername(), model.getPassword(), model.getName(), model.getPhoneNumber(), model.getDescription(), model.isActivated(), new HashSet<>());
     }
 
     @Override
     public Company convertDtoToModel(CompanyExploreDto dto) {
-        return new Company(dto.getId(),dto.getName(), dto.getEmail(), dto.getPhoneNumber(), dto.getUsername(), dto.getPassword(), dto.isActivated());
+        return new Company(dto.getId(),dto.getName(), dto.getEmail(), dto.getPhoneNumber(), dto.getUsername(), dto.getPassword(), dto.getDescription(), dto.isActivated());
     }
 }

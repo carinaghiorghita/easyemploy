@@ -4,6 +4,7 @@ export class BaseUser {
   username: string = "";
   password: string = "";
   phoneNumber: string = "";
+  description: string="";
   activated: boolean=false;
   role: string = "";
 }

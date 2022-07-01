@@ -7,7 +7,9 @@
 <div class="main-div">
   <mat-card class="scroll-dashboard">
 
-    <button *ngIf="posts.length!==0" mat-raised-button color="primary" type="button" [routerLink]="['/new-post']">New post</button>
+    <button *ngIf="posts.length!==0" mat-raised-button color="primary" type="button" [routerLink]="['/new-post']">
+      New post
+    </button>
 
     <a routerLink="/company-post/{{post.id}}" *ngFor="let post of posts" class="post-link">
     <mat-card class="post">
@@ -17,7 +19,8 @@
     </mat-card>
     </a>
     <h2 *ngIf="posts.length===0">
-      Looks like you haven't posted any job listings yet. <a [routerLink]="['/new-post']">Create one now.</a>
+      Looks like you haven't posted any job listings yet.
+      <a [routerLink]="['/new-post']">Create one now.</a>
     </h2>
 
   </mat-card>

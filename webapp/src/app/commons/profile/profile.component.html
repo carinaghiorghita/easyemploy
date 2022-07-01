@@ -9,7 +9,6 @@
     <mat-card-content>
     <h2>Your profile</h2>
       <form (submit)="onSubmit()" class="form-login">
-<!--    todo maybe create separate component based on role-->
         <div *ngIf="role==='USER'">
           <mat-form-field appearance="fill">
             <mat-label>Username</mat-label>
@@ -30,6 +29,11 @@
             <mat-label>Phone Number</mat-label>
             <input [(ngModel)]="user.phoneNumber" matInput name="phoneNumber" type="text" [disabled]="disabled">
           </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput [(ngModel)]="user.description" name="description" [disabled]="disabled"></textarea>
+          </mat-form-field>
         </div>
 
         <div *ngIf="role==='COMPANY'">
@@ -46,6 +50,11 @@
           <mat-form-field appearance="fill">
             <mat-label>Phone Number</mat-label>
             <input [(ngModel)]="company.phoneNumber" matInput name="phoneNumber" type="text" [disabled]="disabled">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput [(ngModel)]="company.description" name="description" [disabled]="disabled"></textarea>
           </mat-form-field>
         </div>
 

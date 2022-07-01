@@ -33,6 +33,7 @@ export class ConfirmAccountService {
 
 
   getUser(email: string): Observable<any>{
+    email=email.replace("+","%2B");
     const params = new HttpParams().set('email', String(email))
 
     return this.httpClient

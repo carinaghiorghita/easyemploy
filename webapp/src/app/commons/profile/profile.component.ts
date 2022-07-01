@@ -73,7 +73,7 @@ export class ProfileComponent implements OnInit {
   }
 
   deleteAccount(): void {
-    const dialogRef = this.dialog.open(DeletePostDialogComponent);
+    const dialogRef = this.dialog.open(DeleteDialogComponent);
 
     var username = this.user.username!=="" ? this.user.username : this.company.username;
 

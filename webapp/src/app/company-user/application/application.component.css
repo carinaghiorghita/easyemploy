@@ -3,7 +3,7 @@
 }
 
 .icon-container{
-  margin: 0 100px 0 100px;
+  margin: 0 50px 0 50px;
 }
 
 button {
@@ -21,4 +21,14 @@ mat-form-field {
   width: 10%;
   font-size: 15px;
   margin: 0 0 10px 20px;
+}
+
+
+a {
+  text-decoration: underline;
+  color: black;
+}
+
+a:hover {
+  cursor: pointer;
 }

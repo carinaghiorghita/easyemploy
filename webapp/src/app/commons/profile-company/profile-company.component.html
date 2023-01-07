@@ -6,8 +6,6 @@
 
 <div class="main-div">
   <mat-card class="view-post">
-    <button *ngIf="authUser.id!==0 && !this.follows" color="primary" mat-raised-button class="follow" (click)="onFollow()">Follow</button>
-    <button *ngIf="authUser.id!==0 && this.follows" color="primary" mat-raised-button class="follow" (click)="onUnfollow()">Unfollow</button>
     <h2 class="justify-align">{{company.name}}</h2>
     <h3 class="justify-align">Contact: {{company.email}}</h3>
     <br>

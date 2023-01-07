@@ -49,10 +49,6 @@ export class EditApplicationComponent implements OnInit {
       event => {
         // @ts-ignore
         this.message = event.message;
-
-        this.jobApplication.firstName = this.message.split(" ")[0];
-        this.jobApplication.lastName = this.message.split(" ")[1];
-        this.jobApplication.email = this.message.split(" ")[2];
       },
       err => {
         console.log(err);

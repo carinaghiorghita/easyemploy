@@ -7,7 +7,6 @@
 <div class="main-div">
   <mat-card class="scroll-dashboard">
 
-    <a href="{{excelLink}}"><button mat-raised-button color="primary" type="button">See all application data</button></a>
 
     <a routerLink='/application/{{postId}}/{{user.id}}' *ngFor="let user of users" class="post-link">
       <mat-card class="post">

@@ -26,9 +26,6 @@
       Don't have an account? <a [routerLink]="['/create-account']">Sign Up</a>
     </p>
     <br>
-    <p class="txt1">
-      <a [routerLink]="['/reset-password-send-mail']">Reset password</a>
-    </p>
     <mat-error *ngIf="errorMessage!==''">
       {{errorMessage}}
     </mat-error>

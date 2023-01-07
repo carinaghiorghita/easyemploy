@@ -24,7 +24,6 @@
         </mat-label>
         <input type="file" accept="application/pdf" (change)="selectCL($event)" />
 
-        <mat-error *ngIf="message.includes('CV')">{{message}}</mat-error>
         <div>
           <mat-form-field appearance="fill">
             <mat-label>

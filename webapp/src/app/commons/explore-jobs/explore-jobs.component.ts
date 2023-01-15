@@ -17,6 +17,12 @@ export class ExploreJobsComponent implements OnInit {
     this.service.getPosts().subscribe(posts => {
       this.posts = posts;
     });
+  }
 
+  searchText: string = '';
+
+  onSearchTextEntered(searchValue: string){
+    this.searchText = searchValue;
+    console.log(this.searchText);
   }
 }

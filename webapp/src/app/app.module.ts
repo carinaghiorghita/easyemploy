@@ -52,6 +52,7 @@ import { JobsAppliedComponent } from './applicant-user/jobs-applied/jobs-applied
 import { SeeApplicantsComponent } from './company-user/see-applicants/see-applicants.component';
 import { ApplicationComponent } from './company-user/application/application.component';
 import { CalendarComponent } from './commons/calendar/calendar.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import { CalendarComponent } from './commons/calendar/calendar.component';
       JobsAppliedComponent,
       SeeApplicantsComponent,
       ApplicationComponent,
-      CalendarComponent
+      CalendarComponent,
+      SearchComponent
   ],
   imports: [
     FormsModule,

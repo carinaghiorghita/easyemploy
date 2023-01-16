@@ -25,4 +25,11 @@ export class SeeApplicantsComponent implements OnInit {
       (users) => this.users = users
     );
   }
+
+  searchText: string = '';
+
+  onSearchTextEntered(searchValue: string){
+    this.searchText = searchValue;
+    console.log(this.searchText);
+  }
 }

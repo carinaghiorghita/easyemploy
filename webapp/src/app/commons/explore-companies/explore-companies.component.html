@@ -6,12 +6,17 @@
 
 <div class="main-div">
   <mat-card class="scroll-dashboard">
+    <mat-card class="search-field">
+      <app-search (searchTextChanged)="onSearchTextEntered($event)"></app-search>
+    </mat-card>
 
     <a routerLink='/profile-company/{{company.id}}' *ngFor="let company of companies" class="post-link">
-      <mat-card class="post">
-        {{company.name}}
+      <div>
+        <mat-card class="post" *ngIf="searchText === '' || company.name.toLowerCase().includes(searchText.toLocaleLowerCase()) ">
+          {{company.name}}
 
-      </mat-card>
+        </mat-card>
+      </div>
     </a>
   </mat-card>
 

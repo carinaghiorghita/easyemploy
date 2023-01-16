@@ -5,11 +5,13 @@
 <body>
 
 <div class="main-div">
-  <app-search (searchTextChanged)="onSearchTextEntered($event)"></app-search>
   <mat-card class="scroll-dashboard">
+    <mat-card class="search-field">
+      <app-search (searchTextChanged)="onSearchTextEntered($event)"></app-search>
+    </mat-card>
 
     <a routerLink='/view-post/{{post.id}}' *ngFor="let post of posts" class="post-link">
-      <div class="jobs-container" *ngIf="searchText === '' || post.jobTitle.toLowerCase().includes(searchText) ">
+      <div class="jobs-container" *ngIf="searchText === '' || post.jobTitle.toLowerCase().includes(searchText.toLowerCase()) ">
         <mat-card class="post">
           {{post.jobTitle}}
         </mat-card>

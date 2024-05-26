@@ -1,8 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {JobApplication} from "../../model/job.application.model";
 import {PostService} from "../../service/post.service";
 import {Interview} from "../../model/interview.model";
-import {MatCalendarCellClassFunction, MatCalendarCellCssClasses} from "@angular/material/datepicker";
+import {MatCalendarCellClassFunction} from "@angular/material/datepicker";
 
 @Component({
   selector: 'app-calendar',
@@ -49,7 +48,7 @@ export class CalendarComponent implements OnInit {
   checkInterview(){
     this.isInterview = false;
 
-    for(var i=0;i<this.dates.length;i++)
+    for(let i=0; i<this.dates.length; i++)
       if(new Date(this.dates[i]).getDate() === new Date(this.selected as Date).getDate()
         && new Date(this.dates[i]).getMonth() === new Date(this.selected as Date).getMonth()
         && new Date(this.dates[i]).getFullYear() === new Date(this.selected as Date).getFullYear()) {

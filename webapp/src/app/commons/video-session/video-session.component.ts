@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 
 declare var apiRTC: any;
@@ -19,14 +19,14 @@ export class VideoSessionComponent implements OnInit {
   ngOnInit(): void {
     this.conversationId = this.route.snapshot.paramMap.get('id');
 
-    this.getOrcreateConversation();
+    this.getOrCreateConversation();
   }
 
-  getOrcreateConversation() {
-    var localStream: any = null;
+  getOrCreateConversation() {
+    let localStream: any = null;
 
     // create user agent
-    var ua = new apiRTC.UserAgent({
+    const ua = new apiRTC.UserAgent({
       uri: 'apzkey:myDemoApiKey'
     });
 
@@ -78,7 +78,7 @@ export class VideoSessionComponent implements OnInit {
 
           // join conversation
           conversation.join()
-            .then((response: any) => {
+            .then(() => {
               // publish local stream
               conversation.publish(localStream);
             }).catch((err: any) => {
@@ -88,5 +88,6 @@ export class VideoSessionComponent implements OnInit {
         }).catch((err: any) => {
         console.error('create stream error', err);
       });
-    });  }
+    });
+  }
 }

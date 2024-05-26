@@ -28,7 +28,7 @@ export class CreateAccountComponent implements OnInit {
       let newUser = <BaseUser>{email: this.email, password: this.password, role: this.role};
       this.service.createAccount(newUser)
         .subscribe((user: any) => {
-            this.router.navigate(['/resend-confirmation']);
+            this.router.navigate(['/resend-confirmation']).then();
           },
           error => this.errorMessage = error.error.message
         );

@@ -1,4 +1,4 @@
-import {Component, Input, NgZone, OnInit} from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 
@@ -43,7 +43,7 @@ export class HeaderComponent implements OnInit {
   logout(): void {
     this.httpClient.get<any>('/api/logout').subscribe(() => {
       this.zone.run(() => {
-        this.router.navigateByUrl('/login');
+        this.router.navigateByUrl('/login').then();
       });
       }
     );

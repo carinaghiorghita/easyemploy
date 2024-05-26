@@ -4,7 +4,6 @@ import {ConfirmAccountService} from "../../service/confirm-account.service";
 import {BaseUser} from "../../model/baseuser.model";
 import {User} from "../../model/user.model";
 import {Company} from "../../model/company.model";
-import {LoginService} from "../../service/login.service";
 
 @Component({
   selector: 'app-confirm-account',
@@ -54,7 +53,7 @@ export class ConfirmAccountComponent implements OnInit {
       this.user.password = this.baseUser.password;
 
       this.confirmAccountService.updateUser(this.user).subscribe(() => {
-        this.router.navigate(['/account-successfully-created']);
+        this.router.navigate(['/account-successfully-created']).then();
         },
         error => this.creationError = error.error.message
       );
@@ -70,7 +69,7 @@ export class ConfirmAccountComponent implements OnInit {
 
       this.confirmAccountService.updateCompany(this.company).subscribe((
         ) => {
-          this.router.navigate(['/account-successfully-created']);
+          this.router.navigate(['/account-successfully-created']).then();
         },
         error => this.creationError = error.error.message
       );

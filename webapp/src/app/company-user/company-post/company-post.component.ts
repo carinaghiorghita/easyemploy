@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from "../../model/user.model";
-import {Company} from "../../model/company.model";
-import {HttpClient} from "@angular/common/http";
-import {ProfileService} from "../../service/profile.service";
-import {ActivatedRoute, Route, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
-import {DeleteDialogComponent} from "../../commons/delete-dialog/delete-dialog.component";
 import {PostService} from "../../service/post.service";
 import {Post} from "../../model/post.model";
 import {DeletePostDialogComponent} from "../../commons/delete-post-dialog/delete-post-dialog.component";

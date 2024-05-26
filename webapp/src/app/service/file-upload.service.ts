@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpEvent, HttpParams} from "@angular/common/http";
-import {empty, Observable, of} from "rxjs";
+import {Observable, of} from "rxjs";
 import {FileModel} from "../model/file.model";
 import {JobApplication} from "../model/job.application.model";
 

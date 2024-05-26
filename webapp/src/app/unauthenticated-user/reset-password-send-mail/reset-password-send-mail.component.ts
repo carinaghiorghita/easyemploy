@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginService} from "../../service/login.service";
 import {Router} from "@angular/router";
-import {BaseUser} from "../../model/baseuser.model";
 
 @Component({
   selector: 'app-reset-password',
@@ -22,7 +21,7 @@ export class ResetPasswordSendMailComponent implements OnInit {
   onSubmit() {
       this.service.resetPassword(this.email)
         .subscribe(() => {
-            this.router.navigate(['/resend-confirmation']);
+            this.router.navigate(['/resend-confirmation']).then();
           },
           error => this.errorMessage = error.error.message
         );

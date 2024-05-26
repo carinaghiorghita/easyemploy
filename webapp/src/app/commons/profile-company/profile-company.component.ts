@@ -24,7 +24,7 @@ export class ProfileCompanyComponent implements OnInit {
     this.service.getCompanyById(id)
       .subscribe(company => {
         this.company = company;
-        var re = /\+.*@/;
+        const re = /\+.*@/;
         this.company.email = this.company.email.replace(re,"@");
         this.service.getUser().subscribe(user => {
           this.authUser=user;
@@ -47,7 +47,7 @@ export class ProfileCompanyComponent implements OnInit {
   onUnfollow(){
     this.service.unfollow(this.company).subscribe(() =>
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate([`/profile-company/${this.company.id}`]);
+      this.router.navigate([`/profile-company/${this.company.id}`]).then();
     }
     ));
   }

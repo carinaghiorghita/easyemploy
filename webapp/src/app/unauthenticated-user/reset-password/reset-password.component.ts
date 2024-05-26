@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {BaseUser} from "../../model/baseuser.model";
-import {User} from "../../model/user.model";
-import {Company} from "../../model/company.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ConfirmAccountService} from "../../service/confirm-account.service";
 
@@ -44,7 +42,7 @@ export class ResetPasswordComponent implements OnInit {
   onSubmit(): void {
       this.confirmAccountService.resetPassword(this.baseUser).subscribe(
         () => {
-          this.router.navigate(['/password-successfully-reset']);
+          this.router.navigate(['/password-successfully-reset']).then();
         },
         error => this.creationError = error.error.message
       );

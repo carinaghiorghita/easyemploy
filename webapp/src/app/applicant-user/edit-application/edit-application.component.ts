@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {JobApplication} from "../../model/job.application.model";
 import {FileUploadService} from "../../service/file-upload.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {DeletePostDialogComponent} from "../../commons/delete-post-dialog/delete-post-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteApplicationDialogComponent} from "../../commons/delete-application-dialog/delete-application-dialog.component";
 import * as moment from 'moment';

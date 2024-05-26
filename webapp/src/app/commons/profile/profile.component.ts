@@ -1,14 +1,11 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ProfileService} from "../../service/profile.service";
 import {User} from "../../model/user.model";
 import {Company} from "../../model/company.model";
 import {Router} from "@angular/router";
-import {BaseUser} from "../../model/baseuser.model";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MatDialog} from "@angular/material/dialog";
 import {DeleteDialogComponent} from "../delete-dialog/delete-dialog.component";
-import {LoginService} from "../../service/login.service";
-import {DeletePostDialogComponent} from "../delete-post-dialog/delete-post-dialog.component";
 
 @Component({
   selector: 'app-profile',
@@ -40,7 +37,7 @@ export class ProfileComponent implements OnInit {
         } else if (this.role == "COMPANY") {
           this.service.getCompany().subscribe((company) => this.company = company)
         } else {
-          this.router.navigate(['login']);
+          this.router.navigate(['login']).then();
         }
       });
   }
@@ -75,7 +72,7 @@ export class ProfileComponent implements OnInit {
   deleteAccount(): void {
     const dialogRef = this.dialog.open(DeleteDialogComponent);
 
-    var username = this.user.username!=="" ? this.user.username : this.company.username;
+    const username = this.user.username !== "" ? this.user.username : this.company.username;
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {

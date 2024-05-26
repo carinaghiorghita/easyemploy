@@ -20,9 +20,8 @@ export class ProfileUserComponent implements OnInit {
     this.service.getUserById(id)
       .subscribe(user => {
         this.user = user;
-        var re = /\+.*@/;
+        const re = /\+.*@/;
         this.user.email = this.user.email.replace(re,"@");
-
       });
   }
 

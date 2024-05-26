@@ -3,7 +3,6 @@ import {PostService} from "../../service/post.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Post} from "../../model/post.model";
 import {HttpClient} from "@angular/common/http";
-import {DeletePostDialogComponent} from "../../commons/delete-post-dialog/delete-post-dialog.component";
 import {UserLoginDialogComponent} from "../../commons/user-login-dialog/user-login-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {JobApplication} from "../../model/job.application.model";
@@ -59,16 +58,16 @@ export class ViewPostComponent implements OnInit {
       .subscribe((user) => {
         if(user.role==='USER'){
           if(this.buttonText==="Apply")
-            this.router.navigate(["/apply",this.post.id]);
+            this.router.navigate(["/apply",this.post.id]).then();
           else
-            this.router.navigate(["/edit-application",this.post.id, user.id]);
+            this.router.navigate(["/edit-application",this.post.id, user.id]).then();
         }
         else {
           const dialogRef = this.dialog.open(UserLoginDialogComponent);
 
           dialogRef.afterClosed().subscribe(result => {
             if (result === true) {
-              this.router.navigateByUrl('/login');
+              this.router.navigateByUrl('/login').then();
             }
           });
 

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient, HttpEventType, HttpResponse} from "@angular/common/http";
 import {FileUploadService} from "../../service/file-upload.service";
 import {JobApplication} from "../../model/job.application.model";
 import {ActivatedRoute, Router} from "@angular/router";

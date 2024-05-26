@@ -13,5 +13,6 @@ public class EasyemployApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        // main function
     }
 }

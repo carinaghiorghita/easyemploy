@@ -1,14 +1,11 @@
 package ubb.thesis.easyemploy.domain.entities;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name="file")
-@Getter
-@Setter
+@lombok.Getter
+@lombok.Setter
 public class FileDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

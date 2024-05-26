@@ -7,13 +7,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PostValidator {
-    public static final String TITLE_REGEX = "^(?U)[\\p{Alpha}\\-&\\. ]*";
-    public static final List<String> VALID_EXPERIENCE_LEVELS = Arrays.asList("Internship", "Junior", "Mid-Level", "Senior", "Any");
+    public static final String TITLE_REGEX = "^(?U)[\\p{Alpha}\\-&. ]*";
+    protected static final List<String> VALID_EXPERIENCE_LEVELS = Arrays.asList("Internship", "Junior", "Mid-Level", "Senior", "Any");
 
     public void validateTitle(Post post){
         var title = post.getJobTitle();
 
-        if(title==null || title.equals(""))
+        if(title==null || title.isEmpty())
             throw new ValidationException("Job Title should not be empty!");
 
         if(!title.matches(TITLE_REGEX))

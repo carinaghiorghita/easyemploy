@@ -8,6 +8,7 @@ class EasyemployApplicationTests {
 
     @Test
     void contextLoads() {
+        // tests will not be implemented for this application
     }
 
 }

@@ -1,19 +1,14 @@
 package ubb.thesis.easyemploy.domain.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@lombok.Getter
+@lombok.Setter
+@lombok.AllArgsConstructor
+@lombok.NoArgsConstructor
 public class JobApplicationKey implements Serializable {
     @Column(name = "user_id")
     Long userId;

@@ -1,16 +1,11 @@
 package ubb.thesis.easyemploy.domain.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.Set;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@Builder
+@lombok.NoArgsConstructor
+@lombok.AllArgsConstructor
+@lombok.Data
+@lombok.Builder
 public class UserExploreDto {
     private Long id;
     private String email;

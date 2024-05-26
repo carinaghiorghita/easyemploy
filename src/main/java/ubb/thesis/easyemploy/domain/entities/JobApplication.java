@@ -1,20 +1,15 @@
 package ubb.thesis.easyemploy.domain.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Table(name = "job_application")
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@lombok.Getter
+@lombok.Setter
+@lombok.AllArgsConstructor
+@lombok.NoArgsConstructor
 public class JobApplication {
     @EmbeddedId
     JobApplicationKey id;

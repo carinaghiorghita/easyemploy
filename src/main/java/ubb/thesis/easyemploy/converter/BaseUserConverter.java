@@ -1,15 +1,15 @@
 package ubb.thesis.easyemploy.converter;
 
+import org.springframework.stereotype.Component;
 import ubb.thesis.easyemploy.domain.dto.BaseUserDto;
 import ubb.thesis.easyemploy.domain.entities.BaseUser;
-import ubb.thesis.easyemploy.domain.entities.User;
 
+@Component
 public class BaseUserConverter implements Converter<BaseUser, BaseUserDto> {
 
     @Override
     public BaseUserDto convertModelToDto(BaseUser model) {
-        String role = model instanceof User ? "USER" : "COMPANY";
-        return new BaseUserDto(model.getId(), model.getEmail(), model.getUsername(), model.getPassword(), model.getPhoneNumber(), model.getDescription(), model.isActivated(), role);
+        return new BaseUserDto(model.getId(), model.getEmail(), model.getUsername(), model.getPassword(), model.getPhoneNumber(), model.getDescription(), model.isActivated(), model.getRole());
     }
 
     @Override

@@ -16,70 +16,75 @@ import ubb.thesis.easyemploy.service.FileDBService;
 
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
 public class FileController {
-    public static final String CV_PROCESSING_ERROR = "Could not process CV.";
+    private static final String CV_PROCESSING_ERROR = "Could not process CV.";
     private final FileDBService fileDBService;
 
     @PostMapping(value = "/api/processCV")
     public ResponseEntity<ResponseMessage> processCV(@RequestParam("cv") MultipartFile cv) {
         try {
             File simpleFile = new File("src/main/resources/targetFile.tmp");
+            var content = getPDFContent(simpleFile);
+            if (content.length < 2)
+                return getResponseEntity(HttpStatus.EXPECTATION_FAILED, CV_PROCESSING_ERROR);
 
-            try (OutputStream os = new FileOutputStream(simpleFile)) {
-                os.write(cv.getBytes());
-            }
-
-            PDFTextStripper pdfTextStripper = new PDFTextStripper();
-            PDDocument document = PDDocument.load(simpleFile);
-
-            String content = pdfTextStripper.getText(document);
-
-            content = content.replace("\u00a0", " \r\n");
-            content = content.replaceAll("([\\r\\n])", "");
-            content = content.replaceAll("( )+", " ");
-            content = content.trim();
-
-            var split = content.split(" ");
-
-            if (split.length < 2)
-                return ResponseEntity
-                        .status(HttpStatus.EXPECTATION_FAILED)
-                        .body(new ResponseMessage(CV_PROCESSING_ERROR));
-
-            var firstName = split[0];
-            var lastName = split[1];
-
-            var emailList = Arrays.stream(split)
-                    .filter(word -> word.contains("@")).collect(Collectors.toList());
-
-            if (emailList.isEmpty())
-                return ResponseEntity
-                        .status(HttpStatus.EXPECTATION_FAILED)
-                        .body(new ResponseMessage(CV_PROCESSING_ERROR));
-            var email = emailList.get(0);
-
-            var phoneList = Arrays.stream(split)
-                    .filter(word -> word.matches("[+#(0-9][+#)(0-9]{3,}[0-9)]")).collect(Collectors.toList());
-
-            if (phoneList.isEmpty())
-                return ResponseEntity
-                        .status(HttpStatus.EXPECTATION_FAILED)
-                        .body(new ResponseMessage(CV_PROCESSING_ERROR));
-            var phone = phoneList.get(0);
-
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(firstName + " " + lastName + " " + email + " " + phone));
+            return extractContent(content);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(CV_PROCESSING_ERROR));
+            return getResponseEntity(HttpStatus.EXPECTATION_FAILED, CV_PROCESSING_ERROR);
         }
+    }
 
+    private ResponseEntity<ResponseMessage> extractContent(String[] content) {
+
+        var firstName = content[0];
+        var lastName = content[1];
+        var email = extractEmail(content);
+        var phone = extractPhoneNumber(content);
+
+        if (email == null || phone == null)
+            return getResponseEntity(HttpStatus.EXPECTATION_FAILED, CV_PROCESSING_ERROR);
+
+        return getResponseEntity(HttpStatus.OK, firstName + " " + lastName + " " + email + " " + phone);
+    }
+
+    private String extractEmail(String[] content) {
+        return Arrays.stream(content)
+                .filter(word -> word.contains("@"))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private String extractPhoneNumber(String[] content) {
+        return Arrays.stream(content)
+                .filter(word -> word.matches("[+#(0-9][+#)(0-9]{3,}[0-9)]"))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private static ResponseEntity<ResponseMessage> getResponseEntity(HttpStatus expectationFailed, String cvProcessingError) {
+        return ResponseEntity
+                .status(expectationFailed)
+                .body(new ResponseMessage(cvProcessingError));
+    }
+
+    private String[] getPDFContent(File simpleFile) throws IOException {
+        PDFTextStripper pdfTextStripper = new PDFTextStripper();
+        PDDocument document = PDDocument.load(simpleFile);
+
+        String content = pdfTextStripper.getText(document);
+
+        content = content.replace("\u00a0", " \r\n");
+        content = content.replaceAll("([\\r\\n])", "");
+        content = content.replaceAll("( )+", " ");
+        content = content.trim();
+        return content.split(" ");
     }
 
     @PostMapping(value = "/api/uploadFiles")

@@ -30,6 +30,11 @@ public class User extends BaseUser {
 
     }
 
+    @Override
+    public String getRole() {
+        return "USER";
+    }
+
     public String getFirstName() {
         return firstName;
     }

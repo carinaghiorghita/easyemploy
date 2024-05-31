@@ -1,10 +1,12 @@
 package ubb.thesis.easyemploy.converter;
 
+import org.springframework.stereotype.Component;
 import ubb.thesis.easyemploy.domain.dto.UserExploreDto;
 import ubb.thesis.easyemploy.domain.entities.User;
 
 import java.util.HashSet;
 
+@Component
 public class UserConverter implements Converter<User, UserExploreDto> {
 
     @Override

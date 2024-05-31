@@ -21,5 +21,4 @@ public class JobApplicationDto {
     private String interviewLink;
     private String dateCreated;
     private String dateLastEdited;
-
 }

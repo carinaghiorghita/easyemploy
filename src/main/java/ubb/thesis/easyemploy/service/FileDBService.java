@@ -23,13 +23,17 @@ public class FileDBService {
     public FileDB save(MultipartFile file, Long user, Long post, boolean isCV) throws IOException {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         FileDB fileDB = new FileDB(fileName, file.getContentType(), file.getBytes(), user, post, isCV);
+        deleteExistingFiles(user, post, isCV);
+        return fileDBRepository.save(fileDB);
+    }
+
+    private void deleteExistingFiles(Long user, Long post, boolean isCV) {
         if(isCV && fileDBRepository.existsFileDBByUserIdAndPostIdAndIsCV(user, post, true)) {
             this.fileDBRepository.deleteByUserIdAndPostIdAndIsCV(user, post, true);
         }
         else if(!isCV && fileDBRepository.existsFileDBByUserIdAndPostIdAndIsCV(user, post, false)) {
             this.fileDBRepository.deleteByUserIdAndPostIdAndIsCV(user, post, false);
         }
-        return fileDBRepository.save(fileDB);
     }
 
     @Transactional

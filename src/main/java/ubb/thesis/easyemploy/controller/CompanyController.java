@@ -8,15 +8,13 @@ import ubb.thesis.easyemploy.converter.CompanyConverter;
 import ubb.thesis.easyemploy.domain.dto.CompanyExploreDto;
 import ubb.thesis.easyemploy.domain.exceptions.ValidationException;
 import ubb.thesis.easyemploy.domain.validation.CompanyValidator;
-import ubb.thesis.easyemploy.service.CompanyService;
-import ubb.thesis.easyemploy.service.UserService;
+import ubb.thesis.easyemploy.service.UserCompanyRelationService;
 
 @RestController
 @AllArgsConstructor
 public class CompanyController {
 
-    private final CompanyService companyService;
-    private final UserService userService;
+    private final UserCompanyRelationService userCompanyRelationService;
 
     @PostMapping(value = "/api/updateCompany")
     public void updateCompany(@RequestBody CompanyExploreDto companyExploreDto) {
@@ -28,12 +26,12 @@ public class CompanyController {
         companyValidator.validateUsername(company);
         companyValidator.validatePhoneNumber(company);
 
-        if (companyService.getCompanyById(company.getId()).getUsername().isEmpty()
-                && (companyService.getCompanyByUsername(company.getUsername()).isPresent()
-                || userService.getUserByUsername(company.getUsername()).isPresent())) {
+        if (userCompanyRelationService.getCompanyById(company.getId()).getUsername().isEmpty()
+                && (userCompanyRelationService.getCompanyByUsername(company.getUsername()).isPresent()
+                || userCompanyRelationService.getUserByUsername(company.getUsername()).isPresent())) {
             throw new ValidationException("Username already exists!");
         }
 
-        this.companyService.updateCompany(company);
+        this.userCompanyRelationService.updateCompany(company);
     }
 }

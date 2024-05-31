@@ -11,8 +11,7 @@ import ubb.thesis.easyemploy.domain.dto.CompanyExploreDto;
 import ubb.thesis.easyemploy.domain.dto.UserExploreDto;
 import ubb.thesis.easyemploy.domain.exceptions.ValidationException;
 import ubb.thesis.easyemploy.domain.validation.UserValidator;
-import ubb.thesis.easyemploy.service.CompanyService;
-import ubb.thesis.easyemploy.service.UserService;
+import ubb.thesis.easyemploy.service.UserCompanyRelationService;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -22,8 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserController {
 
-    private final CompanyService companyService;
-    private final UserService userService;
+    private final UserCompanyRelationService userCompanyRelationService;
 
     @PostMapping(value = "/api/updateUser")
     public void updateUser(@RequestBody UserExploreDto userExploreDto) {
@@ -36,18 +34,18 @@ public class UserController {
         userValidator.validateUsername(user);
         userValidator.validatePhoneNumber(user);
 
-        if (userService.getUserById(user.getId()).getUsername().isEmpty()
-                && (companyService.getCompanyByUsername(user.getUsername()).isPresent()
-                || userService.getUserByUsername(user.getUsername()).isPresent())) {
+        if (userCompanyRelationService.getUserById(user.getId()).getUsername().isEmpty()
+                && (userCompanyRelationService.getCompanyByUsername(user.getUsername()).isPresent()
+                || userCompanyRelationService.getUserByUsername(user.getUsername()).isPresent())) {
             throw new ValidationException("Username already exists!");
         }
 
-        this.userService.updateUser(user);
+        this.userCompanyRelationService.updateUser(user);
     }
 
     @GetMapping(value = "/api/getFollowedCompanies")
     public List<CompanyExploreDto> getFollowedCompanies(HttpSession httpSession) {
-        var user = this.userService.getUserById((Long) httpSession.getAttribute("id"));
+        var user = this.userCompanyRelationService.getUserById((Long) httpSession.getAttribute("id"));
         var companies = user.getFollowedCompanies();
 
         List<CompanyExploreDto> companyDtos = new ArrayList<>();

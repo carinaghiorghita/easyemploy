@@ -14,7 +14,6 @@ import ubb.thesis.easyemploy.repository.JobApplicationRepository;
 
 import javax.transaction.Transactional;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +21,10 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class JobApplicationService {
+
+    private static final int SMALL_CELL = 15 * 256;
+    private static final int MEDIUM_CELL = 25 * 256;
+    private static final int BIG_CELL = 30 * 256;
 
     @Autowired
     private final JobApplicationRepository jobApplicationRepository;
@@ -51,64 +54,17 @@ public class JobApplicationService {
                 });
     }
 
-    public byte[] getExcel(Post post) throws IOException {
+    public byte[] getExcel(Post post) {
         XSSFWorkbook workbook = new XSSFWorkbook();
         try (workbook) {
             var applications = jobApplicationRepository.findAllByPost(post);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
             XSSFSheet sheet = workbook.createSheet(post.getJobTitle());
-            // set width for bigger columns
-            sheet.setColumnWidth(2, 15 * 256);
-            sheet.setColumnWidth(3, 15 * 256);
-            sheet.setColumnWidth(4, 15 * 256);
-            sheet.setColumnWidth(5, 30 * 256);
-            sheet.setColumnWidth(6, 15 * 256);
-            sheet.setColumnWidth(7, 30 * 256);
-            sheet.setColumnWidth(8, 25 * 256);
-            sheet.setColumnWidth(9, 25 * 256);
-            sheet.setColumnWidth(10, 25 * 256);
-            sheet.setColumnWidth(11, 25 * 256);
-            sheet.setColumnWidth(12, 30 * 256);
 
-            // create header row
-            XSSFRow header = sheet.createRow(0);
-
-            header.createCell(0).setCellValue("Nr.");
-            header.createCell(1).setCellValue("Salutation");
-            header.createCell(2).setCellValue("First Name");
-            header.createCell(3).setCellValue("Last Name");
-            header.createCell(4).setCellValue("Date of Birth");
-            header.createCell(5).setCellValue("Email");
-            header.createCell(6).setCellValue("Phone Number");
-            header.createCell(7).setCellValue("Address");
-            header.createCell(8).setCellValue("Date applied");
-            header.createCell(9).setCellValue("Date last edited");
-            header.createCell(10).setCellValue("Feedback");
-            header.createCell(11).setCellValue("Interview Time");
-            header.createCell(12).setCellValue("Interview Link");
-
-            int rowCount = 1;
-
-            for (JobApplication application : applications) {
-                XSSFRow row = sheet.createRow(rowCount++);
-                row.createCell(0).setCellValue((double)(rowCount - 1));
-                row.createCell(1).setCellValue(application.getSalutations());
-                row.createCell(2).setCellValue(application.getFirstName());
-                row.createCell(3).setCellValue(application.getLastName());
-                row.createCell(4).setCellValue(application.getDob().toString());
-                row.createCell(5).setCellValue(application.getEmail());
-                row.createCell(6).setCellValue(application.getPhone());
-                row.createCell(7).setCellValue(application.getAddress());
-                row.createCell(8).setCellValue(application.getDateCreated().format(formatter));
-                row.createCell(9).setCellValue(application.getDateLastEdited().format(formatter));
-                row.createCell(10).setCellValue(application.getFeedback());
-                if (application.getInterviewTime() == null)
-                    row.createCell(11).setCellValue("");
-                else
-                    row.createCell(11).setCellValue(application.getInterviewTime().format(formatter));
-                row.createCell(12).setCellValue(application.getInterviewLink());
-            }
+            createColumns(sheet);
+            createHeader(sheet);
+            createRows(applications, sheet, formatter);
 
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             try (bos) {
@@ -119,6 +75,65 @@ public class JobApplicationService {
             e.printStackTrace();
         }
         return new ByteArrayOutputStream().toByteArray();
+    }
+
+    private static void createRows(List<JobApplication> applications,
+                                   XSSFSheet sheet,
+                                   DateTimeFormatter formatter) {
+        int rowCount = 1;
+
+        for (JobApplication application : applications) {
+            XSSFRow row = sheet.createRow(rowCount++);
+            row.createCell(0).setCellValue((double)(rowCount - 1));
+            row.createCell(1).setCellValue(application.getSalutations());
+            row.createCell(2).setCellValue(application.getFirstName());
+            row.createCell(3).setCellValue(application.getLastName());
+            row.createCell(4).setCellValue(application.getDob().toString());
+            row.createCell(5).setCellValue(application.getEmail());
+            row.createCell(6).setCellValue(application.getPhone());
+            row.createCell(7).setCellValue(application.getAddress());
+            row.createCell(8).setCellValue(application.getDateCreated().format(formatter));
+            row.createCell(9).setCellValue(application.getDateLastEdited().format(formatter));
+            row.createCell(10).setCellValue(application.getFeedback());
+            if (application.getInterviewTime() == null)
+                row.createCell(11).setCellValue("");
+            else
+                row.createCell(11).setCellValue(application.getInterviewTime().format(formatter));
+            row.createCell(12).setCellValue(application.getInterviewLink());
+        }
+    }
+
+    private static void createHeader(XSSFSheet sheet) {
+        // create header row
+        XSSFRow header = sheet.createRow(0);
+        header.createCell(0).setCellValue("Nr.");
+        header.createCell(1).setCellValue("Salutation");
+        header.createCell(2).setCellValue("First Name");
+        header.createCell(3).setCellValue("Last Name");
+        header.createCell(4).setCellValue("Date of Birth");
+        header.createCell(5).setCellValue("Email");
+        header.createCell(6).setCellValue("Phone Number");
+        header.createCell(7).setCellValue("Address");
+        header.createCell(8).setCellValue("Date applied");
+        header.createCell(9).setCellValue("Date last edited");
+        header.createCell(10).setCellValue("Feedback");
+        header.createCell(11).setCellValue("Interview Time");
+        header.createCell(12).setCellValue("Interview Link");
+    }
+
+    private static void createColumns(XSSFSheet sheet) {
+        // set width for bigger columns
+        sheet.setColumnWidth(2, SMALL_CELL);
+        sheet.setColumnWidth(3, SMALL_CELL);
+        sheet.setColumnWidth(4, SMALL_CELL);
+        sheet.setColumnWidth(5, BIG_CELL);
+        sheet.setColumnWidth(6, SMALL_CELL);
+        sheet.setColumnWidth(7, BIG_CELL);
+        sheet.setColumnWidth(8, MEDIUM_CELL);
+        sheet.setColumnWidth(9, MEDIUM_CELL);
+        sheet.setColumnWidth(10, MEDIUM_CELL);
+        sheet.setColumnWidth(11, MEDIUM_CELL);
+        sheet.setColumnWidth(12, BIG_CELL);
     }
 
     public List<User> getApplicantsForPost(Post post) {

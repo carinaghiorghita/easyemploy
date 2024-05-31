@@ -6,12 +6,7 @@ import ubb.thesis.easyemploy.converter.CompanyConverter;
 import ubb.thesis.easyemploy.converter.UserConverter;
 import ubb.thesis.easyemploy.domain.dto.CompanyExploreDto;
 import ubb.thesis.easyemploy.domain.dto.UserExploreDto;
-import ubb.thesis.easyemploy.domain.entities.Company;
-import ubb.thesis.easyemploy.domain.entities.User;
-import ubb.thesis.easyemploy.service.AuthenticationService;
-import ubb.thesis.easyemploy.service.CompanyService;
 import ubb.thesis.easyemploy.service.UserCompanyRelationService;
-import ubb.thesis.easyemploy.service.UserService;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;
@@ -19,67 +14,69 @@ import java.util.HashSet;
 @RestController
 @AllArgsConstructor
 public class ProfileController {
-    private final UserService userService;
-    private final CompanyService companyService;
-    private final AuthenticationService authenticationService;
-    private final UserCompanyRelationService userCompanyRelationService;
 
-    @GetMapping(value ="/api/getUser")
+    private final UserCompanyRelationService userCompanyRelationService;
+    private final UserConverter userConverter;
+
+    @GetMapping(value = "/api/getUser")
     public UserExploreDto getUser(HttpSession httpSession) {
         String username = (String) httpSession.getAttribute("username");
-        if(username==null)
-            return new UserExploreDto(0L,"","","","","","","",false,new HashSet<>());
-        var user = userService.getUserByUsername(username).get();
-        var userConverter = new UserConverter();
-        return userConverter.convertModelToDto(user);
+        return userConverter.convertModelToDto(
+                userCompanyRelationService.getUserByUsername(username)
+                        .orElseThrow(() -> new IllegalArgumentException("No user with this username"))
+        );
     }
 
-    @GetMapping(value ="/api/getUserById")
+    @GetMapping(value = "/api/getUserById")
     public UserExploreDto getUserById(@RequestParam("id") Long id) {
-        var user = userService.getUserById(id);
-        var userConverter = new UserConverter();
+        var user = userCompanyRelationService.getUserById(id);
         return userConverter.convertModelToDto(user);
     }
 
-    @GetMapping(value ="/api/getCompany")
-    public CompanyExploreDto getCompany(HttpSession httpSession){
+    @GetMapping(value = "/api/getCompany")
+    public CompanyExploreDto getCompany(HttpSession httpSession) {
         String username = (String) httpSession.getAttribute("username");
-        var company = companyService.getCompanyByUsername(username).get();
-        var companyConverter = new CompanyConverter();
-        return companyConverter.convertModelToDto(company);
+        var company = userCompanyRelationService.getCompanyByUsername(username);
+        if (company.isPresent()) {
+            var companyConverter = new CompanyConverter();
+            return companyConverter.convertModelToDto(company.get());
+        } else {
+            throw new IllegalArgumentException("No company with this username");
+        }
     }
 
-    @GetMapping(value ="/api/getCompanyById")
+    @GetMapping(value = "/api/getCompanyById")
     public CompanyExploreDto getCompanyById(@RequestParam("id") Long id) {
-        var company = companyService.getCompanyById(id);
+        var company = userCompanyRelationService.getCompanyById(id);
         var companyConverter = new CompanyConverter();
         return companyConverter.convertModelToDto(company);
     }
 
-    @DeleteMapping(value="/api/deleteAccount")
-    public void deleteAccount(@RequestParam("username") String username){
-        var user = this.authenticationService.getUserByUsername(username);
+    @DeleteMapping(value = "/api/deleteAccount")
+    public void deleteAccount(@RequestParam("username") String username) {
+        var user = this.userCompanyRelationService.getByUsername(username);
 
-        if(user.get() instanceof User)
-            this.userService.deleteUser((User) user.get());
-        else
-            this.companyService.deleteCompany((Company) user.get());
+        if (user.isEmpty()) {
+            throw new IllegalArgumentException("No user with this username");
+        } else {
+            this.userCompanyRelationService.delete(user.get());
+        }
     }
 
-    @PostMapping(value="/api/follow")
-    public void follow(@RequestBody CompanyExploreDto companyDto, HttpSession httpSession){
+    @PostMapping(value = "/api/follow")
+    public void follow(@RequestBody CompanyExploreDto companyDto, HttpSession httpSession) {
         var companyConverter = new CompanyConverter();
         var company = companyConverter.convertDtoToModel(companyDto);
-        var user = this.userService.getUserById((Long)httpSession.getAttribute("id"));
+        var user = this.userCompanyRelationService.getUserById((Long) httpSession.getAttribute("id"));
 
         this.userCompanyRelationService.follow(user, company);
     }
 
-    @PostMapping(value="/api/unfollow")
-    public void unfollow(@RequestBody CompanyExploreDto companyDto, HttpSession httpSession){
+    @PostMapping(value = "/api/unfollow")
+    public void unfollow(@RequestBody CompanyExploreDto companyDto, HttpSession httpSession) {
         var companyConverter = new CompanyConverter();
         var company = companyConverter.convertDtoToModel(companyDto);
-        var user = this.userService.getUserById((Long)httpSession.getAttribute("id"));
+        var user = this.userCompanyRelationService.getUserById((Long) httpSession.getAttribute("id"));
 
         this.userCompanyRelationService.unfollow(user, company);
     }

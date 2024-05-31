@@ -26,8 +26,8 @@ public class PostConverter implements Converter<Post, PostExploreDto> {
     public Post convertDtoToModel(PostExploreDto dto) throws ParseException {
         CompanyConverter companyConverter = new CompanyConverter();
         final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
-        var date = dto.getDateCreated().equals("") ? LocalDateTime.now() : formatter.parse(dto.getDateCreated()).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-        var editedDate = dto.getDateLastEdited().equals("") ? LocalDateTime.now() : formatter.parse(dto.getDateCreated()).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        var date = dto.getDateCreated().isEmpty() ? LocalDateTime.now() : formatter.parse(dto.getDateCreated()).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        var editedDate = dto.getDateLastEdited().isEmpty() ? LocalDateTime.now() : formatter.parse(dto.getDateCreated()).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
         return new Post(dto.getId(), dto.getJobTitle(), dto.getExperienceLevel(), dto.getSalary(), dto.getDescription(), date, editedDate, companyConverter.convertDtoToModel(dto.getCompany()));
     }

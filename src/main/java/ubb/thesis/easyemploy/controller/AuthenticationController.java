@@ -2,47 +2,49 @@ package ubb.thesis.easyemploy.controller;
 
 import lombok.AllArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ubb.thesis.easyemploy.converter.BaseUserConverter;
 import ubb.thesis.easyemploy.converter.TokenConverter;
 import ubb.thesis.easyemploy.domain.dto.BaseUserDto;
 import ubb.thesis.easyemploy.domain.dto.TokenDto;
 import ubb.thesis.easyemploy.domain.entities.BaseUser;
-import ubb.thesis.easyemploy.domain.entities.User;
-import ubb.thesis.easyemploy.domain.validation.BaseUserValidator;
+import ubb.thesis.easyemploy.domain.validation.UserValidator;
 import ubb.thesis.easyemploy.service.AuthenticationService;
 import ubb.thesis.easyemploy.service.TokenService;
+import ubb.thesis.easyemploy.service.UserCompanyRelationService;
 
 import javax.servlet.http.HttpSession;
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
 public class AuthenticationController {
-    public static final String COMPANY = "COMPANY";
-    public static final String USER = "USER";
-    public static final String USERNAME = "username";
-    public static final String UNAUTH = "UNAUTH";
+    private static final String USERNAME = "username";
+    private static final String UNAUTH = "UNAUTH";
+    @Autowired
     private final AuthenticationService authenticationService;
+    private final UserCompanyRelationService userCompanyRelationService;
     private final TokenService tokenService;
+    private final BaseUserConverter userConverter;
 
     @PostMapping(value = "/api/login")
     public BaseUserDto loginUser(@RequestBody BaseUserDto userDto, HttpSession httpSession) {
         var user = authenticationService
-                .loginByUsername(userDto.getUsername(), userDto.getPassword());
-        if (user.isEmpty()) {
-            user = authenticationService.loginByEmail(userDto.getUsername(), userDto.getPassword());
-            if (user.isEmpty())
-                throw new IllegalArgumentException("Username and password do not match!");
-        }
-        if (!user.get().isActivated())
+                .loginByUsername(userDto.getUsername(), userDto.getPassword())
+                .orElse(authenticationService.loginByEmail(userDto.getUsername(), userDto.getPassword())
+                        .orElseThrow(() -> new IllegalArgumentException("Username and password do not match!"))
+                );
+        if (!user.isActivated())
             throw new IllegalStateException("Please confirm your email before proceeding.");
-        var role = user.get() instanceof User ? USER : COMPANY;
-        httpSession.setAttribute(USERNAME, user.get().getUsername());
+        setSessionAttributes(httpSession, user);
+        return userConverter.convertModelToDto(user);
+    }
+
+    private static void setSessionAttributes(HttpSession httpSession, BaseUser user) {
+        var role = user.getRole();
+        httpSession.setAttribute(USERNAME, user.getUsername());
         httpSession.setAttribute("role", role);
-        httpSession.setAttribute("id", user.get().getId());
-        var userConverter = new BaseUserConverter();
-        return userConverter.convertModelToDto(user.get());
+        httpSession.setAttribute("id", user.getId());
     }
 
     @GetMapping(value = "/api/logout")
@@ -55,10 +57,9 @@ public class AuthenticationController {
     @GetMapping(value = "/api/getAuthenticatedUser")
     public BaseUserDto getAuthenticatedUser(HttpSession httpSession) {
         String username = (String) httpSession.getAttribute(USERNAME);
-        if (authenticationService.getUserByUsername(username).isPresent()) {
-            BaseUser baseUser = authenticationService.getUserByUsername(username).get();
-            var baseUserConverter = new BaseUserConverter();
-            return baseUserConverter.convertModelToDto(baseUser);
+        if (userCompanyRelationService.getUserByUsername(username).isPresent()) {
+            BaseUser baseUser = userCompanyRelationService.getUserByUsername(username).get();
+            return userConverter.convertModelToDto(baseUser);
         }
         return new BaseUserDto(0L, "", "", "", "", "", false, UNAUTH);
     }
@@ -68,17 +69,16 @@ public class AuthenticationController {
         String role = (String) httpSession.getAttribute("role");
         if (role == null || role.isEmpty()) {
             httpSession.setAttribute("role", UNAUTH);
-            return new BaseUserDto(0L, "", "", "", "", "", false, UNAUTH);
+            role = UNAUTH;
         }
         return new BaseUserDto(0L, "", "", "", "", "", false, role);
     }
 
     @PostMapping(value = "/api/create-account")
     public void createUser(@RequestBody BaseUserDto userDto) {
-        var baseUserConverter = new BaseUserConverter();
-        var user = baseUserConverter.convertDtoToModel(userDto);
+        var user = userConverter.convertDtoToModel(userDto);
 
-        var baseUserValidator = new BaseUserValidator();
+        var baseUserValidator = new UserValidator();
         baseUserValidator.validateEmail(user);
         baseUserValidator.validatePassword(user.getPassword());
 
@@ -90,12 +90,12 @@ public class AuthenticationController {
 
     @PostMapping(value = "/api/resend-confirmation")
     public void resendConfirmation(@RequestBody BaseUserDto userDto) {
-        Optional<BaseUser> userOptional = authenticationService.getUserByEmail(userDto.getUsername());
-        if(userOptional.isPresent()) {
+        var userOptional = authenticationService.getUserByEmail(userDto.getUsername());
+        if (userOptional.isPresent()) {
             var user = userOptional.get();
-            var role = user instanceof User ? USER : COMPANY;
+            var role = user.getRole();
 
-            authenticationService.deleteUser(user);
+            userCompanyRelationService.delete(user);
 
             authenticationService.signUp(user.getEmail(), user.getPassword(), role);
         } else {
@@ -115,11 +115,11 @@ public class AuthenticationController {
 
     @PostMapping(value = "/api/setNewPassword")
     public void setNewPassword(@RequestBody BaseUserDto baseUserDto) {
-        var baseUserValidator = new BaseUserValidator();
+        var baseUserValidator = new UserValidator();
         baseUserValidator.validatePassword(baseUserDto.getPassword());
 
-        Optional<BaseUser> userOptional = authenticationService.getUserByEmail(baseUserDto.getEmail());
-        if(userOptional.isPresent()) {
+        var userOptional = authenticationService.getUserByEmail(baseUserDto.getEmail());
+        if (userOptional.isPresent()) {
             var user = userOptional.get();
 
             user.setPassword(BCrypt.hashpw(baseUserDto.getPassword(), BCrypt.gensalt()));
@@ -131,21 +131,16 @@ public class AuthenticationController {
 
     @GetMapping(value = "/api/resend-confirmation-expired")
     public void resendConfirmationExpired(@RequestParam("expiredToken") String expiredToken) {
-        var tokenObject = tokenService.getToken(expiredToken);
-        if(tokenObject.isPresent()) {
-            Optional<BaseUser> userOptional = authenticationService.getUserByEmail(tokenObject.get().getEmail());
-            if(userOptional.isPresent()) {
-                var user = userOptional.get();
-                var role = user instanceof User ? USER : COMPANY;
+        var tokenObject = authenticationService.getToken(expiredToken);
+        var userOptional = authenticationService.getUserByEmail(tokenObject.getEmail());
+        if (userOptional.isPresent()) {
+            var user = userOptional.get();
+            var role = user.getRole();
 
-                authenticationService.deleteUser(user);
-
-                authenticationService.signUp(user.getEmail(), user.getPassword(), role);
-            } else {
-                throw new IllegalArgumentException("No user exists with this email");
-            }
+            userCompanyRelationService.delete(user);
+            authenticationService.signUp(user.getEmail(), user.getPassword(), role);
         } else {
-            throw new IllegalArgumentException("Token does not exist");
+            throw new IllegalArgumentException("No user exists with this email");
         }
     }
 

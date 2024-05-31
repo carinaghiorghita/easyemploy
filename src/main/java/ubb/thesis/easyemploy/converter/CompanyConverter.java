@@ -1,10 +1,12 @@
 package ubb.thesis.easyemploy.converter;
 
+import org.springframework.stereotype.Component;
 import ubb.thesis.easyemploy.domain.dto.CompanyExploreDto;
 import ubb.thesis.easyemploy.domain.entities.Company;
 
 import java.util.HashSet;
 
+@Component
 public class CompanyConverter implements Converter<Company, CompanyExploreDto> {
     @Override
     public CompanyExploreDto convertModelToDto(Company model) {

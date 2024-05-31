@@ -9,6 +9,7 @@ import ubb.thesis.easyemploy.domain.entities.Token;
 import ubb.thesis.easyemploy.domain.entities.User;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,83 +17,61 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AuthenticationService {
 
-    private final UserService userService;
-    private final CompanyService companyService;
+    private static final String USER = "USER";
     private final TokenService tokenService;
     private final EmailService emailService;
+    private final UserCompanyRelationService userCompanyRelationService;
 
-    public Optional<BaseUser> loginByUsername(String username, String password){
-        var user = userService.getUserByUsername(username);
-        if(user.isEmpty()){
-            var company = companyService.getCompanyByUsername(username);
-            if(company.isEmpty() || !BCrypt.checkpw(password, company.get().getPassword()))
+    public Optional<BaseUser> loginByUsername(String username, String password) {
+        var user = userCompanyRelationService.getUserByUsername(username);
+        if (user.isEmpty()) {
+            var company = userCompanyRelationService.getCompanyByUsername(username);
+            if (company.isEmpty() || !BCrypt.checkpw(password, company.get().getPassword()))
                 return Optional.empty();
             return Optional.of(company.get());
-        }
-        else if(!BCrypt.checkpw(password, user.get().getPassword()))
+        } else if (!BCrypt.checkpw(password, user.get().getPassword()))
             return Optional.empty();
         return Optional.of(user.get());
     }
 
-    public Optional<BaseUser> loginByEmail(String email, String password){
-        var user = userService.getUserByEmail(email);
-        if(user.isEmpty()){
-            var company = companyService.getCompanyByEmail(email);
-            if(company.isEmpty() || !BCrypt.checkpw(password, company.get().getPassword()))
+    public Optional<BaseUser> loginByEmail(String email, String password) {
+        var user = userCompanyRelationService.getUserByEmail(email);
+        if (user.isEmpty()) {
+            var company = userCompanyRelationService.getCompanyByEmail(email);
+            if (company.isEmpty() || !BCrypt.checkpw(password, company.get().getPassword()))
                 return Optional.empty();
             return Optional.of(company.get());
-        }
-        else if(!BCrypt.checkpw(password, user.get().getPassword()))
+        } else if (!BCrypt.checkpw(password, user.get().getPassword()))
             return Optional.empty();
         return Optional.of(user.get());
     }
 
-    public Optional<BaseUser> getUserByEmail(String email){
-        var user = userService.getUserByEmail(email);
-        if(user.isEmpty()){
-            var company = companyService.getCompanyByEmail(email);
-            if(company.isEmpty())
+    public Optional<BaseUser> getUserByEmail(String email) {
+        var user = userCompanyRelationService.getUserByEmail(email);
+        if (user.isEmpty()) {
+            var company = userCompanyRelationService.getCompanyByEmail(email);
+            if (company.isEmpty())
                 return Optional.empty();
             return Optional.of(company.get());
         }
         return Optional.of(user.get());
     }
 
-    public Optional<BaseUser> getUserByUsername(String username){
-        var user = userService.getUserByUsername(username);
-        if(user.isEmpty()){
-            var company = companyService.getCompanyByUsername(username);
-            if(company.isEmpty())
-                return Optional.empty();
-            return Optional.of(company.get());
-        }
-        return Optional.of(user.get());
-    }
-
-    public void deleteUser(BaseUser user){
-        if(user instanceof User)
-            this.userService.deleteById(user.getId());
+    public void updateUser(BaseUser user) {
+        if (Objects.equals(user.getRole(), USER))
+            this.userCompanyRelationService.updateUser((User) user);
         else
-            this.companyService.deleteById(user.getId());
+            this.userCompanyRelationService.updateCompany((Company) user);
     }
 
-    public void updateUser(BaseUser user){
-        if(user instanceof User)
-            this.userService.updateUser((User) user);
-        else
-            this.companyService.updateCompany((Company) user);
-    }
-
-    public void signUp(String email, String password, String role){
-        if(role.equals("USER")){
-            var user = new User("","",email,"","",this.hashPassword(password),"",false);
-            userService.saveUser(user);
-        }
-        else if(role.equals("COMPANY")){
-            var company = new Company("",email,"","",this.hashPassword(password),"",false);
-            companyService.saveCompany(company);
-        }
-        else {
+    public void signUp(String email, String password, String role) {
+        if (role.equals(USER)) {
+            var user = new User("", "", email, "", "", this.hashPassword(password), "", false);
+            userCompanyRelationService.saveUser(user);
+        } else if (role.equals("COMPANY")) {
+            var company = new Company("", email, "", "", this.hashPassword(password), "", false);
+            userCompanyRelationService.saveCompany(company);
+        } else {
             throw new IllegalArgumentException("Invalid role");
         }
 
@@ -116,7 +95,7 @@ public class AuthenticationService {
 
     }
 
-    public void resetPassword(BaseUser user){
+    public void resetPassword(BaseUser user) {
         String tokenString = UUID.randomUUID().toString();
 
         Token token = new Token(
@@ -138,10 +117,21 @@ public class AuthenticationService {
     }
 
     public void confirm(String tokenString) {
-        var token = tokenService.getToken(tokenString).orElseThrow(
+        var token = getToken(tokenString);
+
+        validateToken(token);
+
+        tokenService.setConfirmedAt(tokenString);
+        activateUser(token);
+    }
+
+    public Token getToken(String tokenString) {
+        return tokenService.getToken(tokenString).orElseThrow(
                 () -> new IllegalArgumentException("Invalid token")
         );
+    }
 
+    private static void validateToken(Token token) {
         if (token.getConfirmedAt() != null) {
             throw new IllegalStateException("Email already confirmed");
         }
@@ -151,23 +141,22 @@ public class AuthenticationService {
         if (expiredAt.isBefore(LocalDateTime.now())) {
             throw new IllegalStateException("Token has expired");
         }
+    }
 
-        tokenService.setConfirmedAt(tokenString);
-
+    private void activateUser(Token token) {
         var user = this.getUserByEmail(token.getEmail());
 
-        if(user.isEmpty())
+        if (user.isEmpty())
             throw new IllegalStateException("Invalid email");
         user.get().setActivated(true);
-        if(user.get() instanceof User) {
-            userService.updateUser((User) user.get());
-        }
-        else {
-            companyService.updateCompany((Company) user.get());
+        if (Objects.equals(user.get().getRole(), USER)) {
+            userCompanyRelationService.updateUser((User) user.get());
+        } else {
+            userCompanyRelationService.updateCompany((Company) user.get());
         }
     }
 
-    public String hashPassword(String plainTextPassword) {
+    private String hashPassword(String plainTextPassword) {
         return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
     }
 }

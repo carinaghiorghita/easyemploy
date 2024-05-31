@@ -5,9 +5,11 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@lombok.Setter
+@lombok.Getter
 @Entity
-@Table(name="company")
-public class Company extends BaseUser{
+@Table(name = "company")
+public class Company extends BaseUser {
     private String name;
 
     @ManyToMany
@@ -23,22 +25,12 @@ public class Company extends BaseUser{
         this.name = name;
     }
 
-    public Company(){}
-
-    public String getName() {
-        return name;
+    public Company() {
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<User> getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(Set<User> followers) {
-        this.followers = followers;
+    @Override
+    public String getRole() {
+        return "COMPANY";
     }
 
     @Override

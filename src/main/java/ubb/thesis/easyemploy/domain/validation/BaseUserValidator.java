@@ -4,12 +4,12 @@ import ubb.thesis.easyemploy.domain.entities.BaseUser;
 import ubb.thesis.easyemploy.domain.exceptions.ValidationException;
 
 public class BaseUserValidator {
-    public static final String USERNAME_REGEX = "^[a-zA-Z0-9\\-_.]*";
-    public static final String PHONE_NUMBER_REGEX = "^[0-9+#)( ]*";
-    public static final String EMAIL_USERNAME_REGEX = "^[a-zA-Z0-9._+]+";
-    public static final String EMAIL_DOMAIN_PROVIDER_REGEX = "^[a-zA-Z]+";
-    public static final String EMAIL_DOMAIN_LOCATION_REGEX = "^[a-zA-Z]+";
-    public static final String NAME_REGEX = "^(?U)[\\p{Alpha}\\-&. ]+";
+    private static final String USERNAME_REGEX = "^[a-zA-Z0-9\\-_.]*";
+    private static final String PHONE_NUMBER_REGEX = "^[0-9+#)( ]*";
+    private static final String EMAIL_USERNAME_REGEX = "^[a-zA-Z0-9._+]+";
+    private static final String EMAIL_DOMAIN_PROVIDER_REGEX = "^[a-zA-Z]+";
+    private static final String EMAIL_DOMAIN_LOCATION_REGEX = "^[a-zA-Z]+";
+    protected static final String NAME_REGEX = "^(?U)[\\p{Alpha}\\-&. ]+";
 
     public void validateUsername(BaseUser entity){
         var username = entity.getUsername();

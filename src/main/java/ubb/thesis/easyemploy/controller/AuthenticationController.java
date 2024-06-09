@@ -9,12 +9,14 @@ import ubb.thesis.easyemploy.converter.TokenConverter;
 import ubb.thesis.easyemploy.domain.dto.BaseUserDto;
 import ubb.thesis.easyemploy.domain.dto.TokenDto;
 import ubb.thesis.easyemploy.domain.entities.BaseUser;
+import ubb.thesis.easyemploy.domain.entities.User;
 import ubb.thesis.easyemploy.domain.validation.UserValidator;
 import ubb.thesis.easyemploy.service.AuthenticationService;
 import ubb.thesis.easyemploy.service.TokenService;
 import ubb.thesis.easyemploy.service.UserCompanyRelationService;
 
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -57,8 +59,9 @@ public class AuthenticationController {
     @GetMapping(value = "/api/getAuthenticatedUser")
     public BaseUserDto getAuthenticatedUser(HttpSession httpSession) {
         String username = (String) httpSession.getAttribute(USERNAME);
-        if (userCompanyRelationService.getUserByUsername(username).isPresent()) {
-            BaseUser baseUser = userCompanyRelationService.getUserByUsername(username).get();
+        Optional<User> userOptional = userCompanyRelationService.getUserByUsername(username);
+        if (userOptional.isPresent()) {
+            BaseUser baseUser = userOptional.get();
             return userConverter.convertModelToDto(baseUser);
         }
         return new BaseUserDto(0L, "", "", "", "", "", false, UNAUTH);

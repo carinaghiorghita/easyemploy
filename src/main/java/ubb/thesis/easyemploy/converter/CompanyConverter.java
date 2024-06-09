@@ -15,6 +15,15 @@ public class CompanyConverter implements Converter<Company, CompanyExploreDto> {
 
     @Override
     public Company convertDtoToModel(CompanyExploreDto dto) {
-        return new Company(dto.getId(),dto.getName(), dto.getEmail(), dto.getPhoneNumber(), dto.getUsername(), dto.getPassword(), dto.getDescription(), dto.isActivated());
-    }
+        var companyBuilder = new Company.CompanyBuilder();
+        return (Company) companyBuilder
+                .name(dto.getName())
+                .id(dto.getId())
+                .email(dto.getEmail())
+                .phoneNumber(dto.getPhoneNumber())
+                .username(dto.getUsername())
+                .password(dto.getPassword())
+                .description(dto.getDescription())
+                .activated(dto.isActivated())
+                .build();    }
 }

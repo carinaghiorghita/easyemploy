@@ -1,12 +1,8 @@
 package ubb.thesis.easyemploy.domain.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-
-@Data
-@Builder
-@AllArgsConstructor
+@lombok.Data
+@lombok.Builder
+@lombok.AllArgsConstructor
 public class FileDto {
     private String name;
     private String url;

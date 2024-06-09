@@ -16,6 +16,17 @@ public class UserConverter implements Converter<User, UserExploreDto> {
 
     @Override
     public User convertDtoToModel(UserExploreDto dto) {
-        return new User(dto.getId(),dto.getFirstName(), dto.getLastName(), dto.getEmail(), dto.getPhoneNumber(), dto.getUsername(), dto.getPassword(), dto.getDescription(), dto.isActivated());
+        var userBuilder = new User.UserBuilder();
+        return (User) userBuilder
+                .firstName(dto.getFirstName())
+                .lastName(dto.getLastName())
+                .id(dto.getId())
+                .email(dto.getEmail())
+                .phoneNumber(dto.getPhoneNumber())
+                .username(dto.getUsername())
+                .password(dto.getPassword())
+                .description(dto.getDescription())
+                .activated(dto.isActivated())
+                .build();
     }
 }

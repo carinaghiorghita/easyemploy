@@ -14,6 +14,15 @@ public class BaseUserConverter implements Converter<BaseUser, BaseUserDto> {
 
     @Override
     public BaseUser convertDtoToModel(BaseUserDto dto) {
-        return new BaseUser(dto.getId(), dto.getEmail(), dto.getPhoneNumber(), dto.getUsername(), dto.getPassword(), dto.getDescription(), dto.isActivated());
+        var builder = new BaseUser.Builder();
+        return builder
+                .id(dto.getId())
+                .email(dto.getEmail())
+                .phoneNumber(dto.getPhoneNumber())
+                .username(dto.getUsername())
+                .password(dto.getPassword())
+                .description(dto.getDescription())
+                .activated(dto.isActivated())
+                .build();
     }
 }

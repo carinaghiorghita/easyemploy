@@ -7,35 +7,26 @@ import java.util.Objects;
 @lombok.Getter
 @MappedSuperclass
 public class BaseUser {
-    public static final String UNKNOWN = "UNKNOWN";
+    private static final String UNKNOWN = "UNKNOWN";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String email;
-    private String phoneNumber;
+    protected Long id;
+    protected String email;
+    protected String phoneNumber;
     @Column(name = "description", length = 9999)
-    private String description;
-    private String username;
-    private String password;
-    private boolean activated;
+    protected String description;
+    protected String username;
+    protected String password;
+    protected boolean activated;
 
-    public BaseUser(String email, String phoneNumber, String username, String password, String description, boolean activated) {
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.username = username;
-        this.password = password;
-        this.activated = activated;
-        this.description = description;
-    }
-
-    public BaseUser(Long id, String email, String phoneNumber, String username, String password, String description, boolean activated) {
-        this.id = id;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.username = username;
-        this.password = password;
-        this.activated = activated;
-        this.description = description;
+    public BaseUser(Builder builder) {
+        this.id = builder.id;
+        this.email = builder.email;
+        this.phoneNumber = builder.phoneNumber;
+        this.username = builder.username;
+        this.password = builder.password;
+        this.activated = builder.activated;
+        this.description = builder.description;
     }
 
     protected BaseUser() {
@@ -43,7 +34,7 @@ public class BaseUser {
 
     public String getRole() {
         return UNKNOWN;
-    };
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -68,5 +59,54 @@ public class BaseUser {
                 ", password='" + password + '\'' +
                 ", activated=" + activated +
                 '}';
+    }
+
+    public static class Builder {
+        protected Long id;
+        protected String email;
+        protected String phoneNumber;
+        protected String description;
+        protected String username;
+        protected String password;
+        protected boolean activated;
+
+        public Builder id (Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder email (String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder phoneNumber (String phoneNumber) {
+            this.phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public Builder username (String username) {
+            this.username = username;
+            return this;
+        }
+
+        public Builder password (String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder activated (boolean activated) {
+            this.activated = activated;
+            return this;
+        }
+
+        public Builder description (String description) {
+            this.description = description;
+            return this;
+        }
+
+        public BaseUser build() {
+            return new BaseUser(this);
+        }
     }
 }

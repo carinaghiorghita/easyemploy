@@ -29,6 +29,16 @@ public class PostConverter implements Converter<Post, PostExploreDto> {
         var date = dto.getDateCreated().isEmpty() ? LocalDateTime.now() : formatter.parse(dto.getDateCreated()).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         var editedDate = dto.getDateLastEdited().isEmpty() ? LocalDateTime.now() : formatter.parse(dto.getDateCreated()).toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
-        return new Post(dto.getId(), dto.getJobTitle(), dto.getExperienceLevel(), dto.getSalary(), dto.getDescription(), date, editedDate, companyConverter.convertDtoToModel(dto.getCompany()));
+        var builder = new Post.Builder();
+        return builder
+                .id(dto.getId())
+                .jobTitle(dto.getJobTitle())
+                .experienceLevel(dto.getExperienceLevel())
+                .salary(dto.getSalary())
+                .description(dto.getDescription())
+                .dateCreated(date)
+                .dateLastEdited(editedDate)
+                .company(companyConverter.convertDtoToModel(dto.getCompany()))
+                .build();
     }
 }

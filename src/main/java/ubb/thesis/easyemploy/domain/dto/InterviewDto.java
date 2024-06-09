@@ -1,14 +1,9 @@
 package ubb.thesis.easyemploy.domain.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@Builder
+@lombok.NoArgsConstructor
+@lombok.AllArgsConstructor
+@lombok.Data
+@lombok.Builder
 public class InterviewDto {
     private String feedback;
     private String interviewTime;

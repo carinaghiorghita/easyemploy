@@ -66,11 +66,30 @@ public class AuthenticationService {
 
     public void signUp(String email, String password, String role) {
         if (role.equals(USER)) {
-            var user = new User("", "", email, "", "", this.hashPassword(password), "", false);
-            userCompanyRelationService.saveUser(user);
+            var userBuilder = new User.UserBuilder();
+            var user = userBuilder
+                    .firstName("")
+                    .lastName("")
+                    .email(email)
+                    .description("")
+                    .phoneNumber("")
+                    .password(this.hashPassword(password))
+                    .activated(false)
+                    .username("")
+                    .build();
+            userCompanyRelationService.saveUser((User) user);
         } else if (role.equals("COMPANY")) {
-            var company = new Company("", email, "", "", this.hashPassword(password), "", false);
-            userCompanyRelationService.saveCompany(company);
+            var companyBuilder = new Company.CompanyBuilder();
+            var company = companyBuilder
+                    .name("")
+                    .email(email)
+                    .description("")
+                    .phoneNumber("")
+                    .password(this.hashPassword(password))
+                    .activated(false)
+                    .username("")
+                    .build();
+            userCompanyRelationService.saveCompany((Company) company);
         } else {
             throw new IllegalArgumentException("Invalid role");
         }

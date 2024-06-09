@@ -15,14 +15,9 @@ public class Company extends BaseUser {
     @ManyToMany
     private Set<User> followers = new HashSet<>();
 
-    public Company(String name, String email, String phoneNumber, String username, String password, String description, boolean activated) {
-        super(email, phoneNumber, username, password, description, activated);
-        this.name = name;
-    }
-
-    public Company(Long id, String name, String email, String phoneNumber, String username, String password, String description, boolean activated) {
-        super(id, email, phoneNumber, username, password, description, activated);
-        this.name = name;
+    public Company(CompanyBuilder companyBuilder) {
+        super(companyBuilder);
+        this.name = companyBuilder.name;
     }
 
     public Company() {
@@ -52,5 +47,19 @@ public class Company extends BaseUser {
         return "Company{" +
                 "name='" + name + '\'' +
                 '}';
+    }
+
+    public static final class CompanyBuilder extends Builder {
+        private String name;
+
+        public CompanyBuilder name (String name) {
+            this.name = name;
+            return this;
+        }
+
+        @Override
+        public Company build(){
+            return new Company(this);
+        }
     }
 }

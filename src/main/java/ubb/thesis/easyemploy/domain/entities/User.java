@@ -14,20 +14,13 @@ public class User extends BaseUser {
     @ManyToMany
     private Set<Company> followedCompanies = new HashSet<>();
 
-    public User(String firstName, String lastName, String email, String phoneNumber, String username, String password, String description, boolean activated) {
-        super(email, phoneNumber, username, password, description, activated);
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public User(Long id, String firstName, String lastName, String email, String phoneNumber, String username, String password, String description, boolean activated) {
-        super(id, email, phoneNumber, username, password, description, activated);
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(UserBuilder userBuilder) {
+        super(userBuilder);
+        this.firstName = userBuilder.firstName;
+        this.lastName = userBuilder.lastName;
     }
 
     public User() {
-
     }
 
     @Override
@@ -79,5 +72,25 @@ public class User extends BaseUser {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';
+    }
+
+    public static final class UserBuilder extends Builder {
+        private String firstName;
+        private String lastName;
+
+        public UserBuilder firstName (String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public UserBuilder lastName (String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        @Override
+        public User build(){
+            return new User(this);
+        }
     }
 }

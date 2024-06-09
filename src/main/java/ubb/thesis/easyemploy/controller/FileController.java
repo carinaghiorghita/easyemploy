@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -36,7 +35,6 @@ public class FileController {
 
             return extractContent(content);
         } catch (Exception e) {
-            e.printStackTrace();
             return getResponseEntity(HttpStatus.EXPECTATION_FAILED, CV_PROCESSING_ERROR);
         }
     }

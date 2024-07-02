@@ -26,8 +26,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.httpClient
-      .get<any>('/api/getAuthenticatedUser')
-      .subscribe( (user) => {
+      .get<any>('/api/getUserRole')
+      .subscribe((user) => {
           this.role = user.role;
           if (this.role == "UNAUTH") {
             this.link = '/login';
@@ -35,7 +35,6 @@ export class HeaderComponent implements OnInit {
           else {
             this.link = `/dashboard-${this.role.toLowerCase()}`;
           }
-
         }
       );
   }

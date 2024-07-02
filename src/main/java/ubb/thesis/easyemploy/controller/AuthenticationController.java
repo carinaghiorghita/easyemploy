@@ -31,11 +31,9 @@ public class AuthenticationController {
 
     @PostMapping(value = "/api/login")
     public BaseUserDto loginUser(@RequestBody BaseUserDto userDto, HttpSession httpSession) {
-        var user = authenticationService
-                .loginByUsername(userDto.getUsername(), userDto.getPassword())
-                .orElse(authenticationService.loginByEmail(userDto.getUsername(), userDto.getPassword())
-                        .orElseThrow(() -> new IllegalArgumentException("Username and password do not match!"))
-                );
+        var user = authenticationService.loginByUsername(userDto.getUsername(), userDto.getPassword())
+                .or(() -> authenticationService.loginByEmail(userDto.getUsername(), userDto.getPassword()))
+                .orElseThrow(() -> new IllegalArgumentException("Username and password do not match!"));
         if (!user.isActivated())
             throw new IllegalStateException("Please confirm your email before proceeding.");
         setSessionAttributes(httpSession, user);
